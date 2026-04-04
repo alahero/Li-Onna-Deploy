@@ -8,33 +8,28 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          red: '#E63946',
-          yellow: '#FFB703',
-          dark: '#1A1A2E',
-          cream: '#FFF8E7',
-          orange: '#FB8500',
-        },
+        'brand-green': '#0c7528',
+        'brand-dark-green': '#085e1f',
+        'brand-white': '#ffffff',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'stripe-pattern':
-          'repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,183,3,0.1) 10px, rgba(255,183,3,0.1) 20px)',
-      },
-      animation: {
-        'bounce-slow': 'bounce 2s infinite',
-        'pulse-slow': 'pulse 3s infinite',
-        wiggle: 'wiggle 0.5s ease-in-out infinite',
+        gothic: ['"Gothic Regular"', 'sans-serif'],
+        oswald: ['Oswald', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
       keyframes: {
-        wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
+        slideX: {
+          '0%': { transform: 'translateX(300px)' },
+          '100%': { transform: 'translateX(-200px)' },
+        },
+      },
+      animation: {
+        marquee: 'marquee 18s linear infinite',
+        slideX: 'slideX 8s ease-in-out infinite alternate',
       },
     },
   },

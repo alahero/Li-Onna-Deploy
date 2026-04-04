@@ -3,50 +3,42 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Tacos Atarantados – Los Mejores Tacos de la Ciudad',
+    default: 'Tacos Atarantados',
     template: '%s | Tacos Atarantados',
   },
   description:
-    'Tacos Atarantados: sabor auténtico, ingredientes frescos y calidad insuperable. Visítanos en nuestras sucursales o pide a domicilio.',
+    'Nacimos en Monterrey y eso se nota. Somos tacos norteños, bien servidos y hechos con carácter.',
   metadataBase: new URL('https://tacosatarantados.mx'),
   openGraph: {
     type: 'website',
     locale: 'es_MX',
     url: 'https://tacosatarantados.mx',
     siteName: 'Tacos Atarantados',
-    title: 'Tacos Atarantados – Los Mejores Tacos de la Ciudad',
-    description:
-      'Tacos Atarantados: sabor auténtico, ingredientes frescos y calidad insuperable.',
+    title: 'Tacos Atarantados',
+    description: 'Nacimos en Monterrey y eso se nota. Tacos norteños, bien servidos.',
+    images: [{ url: '/images/og-image.png' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tacos Atarantados',
-    description: 'Los mejores tacos de la ciudad. Pide ahora.',
+    description: 'Tacos norteños, bien servidos y hechos con carácter.',
+    images: ['/images/og-image.png'],
   },
-  keywords: ['tacos', 'taqueria', 'comida mexicana', 'tacos atarantados', 'tacos a domicilio'],
-  robots: {
-    index: true,
-    follow: true,
+  icons: {
+    icon: [
+      { url: '/images/favicon-light.gif', media: '(prefers-color-scheme: light)' },
+      { url: '/images/favicon-dark.gif', media: '(prefers-color-scheme: dark)' },
+    ],
+    apple: '/images/apple-touch-icon.png',
   },
+  keywords: ['tacos', 'tacos atarantados', 'taqueria monterrey', 'tacos norteños', 'trompo'],
+  robots: { index: true, follow: true },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      </head>
-      <body
-        className="min-h-screen bg-brand-cream text-brand-dark antialiased"
-        style={{ fontFamily: 'var(--font-sans)' }}
-      >
-        {children}
-      </body>
+    <html lang="es">
+      <body>{children}</body>
     </html>
   );
 }

@@ -1,117 +1,147 @@
-interface HeroData {
-  heroTitle?: string;
-  heroSubtitle?: string;
-  heroBackgroundImage?: string | null;
-  heroVideoUrl?: string | null;
-  ctaText?: string;
-  ctaLink?: string | null;
-  ctaSecondaryText?: string;
-}
-
-interface HeroProps {
-  data?: HeroData | null;
-}
-
-export default function Hero({ data }: HeroProps) {
-  const title = data?.heroTitle || 'ELEVATE YOUR TULUM EXPERIENCE';
-  const subtitle = data?.heroSubtitle || 'Premium open-air jungle nightclub in the heart of Tulum';
-  const ctaText = data?.ctaText || 'Reserve Your Table';
-  const ctaLink = data?.ctaLink || '#viptables';
-  const ctaSecondaryText = data?.ctaSecondaryText || 'View Events';
-  const bgImage = data?.heroBackgroundImage;
-
+export default function Hero() {
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-black"
+      id="hero"
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100vh',
+        minHeight: 600,
+        backgroundColor: '#0d0e11',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
       aria-label="Hero"
     >
-      {/* Background image / video layer */}
-      {bgImage ? (
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-105"
-          style={{ backgroundImage: `url(${bgImage})` }}
-          aria-hidden="true"
+      {/* Hero background image */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'url(/images/hero-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Vimeo video overlay — very low opacity */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          zIndex: 1,
+          overflow: 'hidden',
+          opacity: 0.08,
+          pointerEvents: 'none',
+          background: 'rgb(0, 0, 0)',
+        }}
+        aria-hidden="true"
+      >
+        <iframe
+          src="https://player.vimeo.com/video/gV7TSdL5l?autoplay=1&loop=1&muted=1&background=1&autopause=0"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            border: 'none',
+          }}
+          allow="autoplay; fullscreen"
+          title="Hero background video"
         />
-      ) : (
-        // Atmospheric fallback when no image
-        <div className="absolute inset-0" aria-hidden="true">
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-forest-deep via-brand-black to-brand-black" />
-          {/* Decorative orbs */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-forest-green/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-brand-gold/5 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-forest-green/5 rounded-full blur-3xl" />
-        </div>
-      )}
+      </div>
 
-      {/* Dark overlay */}
+      {/* Spline 3D scene */}
       <div
-        className="absolute inset-0 bg-gradient-hero"
+        style={{
+          position: 'absolute',
+          top: 93,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: 1200,
+          maxWidth: '100vw',
+          height: '88.375vh',
+          zIndex: 2,
+          pointerEvents: 'none',
+          overflow: 'hidden',
+        }}
         aria-hidden="true"
-      />
+      >
+        <iframe
+          src="https://my.spline.design/untitled-a0437a7d64d3670e9d2c5846d0642085/"
+          style={{
+            width: '100%',
+            height: '100%',
+            border: 'none',
+          }}
+          sandbox="allow-scripts allow-same-origin"
+          title="Spline 3D scene"
+        />
+      </div>
 
-      {/* Bottom gradient to blend with next section */}
+      {/* Dark overlay to darken background */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-black to-transparent"
-        aria-hidden="true"
-      />
-
-      {/* Decorative top border */}
-      <div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(to bottom, rgba(13,14,17,0.2) 0%, rgba(13,14,17,0.4) 60%, rgba(13,14,17,0.85) 100%)',
+          zIndex: 3,
+        }}
         aria-hidden="true"
       />
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-5xl mx-auto pt-20">
-        {/* Eyebrow */}
-        <p className="section-label animate-fade-in mb-8">
-          Tulum, Mexico
-        </p>
-
-        {/* Main title */}
-        <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-brand-cream tracking-[0.12em] uppercase leading-[1.05] mb-6 animate-fade-in-up">
-          {title.split(' ').map((word, i) =>
-            word === 'YOUR' || word === 'TULUM' ? (
-              <span key={i} className="text-gradient-gold">
-                {word}{' '}
-              </span>
-            ) : (
-              <span key={i}>{word} </span>
-            )
-          )}
-        </h1>
-
-        {/* Gold divider */}
-        <div className="gold-divider animate-fade-in" style={{ animationDelay: '0.3s' }} />
-
-        {/* Subtitle */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 4,
+          textAlign: 'center',
+          maxWidth: 1200,
+          width: '100%',
+          padding: '0 24px',
+          paddingTop: 60, // nav height
+        }}
+      >
+        {/* VIP TABLES label */}
         <p
-          className="font-body text-base md:text-lg text-brand-cream-muted tracking-widest max-w-2xl mx-auto mb-12 animate-fade-in"
-          style={{ animationDelay: '0.4s' }}
+          style={{
+            fontFamily: '"Source Sans 3", sans-serif',
+            fontSize: 18,
+            fontWeight: 400,
+            color: 'rgb(239, 128, 36)',
+            letterSpacing: '0.14em',
+            lineHeight: '1em',
+            marginBottom: 16,
+            textTransform: 'uppercase',
+          }}
         >
-          {subtitle}
+          VIP TABLES
         </p>
 
-        {/* CTA Buttons */}
-        <div
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in"
-          style={{ animationDelay: '0.6s' }}
+        {/* Main headline — Basteleur + Austin Cyr Italic mix */}
+        <h1
+          style={{
+            fontSize: 39,
+            lineHeight: '1em',
+            color: '#ffffff',
+            marginBottom: 40,
+            textTransform: 'uppercase',
+          }}
         >
-          <a href={ctaLink} className="btn-gold text-sm px-10 py-4 w-full sm:w-auto text-center">
-            {ctaText}
-          </a>
-          <a href="#events" className="btn-outline-cream text-sm px-10 py-4 w-full sm:w-auto text-center">
-            {ctaSecondaryText}
-          </a>
-        </div>
-      </div>
-
-      {/* Scroll indicator */}
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-pulse-gold">
-        <span className="font-body text-[10px] tracking-[0.4em] text-brand-gold/60 uppercase">
-          Scroll
-        </span>
-        <div className="w-px h-10 bg-gradient-to-b from-brand-gold/60 to-transparent" />
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+            ELEVATE{' '}
+          </span>
+          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+            YOUR TULUM{' '}
+          </span>
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+            EXPERIENCE
+          </span>
+        </h1>
       </div>
     </section>
   );

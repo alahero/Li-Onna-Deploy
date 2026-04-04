@@ -1,16 +1,10 @@
-interface TravelTime {
-  readonly from: string;
-  readonly duration: string;
-  readonly method?: string;
-}
-
 interface LocationData {
   address?: string;
   mapUrl?: string | null;
   mapDirectionsUrl?: string | null;
   phone?: string;
   email?: string;
-  travelTimes?: readonly TravelTime[];
+  travelTimes?: readonly { from: string; duration: string; method?: string }[];
   openingHours?: string;
 }
 
@@ -18,224 +12,257 @@ interface LocationSectionProps {
   data?: LocationData | null;
 }
 
-function MapPinIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
-    </svg>
-  );
-}
-
-function ClockIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-  );
-}
-
-function PhoneIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z" />
-    </svg>
-  );
-}
-
-function EnvelopeIcon() {
-  return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
-    </svg>
-  );
-}
-
-const defaultTravelTimes: readonly TravelTime[] = [
-  { from: 'Tulum Town Center', duration: '10 min', method: 'car' },
-  { from: 'Tulum Beach Hotels', duration: '5 min', method: 'car' },
-  { from: 'Cancun Airport', duration: '2 hrs', method: 'car' },
-  { from: 'Playa del Carmen', duration: '1 hr', method: 'car' },
-];
-
 export default function LocationSection({ data }: LocationSectionProps) {
-  const address = data?.address || 'Carretera Tulum-Boca Paila Km 5.5, Tulum, Quintana Roo, Mexico';
-  const mapUrl = data?.mapUrl;
-  const mapDirectionsUrl =
-    data?.mapDirectionsUrl ||
-    'https://maps.google.com/?q=Carretera+Tulum-Boca+Paila+Km+5.5+Tulum';
-  const phone = data?.phone || '+52 984 123 4567';
-  const email = data?.email || 'hello@tehmplo.mx';
-  const openingHours = data?.openingHours || 'Thursday – Sunday\n10:00 PM – 5:00 AM';
-  const travelTimes: readonly TravelTime[] =
-    data?.travelTimes && data.travelTimes.length > 0 ? data.travelTimes : defaultTravelTimes;
+  const mapsUrl =
+    'https://www.google.com/maps?ll=20.16939,-87.455675&z=16&t=m&hl=es-419&gl=MX&mapclient=embed&cid=15257279752080205533';
 
-  const hourLines = openingHours.split('\n').filter(Boolean);
+  const embedUrl =
+    'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.15213160337!2d-87.4556748!3d20.1693903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f4fd1f4128f7f1f%3A0xd3bcbf19158026dd!2sTehmplo!5e0!3m2!1ses-419!2smx!4v1743720471638!5m2!1ses-419!2smx';
 
   return (
-    <div className="relative bg-brand-dark-alt py-24 lg:py-32 overflow-hidden">
-      {/* Top decorative line */}
+    <section
+      id="location"
+      style={{
+        position: 'relative',
+        minHeight: 574,
+        width: '100%',
+        overflow: 'hidden',
+        scrollMarginTop: 64,
+        backgroundColor: '#0f0e0c',
+      }}
+    >
+      {/* Background image */}
       <div
-        className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'url(/images/location-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
         aria-hidden="true"
       />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Section header */}
-        <div className="text-center mb-16">
-          <p className="section-label">Find Us</p>
-          <h2 className="section-title">LOCATION</h2>
-          <div className="gold-divider" />
-        </div>
+      {/* Dark overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(15, 14, 12, 0.75)',
+          zIndex: 1,
+        }}
+        aria-hidden="true"
+      />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* Left: Info panel */}
-          <div className="space-y-10">
-            {/* Address */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center border border-brand-forest-green/30 text-brand-gold">
-                <MapPinIcon />
-              </div>
-              <div>
-                <p className="font-body text-[10px] tracking-[0.3em] text-brand-gold uppercase mb-2">
-                  Address
-                </p>
-                <p className="font-body text-sm text-brand-cream-muted leading-relaxed">
-                  {address}
-                </p>
-                <a
-                  href={mapDirectionsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-3 font-body text-xs text-brand-forest-light tracking-widest uppercase hover:text-brand-gold transition-colors duration-300 underline underline-offset-4"
-                >
-                  Get Directions
-                </a>
-              </div>
-            </div>
-
-            {/* Opening hours */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center border border-brand-forest-green/30 text-brand-gold">
-                <ClockIcon />
-              </div>
-              <div>
-                <p className="font-body text-[10px] tracking-[0.3em] text-brand-gold uppercase mb-2">
-                  Opening Hours
-                </p>
-                {hourLines.map((line, i) => (
-                  <p key={i} className="font-body text-sm text-brand-cream-muted">
-                    {line}
-                  </p>
-                ))}
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center border border-brand-forest-green/30 text-brand-gold">
-                <PhoneIcon />
-              </div>
-              <div>
-                <p className="font-body text-[10px] tracking-[0.3em] text-brand-gold uppercase mb-2">
-                  Phone
-                </p>
-                <a
-                  href={`tel:${phone.replace(/\s/g, '')}`}
-                  className="font-body text-sm text-brand-cream-muted hover:text-brand-gold transition-colors duration-300"
-                >
-                  {phone}
-                </a>
-              </div>
-            </div>
-
-            {/* Email */}
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center border border-brand-forest-green/30 text-brand-gold">
-                <EnvelopeIcon />
-              </div>
-              <div>
-                <p className="font-body text-[10px] tracking-[0.3em] text-brand-gold uppercase mb-2">
-                  Email
-                </p>
-                <a
-                  href={`mailto:${email}`}
-                  className="font-body text-sm text-brand-cream-muted hover:text-brand-gold transition-colors duration-300"
-                >
-                  {email}
-                </a>
-              </div>
-            </div>
-
-            {/* Travel times */}
-            <div>
-              <p className="font-body text-[10px] tracking-[0.3em] text-brand-gold uppercase mb-5">
-                Getting Here
-              </p>
-              <div className="grid grid-cols-2 gap-3">
-                {travelTimes.map((tt, i) => (
-                  <div
-                    key={i}
-                    className="bg-brand-black border border-brand-forest-green/20 px-4 py-3"
-                  >
-                    <p className="font-body text-xs text-brand-cream-muted/60 mb-1 truncate">
-                      {tt.from}
-                    </p>
-                    <p className="font-display text-lg text-brand-amber">{tt.duration}</p>
-                    {tt.method && (
-                      <p className="font-body text-[10px] text-brand-forest-light/70 tracking-wider uppercase mt-0.5">
-                        by {tt.method}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </div>
+      {/* Content */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          maxWidth: 1200,
+          margin: '0 auto',
+          padding: '80px 24px',
+        }}
+      >
+        {/* Desktop: flex row with map on left, info on right */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 48,
+          }}
+          className="lg:flex-row"
+        >
+          {/* Left side — Google Maps embed */}
+          <div style={{ flexShrink: 0 }}>
+            <div
+              style={{
+                width: '100%',
+                maxWidth: 512,
+                height: 370,
+                overflow: 'hidden',
+                borderRadius: 4,
+                border: '1px solid rgba(255,255,255,0.1)',
+              }}
+            >
+              <iframe
+                src={embedUrl}
+                width="512"
+                height="370"
+                style={{ border: 0, width: '100%', height: '100%' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Tehmplo on Google Maps"
+              />
             </div>
           </div>
 
-          {/* Right: Map */}
-          <div className="lg:sticky lg:top-24">
-            <div className="relative aspect-[4/3] bg-brand-forest-deep border border-brand-forest-green/30 overflow-hidden">
-              {mapUrl ? (
-                <iframe
-                  src={mapUrl}
-                  className="absolute inset-0 w-full h-full"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Tehmplo location on map"
-                  allowFullScreen
-                />
-              ) : (
-                // Placeholder when no embed URL
-                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                  <div className="text-brand-gold/30">
-                    <MapPinIcon />
-                  </div>
-                  <p className="font-body text-xs text-brand-cream-muted/30 tracking-widest uppercase text-center px-8">
-                    Carretera Tulum-Boca Paila<br />Km 5.5, Tulum
-                  </p>
-                  <a
-                    href={mapDirectionsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-outline-gold text-xs py-2 px-6 mt-2"
-                  >
-                    Open in Google Maps
-                  </a>
-                </div>
-              )}
-            </div>
+          {/* Right side — info */}
+          <div style={{ flex: 1 }}>
+            {/* GETTING THERE heading */}
+            <h2
+              style={{
+                fontFamily: '"Austin Cyr Roman", serif',
+                fontSize: 38,
+                fontWeight: 400,
+                color: '#ffffff',
+                lineHeight: '1em',
+                marginBottom: 20,
+                textTransform: 'uppercase',
+              }}
+            >
+              GETTING THERE
+            </h2>
 
-            {/* Coordinates tag */}
-            <div className="mt-3 flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-brand-gold animate-pulse" />
-              <span className="font-body text-[10px] text-brand-forest-light tracking-widest uppercase">
-                20.1878° N, 87.4691° W — Tulum, Mexico
-              </span>
+            {/* Address italic */}
+            <p
+              style={{
+                fontFamily: '"Austin Cyr Italic", serif',
+                fontSize: 22,
+                fontWeight: 400,
+                fontStyle: 'italic',
+                color: '#ffffff',
+                lineHeight: '1em',
+                marginBottom: 8,
+              }}
+            >
+              Parcela, Carretera Tulum - Boca Paila 1678-Km. 5.5,
+            </p>
+            <p
+              style={{
+                fontFamily: '"Source Sans 3", sans-serif',
+                fontSize: 20,
+                fontWeight: 500,
+                color: '#ffffff',
+                lineHeight: '1em',
+                marginBottom: 32,
+              }}
+            >
+              77780 Tulum, Q.R.
+            </p>
+
+            {/* OPEN IN MAPS button */}
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: '"Source Sans 3", sans-serif',
+                fontSize: 19,
+                fontWeight: 400,
+                color: '#ffffff',
+                letterSpacing: '0.14em',
+                lineHeight: '1.5em',
+                border: '2px solid #ef8024',
+                borderRadius: 5,
+                width: 267,
+                height: 48,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textDecoration: 'none',
+                marginBottom: 36,
+                textTransform: 'uppercase',
+                transition: 'background-color 0.2s ease',
+              }}
+            >
+              OPEN IN MAPS
+            </a>
+
+            {/* Distance grid */}
+            <div>
+              {/* Header row */}
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '120px 1fr 1fr',
+                  marginBottom: 8,
+                }}
+              >
+                <div />
+                <p
+                  style={{
+                    fontFamily: '"Source Sans 3", sans-serif',
+                    fontSize: 17,
+                    fontWeight: 500,
+                    color: '#ffffff',
+                    letterSpacing: '0.14em',
+                    lineHeight: '1.5em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  FROM HOTEL ZONE
+                </p>
+                <p
+                  style={{
+                    fontFamily: '"Source Sans 3", sans-serif',
+                    fontSize: 17,
+                    fontWeight: 500,
+                    color: '#ffffff',
+                    letterSpacing: '0.14em',
+                    lineHeight: '1.5em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  FROM ALDEA ZAMA
+                </p>
+              </div>
+
+              {[
+                { label: 'DRIVE:', hotelZone: '15 MIN.', aldeaZama: '20 MIN.' },
+                { label: 'BIKE RIDE:', hotelZone: '08 MIN.', aldeaZama: '15 MIN.' },
+                { label: 'WALK:', hotelZone: '40 MIN.', aldeaZama: '60 MIN.' },
+              ].map((row) => (
+                <div
+                  key={row.label}
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: '120px 1fr 1fr',
+                    marginBottom: 4,
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: '"Source Sans 3", sans-serif',
+                      fontSize: 17,
+                      fontWeight: 500,
+                      color: '#ffffff',
+                      letterSpacing: '0.14em',
+                      lineHeight: '1.5em',
+                    }}
+                  >
+                    {row.label}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: '"Source Sans 3", sans-serif',
+                      fontSize: 17,
+                      color: '#ffffff',
+                      letterSpacing: '0.14em',
+                      lineHeight: '1.5em',
+                    }}
+                  >
+                    {row.hotelZone}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: '"Source Sans 3", sans-serif',
+                      fontSize: 17,
+                      color: '#ffffff',
+                      letterSpacing: '0.14em',
+                      lineHeight: '1.5em',
+                    }}
+                  >
+                    {row.aldeaZama}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

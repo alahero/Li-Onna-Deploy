@@ -3,63 +3,40 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Houdinni | El Speakeasy Mágico',
+    default: 'Houdinni',
     template: '%s | Houdinni',
   },
-  description:
-    'Houdinni — Un speakeasy donde la magia y la mixología se encuentran. Shows de ilusionismo, cócteles de autor y una experiencia que desafía los sentidos.',
-  keywords: [
-    'Houdinni',
-    'speakeasy',
-    'bar mágico',
-    'ilusionismo',
-    'shows de magia',
-    'cócteles',
-    'experiencia',
-    'México',
-  ],
+  description: 'Houdinni Madrid',
   metadataBase: new URL('https://houdinni.com'),
   openGraph: {
-    type: 'website',
-    locale: 'es_MX',
-    url: 'https://houdinni.com',
-    siteName: 'Houdinni',
-    title: 'Houdinni | El Speakeasy Mágico',
-    description:
-      'Donde la magia y la mixología se encuentran. Shows de ilusionismo y cócteles de autor.',
+    type:      'website',
+    locale:    'es_ES',
+    url:       'https://houdinni.com',
+    siteName:  'Houdinni',
+    title:     'Houdinni',
+    description: 'Houdinni Madrid',
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Houdinni | El Speakeasy Mágico',
-    description:
-      'Donde la magia y la mixología se encuentran. Shows de ilusionismo y cócteles de autor.',
+    card:  'summary_large_image',
+    title: 'Houdinni',
+    description: 'Houdinni Madrid',
   },
   robots: {
-    index: true,
+    index:  true,
     follow: true,
   },
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className="scroll-smooth">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/*
-          Cormorant Garamond: theatrical display serif (headings)
-          Raleway: elegant geometric sans (body)
-        */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Raleway:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
+        <link rel="icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        {/* Framer Events script */}
+        <script src="https://events.framer.com/script?v=2" async />
       </head>
-      <body className="bg-brand-black text-brand-cream min-h-screen overflow-x-hidden">
+      <body className="bg-houdinni-black text-houdinni-white min-h-screen overflow-x-hidden">
         {children}
       </body>
     </html>

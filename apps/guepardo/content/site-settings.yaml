@@ -1,16 +1,14 @@
-siteName: Guepardo
-tagline: La noche más exclusiva de México
-logo: ~
-logoDark: ~
-favicon: ~
-metaTitle: Guepardo | El Mejor Antro de México
-metaDescription: >-
-  Guepardo — La experiencia de nightlife más exclusiva. Eventos con los mejores
-  DJs, zona VIP, y una atmósfera única en México.
-ogImage: ~
-social:
-  instagram: "https://instagram.com/guepardo"
-  facebook: "https://facebook.com/guepardo"
-  tiktok: "https://tiktok.com/@guepardo"
-  twitter: ""
-  whatsapp: "https://wa.me/521234567890"
+heroBackgroundImage: /images/hero-bg.png
+heroLogoImage: /images/logo-cream.png
+sunburstImage: /images/sunburst.png
+reservationUrl: >-
+  https://www.covermanager.com/reserve/module_restaurant/restaurante-guepardo/spanish
+reservationsBgImage: /images/reservations-bg.png
+guepardoBannerImage: /images/guepardo-banner.png
+address: "São Paulo 2367-int. 6, Providencia, 44630 Guadalajara, Jal."
+whatsappUrl: "https://wa.me/523320559502"
+instagramUrl: "https://www.instagram.com/guepardo.mx/"
+googleMapsUrl: "https://share.google/5w7rQSpzuIE2nsGY2"
+mandalaGroupUrl: "https://mandalagroup.mx/"
+mandalaGroupLogo: /images/mandala-group-logo.png
+copyright: "Copyright ® 2024 Mandala Group."

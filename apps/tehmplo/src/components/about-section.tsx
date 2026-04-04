@@ -1,124 +1,293 @@
-interface Pillar {
-  readonly title: string;
-  readonly description: string;
-  readonly icon: string;
-}
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 
 interface AboutData {
   title?: string;
   description?: string;
-  pillars?: readonly Pillar[];
 }
 
 interface AboutSectionProps {
   data?: AboutData | null;
 }
 
-const defaultPillars: readonly Pillar[] = [
+// "experience the REAL Tulum" — letter by letter animated headline
+// "experience the" → Austin Cyr Italic
+// "REAL" → Basteleur Moonlight
+// "Tulum" → Austin Cyr Italic
+const headlineWords = [
+  { text: 'experience ', font: 'austin-italic' },
+  { text: 'the ', font: 'austin-italic' },
+  { text: 'REAL ', font: 'basteleur' },
+  { text: 'Tulum', font: 'austin-italic' },
+];
+
+function LetterByLetterHeadline({ inView }: { inView: boolean }) {
+  // Flatten to individual characters with their font info
+  const chars: { char: string; font: string; index: number }[] = [];
+  let globalIndex = 0;
+  for (const word of headlineWords) {
+    for (const char of word.text) {
+      chars.push({ char, font: word.font, index: globalIndex });
+      globalIndex++;
+    }
+  }
+
+  return (
+    <h2
+      style={{
+        fontSize: 'clamp(28px, 5vw, 50px)',
+        lineHeight: 1.2,
+        color: '#ffffff',
+        marginBottom: 32,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: 0,
+      }}
+      aria-label="experience the REAL Tulum"
+    >
+      {chars.map(({ char, font, index }) => {
+        const isBasteleur = font === 'basteleur';
+        const isAustinItalic = font === 'austin-italic';
+        return (
+          <span
+            key={index}
+            aria-hidden="true"
+            style={{
+              display: 'inline-block',
+              fontFamily: isBasteleur
+                ? '"Basteleur Moonlight", sans-serif'
+                : '"Austin Cyr Italic", serif',
+              fontWeight: isBasteleur ? 300 : 400,
+              fontStyle: isAustinItalic ? 'italic' : 'normal',
+              whiteSpace: 'pre',
+              opacity: inView ? 1 : 0.001,
+              filter: inView ? 'blur(0px)' : 'blur(5px)',
+              transform: inView ? 'translateY(0px)' : 'translateY(10px)',
+              transition: inView
+                ? `opacity 0.5s ease-out ${index * 0.04}s, filter 0.5s ease-out ${index * 0.04}s, transform 0.5s ease-out ${index * 0.04}s`
+                : 'none',
+            }}
+          >
+            {char}
+          </span>
+        );
+      })}
+    </h2>
+  );
+}
+
+const pillars = [
   {
-    title: 'Experience',
+    title: 'EXPERIENCE',
     description:
-      'Nestled within the lush jungle of Tulum, every detail of Tehmplo is crafted to transport you. From the open-air architecture to the sacred cenote aesthetics, you are immersed in something truly otherworldly.',
-    icon: '✦',
+      'Our venue is designed to blend into the environment, respecting the raw essence of the majestic jungle of Tulum.',
+    image: '/images/pillar-experience.png',
   },
   {
-    title: 'Music',
+    title: 'MUSIC',
     description:
-      'Our curated program features the world\'s most respected selectors — from Berlin\'s underground to Ibiza\'s finest. Organic house, afro rhythms, and melodic techno fill the jungle air from dusk until dawn.',
-    icon: '◈',
+      'Carefully picked artists, showcases and events dedicated to matching with the Tulum essence and community.',
+    image: '/images/pillar-music.png',
   },
   {
-    title: 'Hospitality',
+    title: 'HOSPITALITY',
     description:
-      'At Tehmplo, you are not just a guest — you are family. Our team of dedicated hosts ensures every visit is personal, memorable, and effortless. Excellence is not a policy; it is our nature.',
-    icon: '⟡',
+      'Our team is thoroughly trained in the F&A industry. They care for our Bars, Tables, & VIP areas, ensuring our guests enjoy their Tulum experience.',
+    image: '/images/pillar-hospitality.png',
   },
 ];
 
 export default function AboutSection({ data }: AboutSectionProps) {
-  const title = data?.title || 'THE TEHMPLO EXPERIENCE';
-  const description =
-    data?.description ||
-    'Nestled within the lush jungle of Tulum, Tehmplo is more than a nightclub — it is a sanctuary where ancient energy meets contemporary sound.';
-  const pillars: readonly Pillar[] =
-    data?.pillars && data.pillars.length > 0 ? data.pillars : defaultPillars;
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="relative bg-brand-black py-24 lg:py-32 overflow-hidden">
-      {/* Decorative background */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 bg-gradient-jungle opacity-50" />
-        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-forest-green/30 to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-forest-green/30 to-transparent" />
-        {/* Large decorative orb */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-forest-green/5 rounded-full blur-3xl" />
-      </div>
+    <section
+      id="about"
+      ref={sectionRef}
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        width: '100%',
+        overflow: 'hidden',
+        backgroundColor: '#0f0e0c',
+      }}
+    >
+      {/* About background image */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: 'url(/images/about-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center top',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.4,
+        }}
+        aria-hidden="true"
+      />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Section header */}
-        <div className="text-center mb-20">
-          <p className="section-label">Who We Are</p>
-          <h2 className="section-title">{title}</h2>
-          <div className="gold-divider" />
-          <p className="font-body text-sm md:text-base text-brand-cream-muted/70 tracking-wider max-w-3xl mx-auto leading-relaxed">
-            {description}
+      {/* Dark overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(15, 14, 12, 0.6)',
+        }}
+        aria-hidden="true"
+      />
+
+      {/* Content */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          maxWidth: 1200,
+          margin: '0 auto',
+          padding: '100px 24px 80px',
+        }}
+      >
+        {/* Animated headline */}
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <LetterByLetterHeadline inView={inView} />
+        </div>
+
+        {/* WELCOME TO TEHMPLO */}
+        <div style={{ textAlign: 'center', marginBottom: 64 }}>
+          <h3
+            style={{
+              fontFamily: '"Austin Cyr Roman", serif',
+              fontSize: 38,
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: '1em',
+              marginBottom: 16,
+              textTransform: 'uppercase',
+            }}
+          >
+            WELCOME TO TEHMPLO
+          </h3>
+
+          <p
+            style={{
+              fontFamily: '"Source Sans 3", sans-serif',
+              fontSize: 13,
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: 1.6,
+              maxWidth: 700,
+              margin: '0 auto 8px',
+              letterSpacing: '0.05em',
+            }}
+          >
+            MINDFUL CURATED ACTS • CAREFULLY CRAFTED EXPERIENCES • PRISTINE PRODUCTION.
+          </p>
+
+          <p
+            style={{
+              fontFamily: '"Source Sans 3", sans-serif',
+              fontSize: 15,
+              fontWeight: 400,
+              color: '#ffffff',
+              lineHeight: 1.7,
+              maxWidth: 600,
+              margin: '0 auto',
+              opacity: 0.8,
+            }}
+          >
+            Hidden in the jungle, this is where music, people, and emotions come together to make Tulum truly one of a kind.
           </p>
         </div>
 
         {/* Three pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 md:gap-px bg-brand-forest-green/10">
-          {pillars.slice(0, 3).map((pillar, i) => (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(255px, 1fr))',
+            gap: 32,
+          }}
+        >
+          {pillars.map((pillar) => (
             <div
-              key={i}
-              className="group relative bg-brand-black p-10 lg:p-14 text-center hover:bg-brand-forest-deep/30 transition-colors duration-500"
+              key={pillar.title}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 16,
+              }}
             >
-              {/* Vertical connector line — only between items on mobile */}
-              {i < pillars.length - 1 && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-px h-px md:hidden" />
-              )}
-
-              {/* Icon */}
-              <div className="mb-6">
-                <span
-                  className="inline-block font-body text-3xl text-brand-gold group-hover:scale-110 transition-transform duration-500"
-                  aria-hidden="true"
-                >
-                  {pillar.icon || '✦'}
-                </span>
+              {/* Pillar image */}
+              <div
+                style={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: 255,
+                  aspectRatio: '3/4',
+                  overflow: 'hidden',
+                  borderRadius: 4,
+                }}
+              >
+                <Image
+                  src={pillar.image}
+                  alt={pillar.title}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="255px"
+                  unoptimized
+                />
               </div>
 
-              {/* Number */}
-              <p className="font-body text-[10px] tracking-[0.4em] text-brand-forest-light uppercase mb-4">
-                {String(i + 1).padStart(2, '0')}
-              </p>
-
-              {/* Title */}
-              <h3 className="font-display text-2xl text-brand-cream tracking-widest uppercase mb-4">
+              {/* Pillar heading */}
+              <h4
+                style={{
+                  fontFamily: '"Basteleur Moonlight", sans-serif',
+                  fontSize: 22,
+                  fontWeight: 400,
+                  color: '#ffffff',
+                  textTransform: 'uppercase',
+                  textAlign: 'center',
+                }}
+              >
                 {pillar.title}
-              </h3>
+              </h4>
 
-              {/* Divider */}
-              <div className="w-8 h-px bg-brand-gold/40 mx-auto mb-6 group-hover:w-16 transition-all duration-500" />
-
-              {/* Description */}
-              <p className="font-body text-sm text-brand-cream-muted/60 leading-relaxed">
+              {/* Pillar description */}
+              <p
+                style={{
+                  fontFamily: '"Source Sans 3", sans-serif',
+                  fontSize: 13,
+                  fontWeight: 400,
+                  color: '#ffffff',
+                  lineHeight: 1.7,
+                  textAlign: 'center',
+                  maxWidth: 255,
+                  opacity: 0.85,
+                }}
+              >
                 {pillar.description}
               </p>
             </div>
           ))}
         </div>
-
-        {/* Quote block */}
-        <div className="mt-20 text-center max-w-4xl mx-auto">
-          <div className="w-px h-16 bg-gradient-to-b from-transparent via-brand-gold/40 to-transparent mx-auto mb-8" />
-          <blockquote className="font-display text-xl md:text-2xl lg:text-3xl text-brand-cream/70 italic tracking-wide leading-relaxed">
-            &ldquo;Where the jungle breathes and music echoes through ancient trees.&rdquo;
-          </blockquote>
-          <p className="font-body text-xs tracking-[0.3em] text-brand-gold/60 uppercase mt-6">
-            Carretera Tulum-Boca Paila, Km 5.5
-          </p>
-        </div>
       </div>
-    </div>
+    </section>
   );
 }

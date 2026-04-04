@@ -1,50 +1,52 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-body',
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
-  title: {
-    default: 'Guepardo | El Mejor Antro de México',
-    template: '%s | Guepardo',
-  },
+  title: 'GUEPARDO',
   description:
-    'Guepardo — La experiencia de nightlife más exclusiva. Eventos con los mejores DJs, zona VIP, y una atmósfera única en México.',
-  keywords: [
-    'Guepardo',
-    'antro',
-    'nightclub',
-    'discoteca',
-    'México',
-    'eventos',
-    'DJs',
-    'VIP',
-    'fiesta',
-  ],
+    'Un espacio donde la noche se disfruta: cócteles sin pretensiones, música sin límites y ambiente sin juicios. Guepardo no sigue tendencias, las define. Sao Paulo, Providencia. Guadalajara, Jalisco.',
   metadataBase: new URL('https://guepardo.com.mx'),
+  alternates: {
+    canonical: 'https://guepardo.com.mx/',
+  },
   openGraph: {
     type: 'website',
-    locale: 'es_MX',
+    locale: 'es',
     url: 'https://guepardo.com.mx',
-    siteName: 'Guepardo',
-    title: 'Guepardo | El Mejor Antro de México',
+    siteName: 'GUEPARDO',
+    title: 'GUEPARDO',
     description:
-      'La experiencia de nightlife más exclusiva. Eventos con los mejores DJs, zona VIP, y una atmósfera única.',
+      'Un espacio donde la noche se disfruta: cócteles sin pretensiones, música sin límites y ambiente sin juicios. Guepardo no sigue tendencias, las define. Sao Paulo, Providencia. Guadalajara, Jalisco.',
+    images: [
+      {
+        url: '/images/og-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Guepardo | El Mejor Antro de México',
+    title: 'GUEPARDO',
     description:
-      'La experiencia de nightlife más exclusiva. Eventos con los mejores DJs, zona VIP, y una atmósfera única.',
+      'Un espacio donde la noche se disfruta: cócteles sin pretensiones, música sin límites y ambiente sin juicios. Guepardo no sigue tendencias, las define.',
+    images: ['/images/og-image.png'],
   },
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: [
+      {
+        url: '/favicon-light.png',
+        media: '(prefers-color-scheme: light)',
+      },
+      {
+        url: '/favicon-dark.png',
+        media: '(prefers-color-scheme: dark)',
+      },
+    ],
   },
 };
 
@@ -54,17 +56,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="es" className={`${inter.variable} scroll-smooth`}>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Bebas Neue for display headings */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="bg-brand-black text-brand-white min-h-screen overflow-x-hidden">
+    <html lang="es">
+      <body style={{ margin: 0, padding: 0, backgroundColor: '#ffffff' }}>
         {children}
       </body>
     </html>

@@ -3,17 +3,35 @@
 @tailwind utilities;
 
 /* ============================================================
-   FUTUR FESTIVAL — Global Styles
-   Dark futuristic theme with neon accents
+   NT DAPPER BOLD — Custom display font from Framer CDN
+   ============================================================ */
+@font-face {
+  font-family: "NT Dapper Bold";
+  src: url("/nt-dapper-bold.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* ============================================================
+   FUTUR FESTIVAL — Global Styles (pixel-perfect from Framer)
    ============================================================ */
 
 :root {
-  --color-black: #0d0d0d;
-  --color-dark: #1a1a2e;
-  --color-purple: #8b5cf6;
-  --color-cyan: #06b6d4;
-  --color-pink: #ec4899;
-  --color-white: #ffffff;
+  --color-bg: #224366;
+  --color-text: #ffffff;
+  --color-muted: #888888;
+  --color-placeholder: #696969;
+  --color-placeholder-collab: #999999;
+  --color-accent-orange: #ff8000;
+  --color-accent-peach: #ffb973;
+  --color-link: #0099ff;
+  --color-modal-overlay: rgba(63, 104, 143, 0.69);
+  --color-form-card: #fefefe;
+  --color-submit-btn: rgb(51, 51, 51);
+  --color-submit-btn-hover: rgba(51, 51, 51, 0.85);
+  --font-display: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  --font-body: "Inter", sans-serif;
 }
 
 html {
@@ -21,159 +39,713 @@ html {
 }
 
 body {
-  background-color: #0d0d0d;
+  background-color: #224366;
   color: #ffffff;
-  font-family: var(--font-body, system-ui, sans-serif);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0d0d0d;
-}
-::-webkit-scrollbar-thumb {
-  background: #8b5cf6;
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #a78bfa;
-}
+/* ============================================================
+   TYPOGRAPHY PRESETS (exact from Framer)
+   ============================================================ */
 
-/* Selection */
-::selection {
-  background-color: rgba(139, 92, 246, 0.4);
-  color: #fff;
+/* preset-nspcl7 — Body/Navigation text */
+.preset-nav {
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0em;
+  line-height: 1.2em;
+  color: #ffffff;
+  text-transform: none;
+  text-decoration: none;
 }
 
-@layer utilities {
-  /* Neon text glows */
-  .text-glow-purple {
-    text-shadow: 0 0 10px rgba(139, 92, 246, 0.8), 0 0 30px rgba(139, 92, 246, 0.5),
-      0 0 60px rgba(139, 92, 246, 0.3);
-  }
-  .text-glow-cyan {
-    text-shadow: 0 0 10px rgba(6, 182, 212, 0.8), 0 0 30px rgba(6, 182, 212, 0.5),
-      0 0 60px rgba(6, 182, 212, 0.3);
-  }
-  .text-glow-pink {
-    text-shadow: 0 0 10px rgba(236, 72, 153, 0.8), 0 0 30px rgba(236, 72, 153, 0.5),
-      0 0 60px rgba(236, 72, 153, 0.3);
-  }
-  .text-glow-white {
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.3);
-  }
+/* preset-1gsqncf — CTA / Button text */
+.preset-cta {
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0em;
+  line-height: 1.2em;
+  color: #ffffff;
+}
 
-  /* Neon border glows */
-  .border-glow-purple {
-    box-shadow: 0 0 12px rgba(139, 92, 246, 0.6), inset 0 0 12px rgba(139, 92, 246, 0.1);
-  }
-  .border-glow-cyan {
-    box-shadow: 0 0 12px rgba(6, 182, 212, 0.6), inset 0 0 12px rgba(6, 182, 212, 0.1);
-  }
-  .border-glow-pink {
-    box-shadow: 0 0 12px rgba(236, 72, 153, 0.6), inset 0 0 12px rgba(236, 72, 153, 0.1);
-  }
+/* preset-89l7r3 — Large heading */
+.preset-h1 {
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 35px;
+  font-weight: 700;
+  letter-spacing: 0em;
+  line-height: 1.2em;
+  color: #ffffff;
+}
 
-  /* Gradient text */
-  .text-gradient-neon {
-    background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 50%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .text-gradient-purple-cyan {
-    background: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .text-gradient-cyan-pink {
-    background: linear-gradient(135deg, #06b6d4 0%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+/* Form label in modal — NT Dapper Bold 12px */
+.form-label {
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #888888;
+}
 
-  /* Glassmorphism */
-  .glass {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-  }
-  .glass-dark {
-    background: rgba(13, 13, 13, 0.7);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(139, 92, 246, 0.15);
-  }
-  .glass-purple {
-    background: rgba(139, 92, 246, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(139, 92, 246, 0.2);
-  }
+/* ============================================================
+   PAGE CONTAINER
+   ============================================================ */
+.page-container {
+  align-content: center;
+  align-items: center;
+  background-color: #224366;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0px;
+  height: min-content;
+  justify-content: flex-start;
+  min-height: 100vh;
+  overflow: clip;
+  padding: 0px;
+  position: relative;
+  width: 1200px;
+  margin: 0 auto;
+}
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .page-container { width: 810px; }
+}
+@media (max-width: 809.98px) {
+  .page-container { width: 390px; }
+}
 
-  /* Noise texture overlay */
-  .noise::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
-    pointer-events: none;
-    z-index: 1;
-  }
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100vh;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
 
-  /* Grid overlay */
-  .grid-overlay {
-    background-image: linear-gradient(rgba(139, 92, 246, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(139, 92, 246, 0.05) 1px, transparent 1px);
-    background-size: 60px 60px;
-  }
+/* ============================================================
+   FIRST LINE (nav top bar)
+   ============================================================ */
+.first-line {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: min-content;
+  justify-content: space-between;
+  overflow: clip;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
+@media (max-width: 809.98px) {
+  .first-line { padding: 0px; }
+}
 
-  /* Neon button */
-  .btn-neon {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s ease;
-  }
-  .btn-neon::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  .btn-neon:hover::before {
-    opacity: 0.15;
-  }
+/* ============================================================
+   CONTENT AREA (logo + button)
+   ============================================================ */
+.content-area {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  height: min-content;
+  justify-content: center;
+  overflow: clip;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
 
-  /* Section divider */
-  .divider-neon {
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, #8b5cf6 30%, #06b6d4 70%, transparent 100%);
+/* ============================================================
+   LOGO
+   ============================================================ */
+.futur-logo {
+  flex: none;
+  height: 199px;
+  position: relative;
+  width: 600px;
+  object-fit: contain;
+}
+@media (max-width: 809.98px) {
+  .futur-logo {
+    width: calc(100vw - 60px);
+    height: auto;
   }
+}
 
-  /* Scanline effect */
-  .scanlines::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(0, 0, 0, 0.08) 2px,
-      rgba(0, 0, 0, 0.08) 4px
-    );
-    pointer-events: none;
-    z-index: 2;
+/* ============================================================
+   REGISTER BUTTON
+   ============================================================ */
+.register-button {
+  background-color: rgba(255, 255, 255, 0);
+  border: 3px solid #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  height: 42px;
+  overflow: clip;
+  position: relative;
+  width: 258px;
+  transition: background-color 0.2s ease;
+}
+.register-button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+.register-button-text {
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0em;
+  line-height: 1.2em;
+  color: #ffffff;
+  white-space: nowrap;
+}
+@media (max-width: 809.98px) {
+  .register-button { width: 185px; }
+}
+
+/* ============================================================
+   BASE LINE (footer copyright)
+   ============================================================ */
+.base-line {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex: none;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: min-content;
+  justify-content: space-between;
+  overflow: clip;
+  padding: 10px;
+  position: relative;
+  width: 100%;
+}
+@media (max-width: 809.98px) {
+  .base-line { gap: 10px; justify-content: center; }
+}
+
+/* ============================================================
+   MODAL OVERLAY
+   ============================================================ */
+.modal-overlay {
+  background-color: rgba(63, 104, 143, 0.69);
+  inset: 0px;
+  position: fixed;
+  user-select: none;
+  z-index: 100;
+}
+
+/* ============================================================
+   MODAL CONTAINER
+   ============================================================ */
+.modal-container {
+  align-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0px;
+  height: min-content;
+  justify-content: center;
+  left: 50%;
+  overflow: clip;
+  padding: 0px;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min-content;
+  z-index: 101;
+}
+
+/* ============================================================
+   CLOSE BUTTON
+   ============================================================ */
+.close-button {
+  aspect-ratio: 1;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  cursor: pointer;
+  flex: none;
+  height: 25px;
+  overflow: clip;
+  position: relative;
+  width: 25px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+}
+
+/* ============================================================
+   FORM CARD
+   ============================================================ */
+.form-card {
+  border: 1px solid #fefefe;
+  align-content: flex-end;
+  align-items: flex-end;
+  background-color: #fefefe;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 0px;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 20px;
+  height: min-content;
+  justify-content: flex-end;
+  overflow: hidden;
+  padding: 20px;
+  position: relative;
+  width: 327px;
+}
+
+/* ============================================================
+   FORM FIELD GROUPS
+   ============================================================ */
+.form-field {
+  align-content: flex-start;
+  align-items: flex-start;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 10px;
+  height: min-content;
+  justify-content: flex-start;
+  padding: 0px;
+  position: relative;
+  width: 100%;
+}
+
+/* ============================================================
+   TEXT INPUTS — Registration Modal
+   ============================================================ */
+.reg-input {
+  background: #fefefe;
+  border: 1px solid #888888;
+  border-radius: 4px;
+  height: 40px;
+  padding: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+.reg-input:focus {
+  border-color: #ffb973;
+  border-width: 1px;
+}
+.reg-input::placeholder {
+  color: #696969;
+}
+
+/* Birth date input — semi-transparent bg */
+.reg-input-date {
+  background: rgba(254, 254, 254, 0.15);
+  border: 1px solid #888888;
+  border-radius: 4px;
+  height: 40px;
+  padding: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #000000;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+.reg-input-date:focus {
+  border-color: #ffb973;
+}
+.reg-input-date::placeholder {
+  color: #696969;
+}
+
+/* ============================================================
+   SUBMIT BUTTON
+   ============================================================ */
+.submit-btn {
+  background: rgb(51, 51, 51);
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  outline: none;
+}
+.submit-btn:hover:not(:disabled) {
+  background: rgba(51, 51, 51, 0.85);
+}
+.submit-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.submit-btn.success {
+  background: linear-gradient(180deg, rgb(255,182,64) 0%, rgb(219,172,180) 35%, rgb(161,192,215) 70%, rgb(70,114,171) 100%);
+  font-size: 13px;
+}
+.submit-btn.error {
+  background: rgba(255, 34, 68, 0.15);
+  color: rgb(255, 34, 68);
+}
+
+/* Collab submit button — same but radius 10px */
+.submit-btn-collab {
+  background: rgb(51, 51, 51);
+  border: none;
+  border-radius: 10px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  height: 40px;
+  width: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  outline: none;
+}
+.submit-btn-collab:hover:not(:disabled) {
+  background: rgba(51, 51, 51, 0.85);
+}
+.submit-btn-collab:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.submit-btn-collab.success {
+  background: linear-gradient(180deg, rgb(255,182,64) 0%, rgb(219,172,180) 35%, rgb(161,192,215) 70%, rgb(70,114,171) 100%);
+}
+.submit-btn-collab.error {
+  background: rgba(255, 34, 68, 0.15);
+  color: rgb(255, 34, 68);
+}
+
+/* ============================================================
+   CHECKBOX (Registration modal)
+   ============================================================ */
+.privacy-checkbox-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+.privacy-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 4px;
+  background: rgba(136, 136, 136, 0.2);
+  border: 1px solid rgba(136, 136, 136, 0.2);
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.privacy-checkbox:focus {
+  border-color: #ffb973;
+}
+.privacy-checkbox:checked {
+  background: #ff8000;
+  border-color: #ff8000;
+}
+.privacy-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid #ffffff;
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+.privacy-label {
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  color: #888888;
+  line-height: 1.3;
+}
+.privacy-label a {
+  color: #888888;
+  text-decoration: underline;
+}
+
+/* ============================================================
+   COLLAB FORM INPUTS
+   ============================================================ */
+.collab-input {
+  background: rgba(187, 187, 187, 0.15);
+  border: 1px solid rgba(136, 136, 136, 0.1);
+  border-radius: 10px;
+  height: 40px;
+  padding: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #999999;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease;
+}
+.collab-input:focus {
+  border-color: #0099ff;
+}
+.collab-input::placeholder {
+  color: #999999;
+}
+.collab-textarea {
+  background: rgba(187, 187, 187, 0.15);
+  border: 1px solid rgba(136, 136, 136, 0.1);
+  border-radius: 10px;
+  min-height: 100px;
+  padding: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #999999;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.15s ease;
+}
+.collab-textarea:focus {
+  border-color: #0099ff;
+}
+.collab-textarea::placeholder {
+  color: #999999;
+}
+.collab-label {
+  font-family: "Inter", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgb(136, 136, 136);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   PHONE INPUT WRAPPER
+   ============================================================ */
+.phone-input-wrapper {
+  display: flex;
+  align-items: center;
+  background: rgb(254, 254, 254);
+  border: 1px solid rgb(136, 136, 136);
+  border-radius: 4px;
+  height: 40px;
+  width: 100%;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+  box-sizing: border-box;
+}
+.phone-input-wrapper:focus-within {
+  border: 2px solid rgb(255, 185, 115);
+}
+.phone-country-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  background: transparent;
+  border: none;
+  border-right: 1px solid rgb(136, 136, 136);
+  height: 100%;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: rgb(105, 105, 105);
+  white-space: nowrap;
+  outline: none;
+}
+.phone-number-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 0 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgb(105, 105, 105);
+  outline: none;
+  height: 100%;
+}
+.phone-number-input::placeholder {
+  color: rgb(105, 105, 105);
+}
+.phone-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  background: rgb(254, 254, 254);
+  border: 1px solid rgb(105, 105, 105);
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(43, 43, 43, 0.35);
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 200;
+  width: 220px;
+}
+.phone-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  color: #333;
+  transition: background 0.1s;
+}
+.phone-dropdown-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ============================================================
+   PRIVACY PAGE NAV
+   ============================================================ */
+.privacy-nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0px 3px 10px 3px rgba(0, 0, 0, 0.25);
+  height: 64px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+@keyframes spinner-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spinner-rotate 0.7s linear infinite;
+}
+
+/* ============================================================
+   RESPONSIVE — Collab page
+   ============================================================ */
+@media (max-width: 809.98px) {
+  .collab-content {
+    flex-direction: column !important;
+    gap: 46px !important;
   }
+  .collab-review-desktop {
+    display: none !important;
+  }
+}
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .collab-content {
+    flex-direction: column !important;
+    gap: 26px !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — Coming to Mexico text
+   ============================================================ */
+@media (max-width: 809.98px) {
+  .coming-to-mexico-desktop { display: none !important; }
+  .coming-to-mexico-mobile { display: block !important; }
+}
+@media (min-width: 810px) {
+  .coming-to-mexico-mobile { display: none !important; }
+  .coming-to-mexico-desktop { display: block !important; }
+}
+
+/* ============================================================
+   RESPONSIVE — Privacy page content
+   ============================================================ */
+@media (max-width: 809.98px) {
+  .privacy-content {
+    padding: 20px !important;
+  }
+}
+
+/* ============================================================
+   LINK STYLES
+   ============================================================ */
+a.nav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-family: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0em;
+  line-height: 1.2em;
+}
+a.nav-link:hover {
+  opacity: 0.8;
+}
+a.content-link {
+  color: #0099ff;
+  text-decoration: none;
+}
+a.content-link:hover {
+  text-decoration: underline;
 }

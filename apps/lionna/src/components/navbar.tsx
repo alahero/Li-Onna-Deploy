@@ -1,132 +1,138 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useState } from 'react';
 
 const navLinks = [
-  { href: '/', label: 'Inicio' },
-  { href: '/#menu', label: 'Menú' },
   { href: '/eventos', label: 'Eventos' },
-  { href: '/giftcards', label: 'Gift Cards' },
+  { href: '/giftcards', label: 'Tarjetas Regalo' },
   { href: '/contact', label: 'Contacto' },
 ];
 
-export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+const navStyle: React.CSSProperties = {
+  height: 60,
+  backgroundColor: '#005BFF',
+  position: 'sticky',
+  top: 0,
+  zIndex: 4,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  padding: '0 80px',
+};
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 60);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+const linkStyle: React.CSSProperties = {
+  fontFamily: 'EditorialNew, serif',
+  fontWeight: 500,
+  fontSize: 13,
+  letterSpacing: '0.04em',
+  color: '#fff',
+  textDecoration: 'none',
+};
+
+const pillStyle: React.CSSProperties = {
+  fontFamily: 'EditorialNew, serif',
+  fontWeight: 500,
+  fontSize: 13,
+  letterSpacing: '0.04em',
+  background: 'rgba(255,255,255,0.1)',
+  border: '1px solid #fff',
+  borderRadius: 8,
+  color: '#fff',
+  padding: '8px 16px',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: 6,
+  whiteSpace: 'nowrap' as const,
+  cursor: 'pointer',
+};
+
+export function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
-          scrolled
-            ? 'bg-brand-black/95 backdrop-blur-sm border-b border-brand-gold/10'
-            : 'bg-transparent'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 md:px-12">
-          <div className="flex items-center justify-between h-18 md:h-22">
-            {/* Logo */}
-            <Link href="/" className="flex flex-col items-start group">
-              <span className="text-brand-cream font-display text-xl tracking-widest2 transition-colors duration-300 group-hover:text-brand-gold">
-                LI-ONNA
-              </span>
-              <span className="japanese-text text-brand-gold/70 text-[10px] tracking-widest transition-colors duration-300 group-hover:text-brand-gold">
-                リオンナ
-              </span>
+      {/* Sticky nav bar — 60px, blue #005BFF */}
+      <nav style={navStyle} className="lionna-nav">
+        {/* Left: Logo */}
+        <Link href="/" style={{ display: 'flex', alignItems: 'center', width: '7%', minWidth: 80 }}>
+          <Image
+            src="/images/logo-navbar.png"
+            alt="LI-ONNA"
+            width={607}
+            height={89}
+            style={{ width: '100%', height: 'auto' }}
+            priority
+          />
+        </Link>
+
+        {/* Center: Nav links (desktop) */}
+        <div className="hidden md:flex items-center" style={{ gap: 24 }}>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} style={linkStyle}>
+              {link.label}
             </Link>
-
-            {/* Desktop nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="nav-link"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Reservation CTA */}
-            <div className="hidden md:flex items-center gap-6">
-              <Link
-                href="/#reservar"
-                className="btn-primary text-[10px] px-6 py-3"
-              >
-                Reservar
-              </Link>
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              className="md:hidden flex flex-col gap-1.5 p-2 text-brand-cream/80 hover:text-brand-cream transition-colors"
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-            >
-              <span
-                className={`block w-6 h-px bg-current transition-all duration-300 ${
-                  menuOpen ? 'rotate-45 translate-y-2' : ''
-                }`}
-              />
-              <span
-                className={`block w-6 h-px bg-current transition-all duration-300 ${
-                  menuOpen ? 'opacity-0' : ''
-                }`}
-              />
-              <span
-                className={`block w-6 h-px bg-current transition-all duration-300 ${
-                  menuOpen ? '-rotate-45 -translate-y-2' : ''
-                }`}
-              />
-            </button>
-          </div>
+          ))}
         </div>
-      </header>
 
-      {/* Mobile menu overlay */}
+        {/* Right: RESERVAS pill button */}
+        <div className="hidden md:block">
+          <span style={pillStyle}>RESERVAS / PRONTO</span>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden"
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+        >
+          <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', transform: menuOpen ? 'rotate(45deg) translate(4px,4px)' : 'none' }} />
+          <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', transform: menuOpen ? 'rotate(-45deg) translate(4px,-4px)' : 'none' }} />
+        </button>
+      </nav>
+
+      {/* Mobile overlay */}
+      {menuOpen && (
+        <div
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.302)', zIndex: 49 }}
+          onClick={() => setMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile drawer — right-anchored, white, border-radius 12px, width 371px */}
       <div
-        className={`fixed inset-0 z-40 bg-brand-black/98 backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-500 md:hidden ${
-          menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-        }`}
+        className="mobile-drawer md:hidden"
+        style={{
+          transform: menuOpen ? 'translateX(0)' : 'translateX(calc(100% + 20px))',
+          transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
+        }}
       >
-        {/* Decorative Japanese character */}
-        <div className="absolute top-1/4 right-8 japanese-text text-8xl text-brand-gold/5 select-none">
-          リ
-        </div>
-
-        <nav className="flex flex-col items-center gap-8">
+        <div style={{ padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 24 }}>
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-display text-3xl text-brand-cream/80 hover:text-brand-cream tracking-wide transition-colors duration-300"
+              style={{
+                fontFamily: 'EditorialNew, serif',
+                fontWeight: 500,
+                fontSize: 20,
+                letterSpacing: '0.04em',
+                color: '#000',
+                textDecoration: 'none',
+              }}
             >
               {link.label}
             </Link>
           ))}
-          <div className="gold-divider w-24" />
-          <Link
-            href="/#reservar"
-            onClick={() => setMenuOpen(false)}
-            className="btn-primary mt-4"
-          >
-            Reservar Mesa
-          </Link>
-        </nav>
-
-        <div className="absolute bottom-12 text-center">
-          <p className="japanese-text text-brand-gold/40 text-sm tracking-widest">
-            リオンナ
-          </p>
+          <div style={{ marginTop: 16 }}>
+            <span style={{ ...pillStyle, background: 'rgba(0,91,255,0.3)', border: '1px solid #005BFF', color: '#005BFF' }}>
+              RESERVAS / PRONTO
+            </span>
+          </div>
         </div>
       </div>
     </>

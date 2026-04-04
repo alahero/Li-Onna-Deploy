@@ -1,187 +1,185 @@
-import React from 'react';
 import Image from 'next/image';
 
-interface ConceptSectionProps {
-  title: string;
-  tagline: string;
-  description: string;
-  image: string | null;
-}
+/**
+ * Brand Manifesto — 4 pillars + Streets banner + DJ booth sections.
+ * Exact copy from Framer design extraction §8.
+ */
 
-function MagicSymbol() {
+const MANIFESTO = [
+  {
+    key: 'community',
+    headline: 'COMMUNITY',
+    body: 'AUTHENTICITY, COMMUNITY, AND IRREVERENCE. CRAFTING A COMMUNITY OF LOUD MUSIC-LOVERS FREAKS.',
+  },
+  {
+    key: 'sanctuary',
+    headline: 'SANCTUARY',
+    body: "IN THIS SANCTUARY YOU'RE ENCOURAGED TO MAKE IT YOUR OWN, TO TAKE OVER THE WALLS, EXPRESS YOURSELF, AND FIND INTERESTING PEOPLE.",
+  },
+  {
+    key: 'music',
+    headline: 'MUSIC WORSHIP',
+    body: 'WHERE DISRUPTIVE ARTS, KILLER MUSIC, AND A BIG MIDDLE FINGER TO MAINSTREAM SOCIETY COLLIDE. WE WORSHIP TOP-NOTCH HIP-HOP, ROCK LEGENDS, CULT MOVIES, AND THE ROOTS OF ELECTRONIC MUSIC.',
+  },
+  {
+    key: 'charming',
+    headline: 'CHARMING VS BORING',
+    body: "WE DITCH THE WHOLE GOOD VS. EVIL THING; INSTEAD WE SPLIT PEOPLE INTO EITHER CHARMING OR BORING. WE CREATE A VIBE FILLED WITH INTERESTING, CULTURED, SOCIAL PEOPLE WITH IMPECCABLE TASTE IN MUSIC.",
+  },
+];
+
+const DJ_SECTIONS = [
+  {
+    key: 'booth',
+    headline: 'DJ BOOTH',
+    body: "AT THE CORE OF OUR SHRINE IS THE DJ BOOTH, THE HEARTBEAT OF THE PLACE. EVERY NIGHT, IT'S ALL ABOUT TAKING OUR GUESTS' SOUL TO HIGHER REALMS AND PUSHING MADRID'S SOCIAL SCENE TO NEW HEIGHTS.",
+    image: '/gallery/photo-1.png',
+  },
+  {
+    key: 'sound',
+    headline: 'SOUND SYSTEM',
+    body: "WITH SPECTACULAR LIGHTS, BOOMING FUNKTION ONE SOUND SYSTEM, AND THE CULTURE OOZING FROM OUR DECOR, WE'RE HERE TO RAISE THE BAR FOR EVERYONE AT HOUDINNI'S NIGHTS.",
+    image: '/gallery/photo-2.png',
+  },
+];
+
+export function ConceptSection() {
   return (
-    <svg
-      width="48"
-      height="48"
-      viewBox="0 0 48 48"
-      fill="none"
-      className="text-brand-gold/50"
-      aria-hidden="true"
-    >
-      <circle cx="24" cy="24" r="22" stroke="currentColor" strokeWidth="0.5" />
-      <circle cx="24" cy="24" r="15" stroke="currentColor" strokeWidth="0.5" strokeDasharray="3 3" />
-      <path
-        d="M24 8L26.4 16.8H35.7L28.6 22.1L31 30.9L24 25.6L17 30.9L19.4 22.1L12.3 16.8H21.6L24 8Z"
-        stroke="currentColor"
-        strokeWidth="0.8"
-        fill="none"
-      />
-    </svg>
-  );
-}
+    <>
+      {/* ── Brand Manifesto: 4 pillars ── */}
+      <section
+        id="manifesto"
+        className="relative bg-houdinni-black"
+        style={{ padding: '80px 0' }}
+      >
+        {/* Mobile background */}
+        <div
+          className="absolute inset-0 tablet:hidden z-0"
+          style={{ backgroundImage: 'url(/gallery/mobile-manifesto-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.18 }}
+        />
 
-export function ConceptSection({ title, tagline, description, image }: ConceptSectionProps) {
-  return (
-    <section
-      id="concepto"
-      className="section-padding relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(180deg, #0B0B0B 0%, #0D0920 50%, #0B0B0B 100%)',
-      }}
-    >
-      {/* Ambient glow */}
-      <div
-        className="absolute top-0 left-1/4 w-96 h-96 rounded-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(45,27,105,0.25) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-        }}
-      />
-      <div
-        className="absolute bottom-0 right-1/4 w-80 h-80 rounded-full pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(128,0,32,0.2) 0%, transparent 70%)',
-          filter: 'blur(40px)',
-        }}
-      />
-
-      {/* Noise */}
-      <div className="absolute inset-0 bg-noise opacity-50 pointer-events-none" />
-
-      <div className="container-wide relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Text side */}
-          <div className="order-2 lg:order-1">
-            {/* Symbol + pre-label */}
-            <div className="flex items-center gap-4 mb-6">
-              <MagicSymbol />
-              <span
-                className="text-xs uppercase tracking-mystical text-brand-gold/70"
-                style={{ fontFamily: "'Raleway', sans-serif" }}
-              >
-                El Concepto
-              </span>
-            </div>
-
-            {/* Title */}
-            <h2 className="section-title mb-4">
-              {title}
-            </h2>
-
-            {/* Tagline */}
-            {tagline && (
-              <p
-                className="text-brand-gold/80 text-lg mb-8"
-                style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: 'italic' }}
-              >
-                &ldquo;{tagline}&rdquo;
-              </p>
-            )}
-
-            {/* Gold divider */}
-            <div className="gold-divider mb-8">
-              <span className="text-brand-gold text-xs" aria-hidden="true">&#10022;</span>
-            </div>
-
-            {/* Description */}
-            <div
-              className="text-brand-cream/65 leading-relaxed text-base space-y-4"
-              style={{ fontFamily: "'Raleway', sans-serif", fontWeight: 300 }}
+        <div
+          className="relative z-10 mx-auto"
+          style={{ maxWidth: '1200px', padding: '0 24px' }}
+        >
+          {/* Section label */}
+          <div className="mb-16 text-center">
+            <span className="font-array text-houdinni-cyan text-xs uppercase tracking-widest">
+              HOUDINNI MADRID
+            </span>
+            <h2
+              className="font-druk text-white mt-4"
+              style={{ fontSize: 'clamp(2rem, 6vw, 5rem)', letterSpacing: '0.02em' }}
             >
-              {description.split('\n\n').map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
-
-            {/* Atmospheric detail */}
-            <div className="mt-10 flex items-start gap-6">
-              {[
-                { label: 'Shows', detail: 'Cada semana' },
-                { label: 'Cócteles', detail: 'De autor' },
-                { label: 'Capacidad', detail: 'Aforo limitado' },
-              ].map((item) => (
-                <div key={item.label} className="text-center">
-                  <div
-                    className="text-brand-gold text-2xl mb-1"
-                    style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 300 }}
-                  >
-                    {item.label}
-                  </div>
-                  <div
-                    className="text-brand-cream/40 text-xs uppercase tracking-widest"
-                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >
-                    {item.detail}
-                  </div>
-                </div>
-              ))}
-            </div>
+              WHO WE ARE
+            </h2>
+            {/* Accent bar */}
+            <div
+              className="mx-auto mt-4"
+              style={{ background: '#3388ff', height: '7px', width: '485px', maxWidth: '100%', overflow: 'clip' }}
+            />
           </div>
 
-          {/* Image side */}
-          <div className="order-1 lg:order-2 relative">
-            <div className="relative aspect-[3/4] max-w-sm mx-auto lg:max-w-none">
-              {/* Decorative border frame */}
-              <div className="absolute -inset-3 border border-brand-gold/15 pointer-events-none z-10" />
-              <div className="absolute -inset-6 border border-brand-gold/8 pointer-events-none z-10" />
+          {/* 4-pillar grid */}
+          <div className="grid grid-cols-1 tablet:grid-cols-2 gap-12 desktop:gap-16">
+            {MANIFESTO.map((item) => (
+              <div key={item.key} className="flex flex-col gap-4">
+                <h3
+                  className="font-druk text-houdinni-blue-light"
+                  style={{ fontSize: 'clamp(1.25rem, 3vw, 2rem)' }}
+                >
+                  {item.headline}
+                </h3>
+                <p
+                  className="font-kanit text-white/80 leading-relaxed"
+                  style={{ fontSize: '14px', letterSpacing: '0.03em' }}
+                >
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-              {/* Image or placeholder */}
-              {image ? (
+      {/* ── THE STREETS ARE CALLIN' ── */}
+      <section
+        className="relative bg-houdinni-black overflow-hidden"
+        style={{ padding: '48px 0' }}
+      >
+        <div className="streets-banner-wrap">
+          <Image
+            src="/streets-callin.png"
+            alt="THE STREETS ARE CALLIN'"
+            width={1966}
+            height={391}
+            className="w-full object-contain"
+            quality={90}
+          />
+        </div>
+        </section>
+
+      {/* ── DJ Booth + Sound System ── */}
+      <section
+        className="bg-houdinni-black"
+        style={{ padding: '80px 0' }}
+      >
+        <div
+          className="mx-auto flex flex-col gap-24"
+          style={{ maxWidth: '1200px', padding: '0 24px' }}
+        >
+          {DJ_SECTIONS.map((item, i) => (
+            <div
+              key={item.key}
+              className={`flex flex-col tablet:flex-row items-center gap-12 ${i % 2 === 1 ? 'tablet:flex-row-reverse' : ''}`}
+            >
+              {/* Image */}
+              <div
+                className="relative shrink-0 overflow-hidden w-full tablet:w-[480px]"
+                style={{ height: '360px' }}
+              >
                 <Image
-                  src={image}
-                  alt={title}
+                  src={item.image}
+                  alt={item.headline}
                   fill
                   className="object-cover"
                   quality={85}
                 />
-              ) : (
+              </div>
+              {/* Text */}
+              <div className="flex flex-col gap-6 flex-1">
+                {/* Cyan accent */}
                 <div
-                  className="w-full h-full flex items-center justify-center"
                   style={{
-                    background: 'linear-gradient(135deg, #1A0F40 0%, #2D1B69 50%, #1A0F40 100%)',
+                    background: '#99eeff',
+                    height: '4px',
+                    width: '80px',
                   }}
+                />
+                <h3
+                  className="font-druk text-white"
+                  style={{ fontSize: 'clamp(1.5rem, 4vw, 3rem)' }}
                 >
-                  <div className="text-center opacity-40">
-                    <MagicSymbol />
-                    <p
-                      className="mt-4 text-xs uppercase tracking-widest text-brand-gold/60"
-                      style={{ fontFamily: "'Raleway', sans-serif" }}
-                    >
-                      Imagen del Concepto
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {/* Bottom vignette on image */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'linear-gradient(to bottom, transparent 60%, rgba(11,11,11,0.7) 100%)',
-                }}
-              />
+                  {item.headline}
+                </h3>
+                <p
+                  className="font-kanit text-white/70 leading-relaxed"
+                  style={{ fontSize: '14px', letterSpacing: '0.03em' }}
+                >
+                  {item.body}
+                </p>
+                {/* Chinese branding */}
+                <p
+                  className="font-array text-houdinni-cyan/60 text-xs"
+                  style={{ letterSpacing: '0.2em' }}
+                >
+                  一 會兒你看見我 一 會兒你看不見我
+                </p>
+              </div>
             </div>
-
-            {/* Floating accent dot */}
-            <div
-              className="absolute -top-4 -right-4 w-24 h-24 rounded-full pointer-events-none"
-              style={{
-                background: 'radial-gradient(circle, rgba(212,175,55,0.12) 0%, transparent 70%)',
-              }}
-            />
-          </div>
+          ))}
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

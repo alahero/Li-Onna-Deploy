@@ -1,42 +1,32 @@
 import { Navbar } from '@/components/navbar';
 import { Hero } from '@/components/hero';
+import { PhotoGallery } from '@/components/photo-gallery';
+import { DishTicker } from '@/components/dish-ticker';
 import { BrandStatement } from '@/components/brand-statement';
-import { SignatureDishes } from '@/components/signature-dishes';
-import { ReservationCta } from '@/components/reservation-cta';
-import { EventsList } from '@/components/events-list';
+import { ContactCta } from '@/components/contact-cta';
 import { Footer } from '@/components/footer';
 
 export default function HomePage() {
   return (
     <>
+      {/* Sticky nav bar (z-index: 4, #005BFF, 60px) */}
       <Navbar />
 
-      <main>
-        {/* Hero — full viewport */}
-        <Hero
-          title="Hola, Madrid"
-          subtitle="Cocina japonesa con alma latina"
-        />
+      <main style={{ backgroundColor: '#F7F8F3' }}>
+        {/* Full-viewport video hero */}
+        <Hero />
 
-        {/* Brand philosophy */}
+        {/* Photo gallery with 7 floating cards */}
+        <PhotoGallery />
+
+        {/* Imprescindibles + 3-row dish ticker */}
+        <DishTicker />
+
+        {/* Brand statement */}
         <BrandStatement />
 
-        {/* Signature dishes / Imprescindibles */}
-        <SignatureDishes />
-
-        {/* Upcoming events — preview */}
-        <section className="relative bg-brand-charcoal/20 border-t border-brand-gold/10">
-          <div className="max-w-7xl mx-auto px-6 md:px-12 pt-20 pb-0">
-            <div className="text-center mb-0">
-              <p className="section-subtitle">Próximamente</p>
-              <h2 className="section-title font-light mt-4 mb-0">Eventos</h2>
-            </div>
-          </div>
-          <EventsList showHeading={false} />
-        </section>
-
-        {/* Reservation CTA */}
-        <ReservationCta />
+        {/* Instagram + contact form CTA */}
+        <ContactCta />
       </main>
 
       <Footer />

@@ -1,139 +1,156 @@
 import Link from 'next/link';
-
-const navLinks = [
-  { href: '/', label: 'Inicio' },
-  { href: '/#menu', label: 'Menú' },
-  { href: '/eventos', label: 'Eventos' },
-  { href: '/giftcards', label: 'Gift Cards' },
-  { href: '/contact', label: 'Contacto' },
-];
+import Image from 'next/image';
 
 const legalLinks = [
-  { href: '/legal/aviso-legal', label: 'Aviso Legal' },
-  { href: '/legal/privacidad', label: 'Política de Privacidad' },
-  { href: '/legal/cookies', label: 'Cookies' },
+  { href: '/politica-de-privacidad', label: 'POLITICA DE PRIVACIDAD' },
+  { href: '/aviso-legal', label: 'INFORMACION LEGAL' },
+  { href: '/politica-de-cookies', label: 'POLITICA DE COOKIES' },
+  { href: '/contact', label: 'CONTACTO' },
 ];
 
+const labelStyle: React.CSSProperties = {
+  fontFamily: 'EditorialNew, serif',
+  fontWeight: 400,
+  fontSize: 10,
+  letterSpacing: '0.1em',
+  color: 'rgba(255,255,255,0.5)',
+};
+
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
-    <footer className="relative bg-brand-black border-t border-brand-gold/10 overflow-hidden">
-      {/* Decorative top gradient */}
-      <div className="h-px bg-gradient-to-r from-transparent via-brand-gold/20 to-transparent" />
-
-      {/* Background decoration */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 select-none pointer-events-none" aria-hidden="true">
-        <span
-          className="japanese-text text-brand-gold/[0.025] font-light leading-none"
-          style={{ fontSize: 'clamp(12rem, 30vw, 40rem)' }}
-        >
-          リ
-        </span>
+    <footer
+      className="lionna-footer"
+      style={{
+        backgroundColor: '#005BFF',
+        color: '#fff',
+        padding: '60px 80px',
+      }}
+    >
+      {/* Logo */}
+      <div style={{ marginBottom: 48 }}>
+        <Image
+          src="/images/logo-large.svg"
+          alt="LI-ONNA"
+          width={7966}
+          height={2181}
+          style={{ width: 200, height: 'auto', opacity: 0.9 }}
+        />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        {/* Main footer content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-          {/* Brand column */}
-          <div className="flex flex-col gap-4">
-            <div>
-              <p className="font-display text-brand-cream text-2xl tracking-widest2">LI-ONNA</p>
-              <p className="japanese-text text-brand-gold/50 text-xs tracking-widest mt-0.5">リオンナ</p>
-            </div>
-
-            <div className="gold-divider-left" />
-
-            <p className="text-brand-cream/40 text-xs font-body leading-relaxed max-w-xs">
-              Cocina japonesa con alma latina en el corazón de Barrio Salamanca, Madrid.
-            </p>
-
-            <address className="not-italic text-brand-cream/30 text-xs font-body leading-relaxed mt-2">
-              C. de Recoletos, 1<br />
-              Barrio Salamanca<br />
-              28001 Madrid
-            </address>
-          </div>
-
-          {/* Navigation column */}
-          <div>
-            <p className="section-subtitle mb-6 text-left">Navegar</p>
-            <nav className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-brand-cream/40 hover:text-brand-cream text-xs uppercase tracking-widest font-body transition-colors duration-300 w-fit"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Grupo column */}
-          <div>
-            <p className="section-subtitle mb-6 text-left">Grupo</p>
-
-            <div className="flex flex-col gap-3 mb-8">
-              <a
-                href="https://kampai.es"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-brand-cream/40 hover:text-brand-cream text-xs uppercase tracking-widest font-body transition-colors duration-300 w-fit"
-              >
-                Grupo Kampai
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-brand-cream/40 hover:text-brand-cream text-xs uppercase tracking-widest font-body transition-colors duration-300 w-fit"
-              >
-                Mandala Group
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-brand-cream/40 hover:text-brand-cream text-xs uppercase tracking-widest font-body transition-colors duration-300 w-fit"
-              >
-                Tanaka Hospitality
-              </a>
-            </div>
-
-            {/* Social / reservations */}
-            <div>
-              <p className="section-subtitle mb-4 text-left">Reservas</p>
-              <Link
-                href="/#reservar"
-                className="btn-gold text-[9px] px-5 py-2.5"
-              >
-                Reservar Mesa
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="border-t border-brand-gold/10 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-brand-cream/20 text-xs font-body tracking-wide">
-            &copy; {currentYear} LI-ONNA &mdash; Tanaka Hospitality S.L. Todos los derechos reservados.
+      {/* Three-column grid */}
+      <div
+        className="footer-grid"
+        style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr 1fr',
+          gap: 40,
+          marginBottom: 60,
+        }}
+      >
+        {/* Column 1: Collaborators + Copyright */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <p style={{ ...labelStyle, textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)' }}>
+            EN COLABORACIÓN CON
           </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <p style={{
+              fontFamily: 'EditorialNew, serif',
+              fontWeight: 500,
+              fontSize: 14,
+              letterSpacing: '0.04em',
+              color: '#fff',
+              margin: 0,
+            }}>
+              Mandala Group
+            </p>
+            <p style={{
+              fontFamily: 'EditorialNew, serif',
+              fontWeight: 500,
+              fontSize: 14,
+              letterSpacing: '0.04em',
+              color: '#fff',
+              margin: 0,
+            }}>
+              Grupo Kampai
+            </p>
+          </div>
+          <div style={{ marginTop: 16, display: 'flex', flexDirection: 'column', gap: 4 }}>
+            <p style={labelStyle}>Copyright ® 2024 Mandala Group.</p>
+            <p style={labelStyle}>Copyright ® 2024 Grupo Kampai</p>
+          </div>
+        </div>
 
-          <nav className="flex items-center gap-6">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-brand-cream/20 hover:text-brand-cream/50 text-[10px] uppercase tracking-widest font-body transition-colors duration-300"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+        {/* Column 2: Address + Contact */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <address style={{
+            fontStyle: 'normal',
+            fontFamily: 'EditorialNew, serif',
+            fontWeight: 400,
+            fontSize: 13,
+            letterSpacing: '0.04em',
+            color: 'rgba(255,255,255,0.8)',
+            lineHeight: 1.6,
+            marginBottom: 4,
+          }}>
+            C. de Recoletos, 1, Salamanca, 28001<br />
+            Madrid, España
+          </address>
+          <a href="tel:+34910463911" style={{ fontFamily: 'EditorialNew, serif', fontWeight: 400, fontSize: 13, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.8)', textDecoration: 'none' }}>
+            Tel: +34 910 463 911
+          </a>
+          <a href="https://api.whatsapp.com/send?phone=34679836561" target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'EditorialNew, serif', fontWeight: 400, fontSize: 13, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.8)', textDecoration: 'none' }}>
+            Mob: +34 679 83 65 61
+          </a>
+          <a href="mailto:hola@lionna.es" style={{ fontFamily: 'EditorialNew, serif', fontWeight: 400, fontSize: 13, letterSpacing: '0.04em', color: 'rgba(255,255,255,0.8)', textDecoration: 'none' }}>
+            hola@lionna.es
+          </a>
+        </div>
+
+        {/* Column 3: Legal links */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {legalLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              style={{
+                fontFamily: 'EditorialNew, serif',
+                fontWeight: 500,
+                fontSize: 10,
+                letterSpacing: '0.1em',
+                color: 'rgba(255,255,255,0.6)',
+                textDecoration: 'none',
+                textTransform: 'uppercase',
+              }}
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
+
+      {/* Japanese name at bottom center */}
+      <div style={{ textAlign: 'center' }}>
+        <p style={{
+          fontFamily: 'Odesta, serif',
+          fontWeight: 600,
+          fontSize: 24,
+          letterSpacing: '0.02em',
+          color: 'rgba(255,255,255,0.35)',
+          margin: 0,
+        }}>
+          リオンナ
+        </p>
+      </div>
+
+      <style>{`
+        @media (max-width: 1439px) {
+          .lionna-footer { padding: 60px 64px !important; }
+        }
+        @media (max-width: 809px) {
+          .lionna-footer { padding: 40px 16px !important; }
+          .footer-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </footer>
   );
 }

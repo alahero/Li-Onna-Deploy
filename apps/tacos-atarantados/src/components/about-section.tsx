@@ -1,124 +1,113 @@
 import Image from 'next/image';
 
-interface AboutSectionProps {
-  title: string;
-  description: unknown; // markdoc output
-  image: string | null;
-}
-
-export function AboutSection({ title, description, image }: AboutSectionProps) {
+export function AboutSection() {
   return (
     <section
-      id="nosotros"
-      className="py-20 bg-brand-dark relative overflow-hidden"
-      aria-labelledby="about-heading"
+      id="quienesomos1-1"
+      style={{
+        width: '100%',
+        background: '#ffffff',
+        padding: '60px 24px',
+      }}
     >
-      {/* Background accents */}
       <div
-        className="absolute top-0 right-0 w-1/3 h-full opacity-5"
         style={{
-          backgroundImage:
-            'repeating-linear-gradient(-45deg, #FFB703 0px, #FFB703 2px, transparent 2px, transparent 30px)',
+          maxWidth: '1200px',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'row',
+          gap: '40px',
+          alignItems: 'flex-start',
+          flexWrap: 'wrap',
         }}
-        aria-hidden="true"
-      />
-      <div className="absolute bottom-10 left-10 text-8xl opacity-5 select-none" aria-hidden="true">
-        🌮
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          {/* Image */}
-          <div className="order-2 lg:order-1">
-            <div className="relative">
-              {/* Decorative frame */}
-              <div
-                className="absolute -top-4 -left-4 w-full h-full rounded-3xl border-2 border-brand-yellow/30"
-                aria-hidden="true"
-              />
-              <div className="relative rounded-3xl overflow-hidden aspect-[4/3] bg-gradient-to-br from-brand-orange/30 to-brand-red/30 shadow-2xl">
-                {image ? (
-                  <Image
-                    src={image}
-                    alt="Nuestra historia - Tacos Atarantados"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                  />
-                ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-                    <span className="text-8xl" aria-hidden="true">🌮</span>
-                    <span className="text-brand-yellow/60 text-lg font-medium">
-                      Desde 2010
-                    </span>
-                  </div>
-                )}
-              </div>
-
-              {/* Floating badge */}
-              <div className="absolute -bottom-6 -right-6 bg-brand-yellow rounded-2xl px-5 py-4 shadow-xl text-brand-dark text-center">
-                <p className="text-3xl font-display leading-none" style={{ fontFamily: 'var(--font-display)' }}>
-                  15+
-                </p>
-                <p className="text-xs font-bold uppercase tracking-wider mt-1">
-                  Años de<br />Sabor
-                </p>
-              </div>
-            </div>
+      >
+        {/* Left: photo collage */}
+        <div
+          style={{
+            flex: '1 1 400px',
+            position: 'relative',
+            minHeight: '500px',
+          }}
+        >
+          {/* Main food photo — slightly rotated */}
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '60%', transform: 'rotate(-2deg)', zIndex: 3 }}>
+            <Image
+              src="/images/quienes-somos-food.png"
+              alt="Tacos Atarantados"
+              width={400}
+              height={346}
+              style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}
+            />
           </div>
+          {/* Interior photo — offset right, different rotation */}
+          <div style={{ position: 'absolute', top: '80px', right: 0, width: '55%', transform: 'rotate(1.5deg)', zIndex: 2 }}>
+            <Image
+              src="/images/quienes-somos-interior.png"
+              alt="Interior Tacos Atarantados"
+              width={350}
+              height={176}
+              style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.18)' }}
+            />
+          </div>
+          {/* Detail photo — bottom left, rotated */}
+          <div style={{ position: 'absolute', bottom: 0, left: '10%', width: '45%', transform: 'rotate(3deg)', zIndex: 4 }}>
+            <Image
+              src="/images/quienes-somos-detail.png"
+              alt="Detalle tacos"
+              width={250}
+              height={229}
+              style={{ width: '100%', height: 'auto', objectFit: 'cover', borderRadius: '4px', boxShadow: '0 8px 32px rgba(0,0,0,0.22)' }}
+            />
+          </div>
+        </div>
 
-          {/* Text */}
-          <div className="order-1 lg:order-2">
-            <div className="inline-flex items-center gap-2 bg-brand-yellow/10 border border-brand-yellow/30 text-brand-yellow px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6">
-              <span aria-hidden="true">❤️</span>
-              <span>Nuestra Historia</span>
-            </div>
-
-            <h2
-              id="about-heading"
-              className="text-4xl md:text-5xl font-display text-white mb-6 leading-tight"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              {title}
-            </h2>
-
-            {description ? (
-              <div className="prose prose-lg prose-invert prose-p:text-white/75 prose-headings:text-white max-w-none">
-                {/* Markdoc renders as raw content — handle as string if needed */}
-                <p className="text-white/75 text-lg leading-relaxed">
-                  {String(description)}
-                </p>
-              </div>
-            ) : (
-              <div className="space-y-4 text-white/75 text-lg leading-relaxed">
-                <p>
-                  Todo comenzó en un pequeño puesto en la calle con una receta familiar. Hoy,
-                  Tacos Atarantados es sinónimo de calidad y sabor en toda la ciudad.
-                </p>
-                <p>
-                  Usamos las mejores tortillas hechas a mano, carnes seleccionadas y salsas
-                  artesanales preparadas cada día con recetas que hemos perfeccionado durante
-                  más de 15 años.
-                </p>
-              </div>
-            )}
-
-            {/* Values */}
-            <div className="grid grid-cols-3 gap-4 mt-10">
-              {[
-                { icon: '🌽', label: 'Ingredientes frescos' },
-                { icon: '👨‍🍳', label: 'Recetas auténticas' },
-                { icon: '❤️', label: 'Hecho con amor' },
-              ].map((val) => (
-                <div
-                  key={val.label}
-                  className="bg-white/5 rounded-xl p-4 text-center border border-white/10 hover:border-brand-yellow/40 transition-colors"
-                >
-                  <span className="text-3xl block mb-2" aria-hidden="true">{val.icon}</span>
-                  <p className="text-white/70 text-xs font-semibold">{val.label}</p>
-                </div>
-              ))}
-            </div>
+        {/* Right: text */}
+        <div
+          style={{
+            flex: '1 1 340px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '16px',
+            paddingTop: '32px',
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: '"Gothic Regular", sans-serif',
+              fontWeight: 400,
+              fontSize: '47px',
+              color: '#0c7528',
+              margin: 0,
+              lineHeight: 1.1,
+            }}
+          >
+            ¿Quiénes somos?
+          </h2>
+          <div
+            style={{
+              fontFamily: 'Oswald, sans-serif',
+              fontWeight: 400,
+              fontSize: '12px',
+              color: '#000000',
+              lineHeight: 1.6,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px',
+            }}
+          >
+            <p>Nacimos en Monterrey y eso se nota.</p>
+            <p>Somos tacos norteños, bien servidos y hechos con carácter.</p>
+            <p>El trompo es nuestra bandera y la mesa es nuestro punto de encuentro.</p>
+            <p>Pero no solo somos sabor.</p>
+            <p>Somos atención cálida, trato cercano y mesas donde siempre hay espacio para uno más.</p>
+            <p>
+              Creemos en las salsas que transforman el taco. En la variedad que te invita a probar,
+              combinar y regresar por otra ronda. Porque en el norte el taco no está completo sin
+              una salsa a su altura.
+            </p>
+            <p>En Atarantados te atendemos como en casa, pero comiendo mejor.</p>
+            <p>Aquí no hay complicaciones, solo buena comida, buena vibra y ganas de repetir.</p>
+            <p>Porque cuando el taco está bien servido, la felicidad esta garantizada.</p>
           </div>
         </div>
       </div>

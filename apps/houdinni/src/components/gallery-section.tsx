@@ -1,135 +1,173 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 
-export interface GalleryItem {
-  slug: string;
-  title: string;
-  image: string | null;
-  category: string;
-  order: number;
-}
+/**
+ * Gallery sticky scroll section — pixel-perfect from Framer.
+ *
+ * Animation spec (from design extraction §12):
+ *   - "Images" container scroll-triggered horizontal pan: x: 0 → x: -1635px
+ *   - Spring: { bounce: 0.2, damping: 60, delay: 0, duration: 0.1, mass: 1, stiffness: 500, type: "spring" }
+ *   - Outer wrapper: x: -270 → x: -716 (desktop)
+ *   - Background image: gallery-bg.png (1440×783)
+ */
+export function GallerySection() {
+  const containerRef = useRef<HTMLDivElement>(null);
 
-interface GallerySectionProps {
-  items: GalleryItem[];
-}
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  });
 
-const CATEGORY_LABELS: Record<string, string> = {
-  venue: 'El Lugar',
-  shows: 'Shows',
-  cocktails: 'Cócteles',
-};
+  /* Spring config from Framer extraction */
+  const springConfig = {
+    damping: 60,
+    stiffness: 500,
+    mass: 1,
+    bounce: 0.2,
+  };
 
-const ALL_CATEGORY = 'all';
+  const rawX = useTransform(scrollYProgress, [0, 1], [0, -1635]);
+  const x = useSpring(rawX, springConfig);
 
-export function GallerySection({ items }: GallerySectionProps) {
-  const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
-
-  const sorted = [...items].sort((a, b) => a.order - b.order);
-  const categories = [ALL_CATEGORY, ...Array.from(new Set(sorted.map((i) => i.category)))];
-
-  const filtered =
-    activeCategory === ALL_CATEGORY
-      ? sorted
-      : sorted.filter((i) => i.category === activeCategory);
+  const rawOuterX = useTransform(scrollYProgress, [0, 1], [-270, -716]);
+  const outerX = useSpring(rawOuterX, springConfig);
 
   return (
     <section
-      id="galeria"
-      className="section-padding relative overflow-hidden bg-brand-black"
+      id="gallery"
+      className="relative w-full overflow-hidden"
+      style={{ minHeight: '80vh' }}
     >
-      {/* Subtle center vignette */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 40%, rgba(11,11,11,0.5) 100%)',
-        }}
-      />
+      {/* Section background */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/gallery-bg.png"
+          alt=""
+          fill
+          className="object-cover object-center"
+          quality={85}
+        />
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
 
-      <div className="container-wide relative z-10">
-        {/* Section header */}
-        <div className="text-center mb-14">
-          <span
-            className="text-xs uppercase tracking-mystical text-brand-gold/70 mb-4 block"
-            style={{ fontFamily: "'Raleway', sans-serif" }}
+      {/* Sticky wrapper */}
+      <div
+        ref={containerRef}
+        className="relative z-10 w-full"
+        style={{ height: '300vh' }}
+      >
+        <div className="sticky top-[34px] w-full overflow-hidden" style={{ height: '100vh' }}>
+          {/* Outer wrapper — animates x: -270 → -716 */}
+          <motion.div
+            style={{ x: outerX }}
+            className="absolute top-0 bottom-0 flex items-center"
           >
-            Momentos Capturados
-          </span>
-          <h2 className="section-title mb-4">Galería</h2>
-          <div className="gold-divider max-w-xs mx-auto">
-            <span className="text-brand-gold/60 text-xs" aria-hidden="true">&#9670;</span>
+            {/* Images container — animates x: 0 → -1635 */}
+            <motion.div
+              style={{ x }}
+              className="flex items-center gap-0"
+            >
+              {/* Desktop panoramic strip */}
+              <div className="hidden tablet:block shrink-0">
+                <Image
+                  src="/gallery/gallery-strip-desktop.png"
+                  alt="Houdinni Gallery"
+                  width={5339}
+                  height={1503}
+                  className="h-[80vh] w-auto object-cover"
+                  quality={85}
+                  priority
+                />
+              </div>
+              {/* Mobile panoramic strip */}
+              <div className="tablet:hidden shrink-0">
+                <Image
+                  src="/gallery/gallery-strip-mobile.png"
+                  alt="Houdinni Gallery"
+                  width={5765}
+                  height={1503}
+                  className="h-[70vh] w-auto object-cover"
+                  quality={85}
+                  priority
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Gallery label overlay */}
+          <div className="absolute bottom-8 left-8 z-20">
+            <h2
+              className="font-druk text-white text-5xl tablet:text-7xl opacity-90"
+              style={{ letterSpacing: '0.02em' }}
+            >
+              GALLERY
+            </h2>
           </div>
         </div>
+      </div>
 
-        {/* Category filter tabs */}
-        {categories.length > 2 && (
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-5 py-2 text-xs uppercase tracking-widest transition-all duration-300 border ${
-                  activeCategory === cat
-                    ? 'bg-brand-gold text-brand-black border-brand-gold'
-                    : 'border-white/15 text-brand-cream/50 hover:border-brand-gold/40 hover:text-brand-cream/80'
-                }`}
-                style={{ fontFamily: "'Raleway', sans-serif" }}
-              >
-                {cat === ALL_CATEGORY ? 'Todos' : CATEGORY_LABELS[cat] ?? cat}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Masonry-like grid */}
-        {filtered.length > 0 ? (
-          <div className="columns-2 md:columns-3 lg:columns-4 gap-3 space-y-3">
-            {filtered.map((item, idx) => (
-              <div
-                key={item.slug}
-                className="relative break-inside-avoid overflow-hidden border border-white/6 hover:border-brand-gold/35 transition-all duration-500 group"
-                style={{ aspectRatio: idx % 5 === 0 ? '3/4' : idx % 3 === 0 ? '4/3' : '1/1' }}
-              >
-                {item.image ? (
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    quality={75}
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
-                ) : (
-                  <div
-                    className="w-full h-full"
-                    style={{
-                      background: 'linear-gradient(135deg, #111111 0%, #1A0F40 100%)',
-                    }}
-                  />
-                )}
-                {/* Hover overlay with title */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-all duration-500 flex items-end p-3">
-                  <span
-                    className="text-brand-cream/0 group-hover:text-brand-cream/80 text-xs uppercase tracking-widest transition-all duration-300"
-                    style={{ fontFamily: "'Raleway', sans-serif" }}
-                  >
-                    {item.title}
-                  </span>
-                </div>
+      {/* Content photo grid below strip */}
+      <div
+        className="relative z-10 bg-houdinni-black"
+        style={{ padding: '80px 24px' }}
+      >
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          {/* 2-col × 3-row grid — exact Framer spec: gap 35px, height 361px */}
+          <div
+            className="grid"
+            style={{
+              display: 'grid',
+              gap: '0px 35px',
+              gridTemplateColumns: 'repeat(2, minmax(50px, 1fr))',
+              gridTemplateRows: 'repeat(3, minmax(0, 1fr))',
+              height: '361px',
+              overflow: 'clip',
+              marginBottom: '35px',
+            }}
+          >
+            {['/gallery/photo-2.png', '/gallery/photo-3.png', '/gallery/photo-4.png', '/gallery/photo-5.png', '/gallery/photo-6.png', '/gallery/photo-1.png'].map((src, i) => (
+              <div key={i} className="relative overflow-hidden">
+                <Image
+                  src={src}
+                  alt={`Houdinni ${i + 1}`}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  quality={80}
+                  sizes="(max-width: 810px) 50vw, 600px"
+                />
               </div>
             ))}
           </div>
-        ) : (
-          <div className="text-center py-16">
-            <p
-              className="text-brand-cream/25 text-sm italic"
-              style={{ fontFamily: "'Cormorant Garamond', serif" }}
-            >
-              Las imágenes están siendo reveladas como en sala oscura...
-            </p>
+
+          {/* 3-col × 3-row grid — exact Framer spec: gap 35px, height 199px */}
+          <div
+            style={{
+              display: 'grid',
+              gap: '0px 35px',
+              gridTemplateColumns: 'repeat(3, minmax(50px, 1fr))',
+              gridTemplateRows: 'repeat(3, minmax(0, 1fr))',
+              height: '199px',
+              overflow: 'clip',
+              marginBottom: '35px',
+            }}
+          >
+            {['/gallery/logo-lightbox-1.png', '/gallery/logo-lightbox-2.png', '/gallery/photo-5.png', '/gallery/photo-4.png', '/gallery/photo-3.png', '/gallery/photo-2.png', '/gallery/photo-1.png', '/gallery/photo-6.png', '/gallery/logo-strip-1.png'].map((src, i) => (
+              <div key={i} className="relative overflow-hidden">
+                <Image
+                  src={src}
+                  alt={`Houdinni venue ${i + 1}`}
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-700"
+                  quality={75}
+                  sizes="(max-width: 810px) 33vw, 400px"
+                />
+              </div>
+            ))}
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

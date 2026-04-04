@@ -3,178 +3,21 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --font-display: 'Cormorant Garamond', serif;
-    --font-body: 'Inter', sans-serif;
-  }
-
   html {
     scroll-behavior: smooth;
+    background-color: #ffffff;
   }
 
   body {
-    @apply bg-brand-black text-brand-white antialiased;
-    font-family: var(--font-body);
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-display);
-    @apply tracking-wide;
+    background-color: #ffffff;
+    color: #ffffff;
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   * {
-    @apply box-border;
-  }
-
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-brand-black;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: rgba(192, 192, 192, 0.3);
-    border-radius: 9999px;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(192, 192, 192, 0.6);
-  }
-}
-
-@layer components {
-  /* === Typography === */
-  .display-title {
-    font-family: var(--font-display);
-    @apply text-5xl md:text-6xl lg:text-7xl font-light tracking-[0.15em] uppercase text-brand-white;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    @apply text-3xl md:text-4xl lg:text-5xl font-light tracking-[0.12em] uppercase text-brand-white;
-  }
-
-  .section-subtitle {
-    @apply text-sm uppercase tracking-[0.25em] text-brand-silver font-medium;
-  }
-
-  /* === Art Deco Divider === */
-  .deco-divider {
-    @apply flex items-center gap-4 justify-center my-4;
-  }
-
-  .deco-divider::before,
-  .deco-divider::after {
-    content: '';
-    @apply flex-1 h-px bg-gradient-to-r from-transparent to-brand-silver/30;
-  }
-
-  .deco-divider::after {
-    @apply bg-gradient-to-l from-transparent to-brand-silver/30;
-  }
-
-  .silver-line {
-    @apply w-12 h-px bg-brand-silver/50 mx-auto my-4;
-  }
-
-  .emerald-accent {
-    @apply text-brand-emerald;
-  }
-
-  /* === Buttons === */
-  .btn-primary {
-    @apply inline-flex items-center justify-center px-8 py-3.5 bg-brand-emerald text-brand-black font-semibold uppercase tracking-[0.2em] text-xs transition-all duration-300 hover:bg-brand-emerald-dark hover:scale-105 active:scale-95;
-  }
-
-  .btn-silver {
-    @apply inline-flex items-center justify-center px-8 py-3.5 border border-brand-silver/40 text-brand-silver font-semibold uppercase tracking-[0.2em] text-xs transition-all duration-300 hover:bg-brand-silver hover:text-brand-black hover:border-brand-silver hover:scale-105 active:scale-95;
-  }
-
-  .btn-outline-emerald {
-    @apply inline-flex items-center justify-center px-8 py-3.5 border border-brand-emerald text-brand-emerald font-semibold uppercase tracking-[0.2em] text-xs transition-all duration-300 hover:bg-brand-emerald hover:text-brand-black hover:scale-105 active:scale-95;
-  }
-
-  /* === Cards === */
-  .card-dark {
-    @apply bg-brand-dark-card border border-white/[0.06] hover:border-brand-silver/20 transition-all duration-400;
-  }
-
-  .card-cocktail {
-    @apply bg-brand-dark-surface border border-brand-silver/10 overflow-hidden transition-all duration-400 hover:border-brand-silver/25 hover:shadow-card;
-  }
-
-  /* === Overlays === */
-  .overlay-dark {
-    @apply absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/80;
-  }
-
-  .overlay-hero {
-    @apply absolute inset-0 bg-gradient-to-b from-brand-black/60 via-brand-navy/40 to-brand-black/90;
-  }
-
-  /* === Spade Icon (SVG inline helper) === */
-  .spade-motif {
-    @apply opacity-10 select-none pointer-events-none;
-    font-size: 200px;
-    line-height: 1;
-  }
-
-  /* === Art Deco Corner Ornament === */
-  .deco-corner {
-    @apply absolute w-8 h-8 border-brand-silver/30;
-  }
-
-  .deco-corner-tl {
-    @apply top-4 left-4 border-t border-l;
-  }
-
-  .deco-corner-tr {
-    @apply top-4 right-4 border-t border-r;
-  }
-
-  .deco-corner-bl {
-    @apply bottom-4 left-4 border-b border-l;
-  }
-
-  .deco-corner-br {
-    @apply bottom-4 right-4 border-b border-r;
-  }
-}
-
-@layer utilities {
-  .text-shadow-silver {
-    text-shadow: 0 0 40px rgba(192, 192, 192, 0.3);
-  }
-
-  .text-shadow-emerald {
-    text-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
-  }
-
-  .glow-silver {
-    box-shadow: 0 0 24px rgba(192, 192, 192, 0.15);
-  }
-
-  .glow-emerald {
-    box-shadow: 0 0 24px rgba(16, 185, 129, 0.2);
-  }
-
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
-  }
-
-  .letter-widest {
-    letter-spacing: 0.3em;
-  }
-
-  .transition-400 {
-    transition-duration: 400ms;
+    box-sizing: border-box;
   }
 }

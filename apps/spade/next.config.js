@@ -2,7 +2,12 @@
 const nextConfig = {
   transpilePackages: ['@mg/keystatic-config', '@mg/ui-primitives', '@mg/shared-utils'],
   images: {
-    domains: [],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'framerusercontent.com',
+      },
+    ],
   },
 };
 module.exports = nextConfig;

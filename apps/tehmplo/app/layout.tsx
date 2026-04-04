@@ -1,62 +1,63 @@
 import type { Metadata } from 'next';
-import { Cormorant_Garamond, Jost } from 'next/font/google';
+import { Source_Sans_3 } from 'next/font/google';
 import './globals.css';
+import LenisScroll from '@/components/lenis-scroll';
 
-const cormorant = Cormorant_Garamond({
+const sourceSans = Source_Sans_3({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const jost = Jost({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-body',
+  weight: ['400', '500'],
+  variable: '--font-source-sans',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   title: 'Tehmplo – Elevate Your Tulum Experience',
   description:
-    'Premium open-air jungle nightclub in the heart of Tulum. VIP tables, world-class DJs, and an unforgettable experience under the stars.',
-  keywords: [
-    'Tehmplo',
-    'Tulum nightclub',
-    'jungle club Tulum',
-    'VIP tables Tulum',
-    'open air club Mexico',
-    'Tulum events',
-  ],
+    'Hidden in the jungle, this is where music, people, and emotions come together to make Tulum truly one of a kind. World-class DJs and an atmosphere that awakens your senses.',
+  keywords: ['Tehmplo', 'Tulum nightclub', 'jungle club Tulum', 'VIP tables Tulum', 'open air club Mexico', 'Tulum events'],
+  robots: { index: true, follow: true, googleBot: { 'max-image-preview': 'large' } },
   openGraph: {
     title: 'Tehmplo – Elevate Your Tulum Experience',
-    description:
-      'Premium open-air jungle nightclub in the heart of Tulum. VIP tables, world-class DJs, and an unforgettable experience under the stars.',
-    url: 'https://tehmplo.com',
+    description: 'Hidden in the jungle, this is where music, people, and emotions come together to make Tulum truly one of a kind.',
+    url: 'https://www.tehmplo.com',
     siteName: 'Tehmplo',
-    locale: 'en_US',
+    locale: 'en',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Tehmplo – Elevate Your Tulum Experience',
-    description:
-      'Premium open-air jungle nightclub in Tulum, Mexico.',
+  alternates: {
+    canonical: 'https://www.tehmplo.com',
+    languages: { 'en': '/', 'es-MX': '/es/' },
   },
-  robots: {
-    index: true,
-    follow: true,
+  icons: {
+    icon: '/images/favicon-light.png',
+    apple: '/images/favicon-light.png',
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cormorant.variable} ${jost.variable}`}>
-      <body className="bg-brand-black text-brand-cream antialiased">
+    <html lang="en" className={sourceSans.variable}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500&display=swap"
+          rel="stylesheet"
+        />
+        {/* General Sans from Fontshare */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=general-sans@400&display=swap"
+          rel="stylesheet"
+        />
+        {/* Google Analytics */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FVMKLEM3NT" />
+        <script dangerouslySetInnerHTML={{
+          __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-FVMKLEM3NT');`
+        }} />
+      </head>
+      <body className="bg-tehmplo-bg text-white antialiased">
+        <LenisScroll />
         {children}
       </body>
     </html>

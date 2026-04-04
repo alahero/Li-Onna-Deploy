@@ -10,258 +10,96 @@ export default config({
       label: 'Configuración del Sitio',
       path: 'content/site-settings',
       schema: {
-        siteName: fields.text({ label: 'Nombre del sitio' }),
-        tagline: fields.text({ label: 'Tagline / Eslogan' }),
-        logo: fields.image({ label: 'Logo', directory: 'public/images', publicPath: '/images' }),
-        logoDark: fields.image({ label: 'Logo (versión oscura)', directory: 'public/images', publicPath: '/images' }),
+        siteName: fields.text({ label: 'Nombre del sitio', defaultValue: 'Houdinni' }),
+        tagline: fields.text({ label: 'Tagline / Eslogan', defaultValue: 'Houdinni Madrid' }),
+        logo: fields.image({ label: 'Logo (blanco)', directory: 'public/images', publicPath: '/images' }),
+        logoDark: fields.image({ label: 'Logo (oscuro)', directory: 'public/images', publicPath: '/images' }),
         favicon: fields.image({ label: 'Favicon', directory: 'public', publicPath: '/' }),
         ...seoFields,
         social: fields.object(socialFields, { label: 'Redes Sociales' }),
       },
     }),
 
-    homepage: singleton({
-      label: 'Página Principal (Hero)',
-      path: 'content/homepage',
+    contact: singleton({
+      label: 'Información de Contacto',
+      path: 'content/contact',
       schema: {
-        heroTitle: fields.text({
-          label: 'Título del Hero',
-          description: 'Título principal del speakeasy (ej. "Donde la Magia Ocurre")',
+        address: fields.text({
+          label: 'Dirección',
+          description: 'Ej. C. de Serrano 41, Local A y B, Salamanca 28001',
+          defaultValue: 'C. de Serrano 41, Local A y B, Salamanca 28001',
         }),
-        heroSubtitle: fields.text({
-          label: 'Subtítulo del Hero',
-          description: 'Frase misteriosa bajo el título',
-          multiline: true,
+        city: fields.text({
+          label: 'Ciudad',
+          defaultValue: 'Madrid, España',
         }),
-        heroImage: fields.image({
-          label: 'Imagen de Fondo del Hero',
-          directory: 'public/images/hero',
-          publicPath: '/images/hero',
+        phoneVenue: fields.text({
+          label: 'Teléfono del local',
+          defaultValue: '+34 910 46 39 11',
         }),
-        heroVideoUrl: fields.text({
-          label: 'URL de Video de Fondo (opcional)',
-          description: 'URL de video MP4 para el fondo del hero. Tiene prioridad sobre la imagen.',
-        }),
-        ctaText: fields.text({
-          label: 'Texto del Botón Principal',
-          description: 'Ej. "Reservar Mesa"',
-        }),
-        ctaLink: fields.text({
-          label: 'Enlace del Botón Principal',
-          description: 'URL o ancla (ej. #reservaciones)',
-        }),
-      },
-    }),
-
-    concept: singleton({
-      label: 'El Concepto / Nuestra Historia',
-      path: 'content/concept',
-      schema: {
-        title: fields.text({
-          label: 'Título de la Sección',
-          description: 'Ej. "El Secreto Detrás del Telón"',
-        }),
-        tagline: fields.text({
-          label: 'Tagline / Frase Mágica',
-          description: 'Frase corta e intrigante',
-        }),
-        description: fields.text({
-          label: 'Historia del Concepto',
-          description: 'Descripción completa del concepto del speakeasy.',
-          multiline: true,
-        }),
-        image: fields.image({
-          label: 'Imagen del Concepto',
-          directory: 'public/images/concept',
-          publicPath: '/images/concept',
-        }),
-      },
-    }),
-
-    reservations: singleton({
-      label: 'Reservaciones',
-      path: 'content/reservations',
-      schema: {
-        title: fields.text({
-          label: 'Título de la Sección',
-          description: 'Ej. "Solicita Tu Acceso"',
-        }),
-        description: fields.text({
-          label: 'Descripción',
-          multiline: true,
-        }),
-        whatsappNumber: fields.text({
-          label: 'Número de WhatsApp',
-          description: 'Solo el número con código de país, sin espacios (ej. 521234567890)',
-        }),
-        phone: fields.text({
-          label: 'Teléfono de Contacto',
+        phoneWhatsapp: fields.text({
+          label: 'Teléfono WhatsApp',
+          defaultValue: '+34 671 80 77 47',
         }),
         email: fields.text({
-          label: 'Correo Electrónico',
+          label: 'Email',
+          defaultValue: 'hola@houdinni.com',
         }),
-        bookingUrl: fields.text({
-          label: 'URL de Reservación Externa (opcional)',
-          description: 'Si usas plataforma como OpenTable, TheFork, etc.',
+        mapsUrl: fields.url({
+          label: 'Enlace Google Maps',
+        }),
+      },
+    }),
+
+    marqueeText: singleton({
+      label: 'Texto del Marquee / Ticker',
+      path: 'content/marquee',
+      schema: {
+        mainText: fields.text({
+          label: 'Texto principal del ticker',
+          multiline: true,
+          defaultValue:
+            "HOUDINNI OR NOWHERE // MUSIC IS THE ANSWER // AUTHENTICITY, COMMUNITY, AND IRREVERENCE. CRAFTING A COMMUNITY OF LOUD MUSIC-LOVERS FREAKS. // NOW YOU SEE ME, NOW YOU DON'T. // LA MÚSICA VA PRIMERO // HOUDINNI",
+        }),
+        eventText: fields.text({
+          label: 'Texto del ticker de eventos',
+          multiline: true,
+          defaultValue: 'BETICAL 23 OCT // BENJA 06 NOV // OKIO - ASIAN STREET MARKET',
         }),
       },
     }),
   },
 
   collections: {
-    shows: collection({
-      label: 'Shows / Espectáculos',
-      slugField: 'title',
-      path: 'content/shows/*',
-      schema: {
-        title: fields.slug({
-          name: {
-            label: 'Nombre del Show',
-          },
-          slug: {
-            label: 'Slug (URL)',
-          },
-        }),
-        date: fields.date({
-          label: 'Fecha del Show',
-        }),
-        time: fields.text({
-          label: 'Hora',
-          description: 'Ej. "9:00 PM"',
-        }),
-        description: fields.text({
-          label: 'Descripción del Show',
-          multiline: true,
-        }),
-        image: fields.image({
-          label: 'Imagen del Show',
-          directory: 'public/images/shows',
-          publicPath: '/images/shows',
-        }),
-        performer: fields.text({
-          label: 'Artista / Mago / Performer',
-          description: 'Nombre del artista principal',
-        }),
-        ticketUrl: fields.text({
-          label: 'URL de Boletos',
-          description: 'Enlace para adquirir boletos (opcional)',
-        }),
-        price: fields.text({
-          label: 'Precio',
-          description: 'Precio de entrada (ej. "$450 MXN por persona")',
-        }),
-        featured: fields.checkbox({
-          label: 'Show Destacado',
-          description: 'Mostrar este show de forma prominente en la página',
-          defaultValue: false,
-        }),
-      },
-    }),
-
-    menuCategories: collection({
-      label: 'Categorías del Menú',
+    events: collection({
+      label: 'Eventos / Artistas',
       slugField: 'name',
-      path: 'content/menu-categories/*',
+      path: 'content/events/*',
       schema: {
         name: fields.slug({
-          name: {
-            label: 'Nombre de la Categoría',
-          },
-          slug: {
-            label: 'Slug',
-          },
+          name: { label: 'Nombre del evento / artista' },
+          slug: { label: 'Slug (URL)' },
         }),
-        order: fields.integer({
-          label: 'Orden de Aparición',
-          description: 'Número menor aparece primero',
-          defaultValue: 99,
-        }),
-      },
-    }),
-
-    menuItems: collection({
-      label: 'Platillos del Menú',
-      slugField: 'name',
-      path: 'content/menu-items/*',
-      schema: {
-        name: fields.slug({
-          name: {
-            label: 'Nombre del Platillo',
-          },
-          slug: {
-            label: 'Slug',
-          },
-        }),
-        description: fields.text({
-          label: 'Descripción',
-          multiline: true,
-        }),
-        price: fields.text({
-          label: 'Precio',
-          description: 'Ej. "$180 MXN"',
-        }),
-        category: fields.relationship({
-          label: 'Categoría',
-          collection: 'menuCategories',
-        }),
+        date: fields.date({ label: 'Fecha del evento' }),
+        time: fields.text({ label: 'Hora', description: 'Ej. 23:00' }),
+        description: fields.text({ label: 'Descripción', multiline: true }),
         image: fields.image({
-          label: 'Imagen del Platillo',
-          directory: 'public/images/menu',
-          publicPath: '/images/menu',
+          label: 'Imagen del evento',
+          directory: 'public/images/events',
+          publicPath: '/images/events',
         }),
-      },
-    }),
-
-    cocktails: collection({
-      label: 'Cócteles',
-      slugField: 'name',
-      path: 'content/cocktails/*',
-      schema: {
-        name: fields.slug({
-          name: {
-            label: 'Nombre del Cóctel',
-          },
-          slug: {
-            label: 'Slug',
-          },
-        }),
-        description: fields.text({
-          label: 'Descripción',
-          description: 'Historia o inspiración detrás del cóctel',
-          multiline: true,
-        }),
-        ingredients: fields.text({
-          label: 'Ingredientes',
-          description: 'Lista de ingredientes separados por coma',
-          multiline: true,
-        }),
-        image: fields.image({
-          label: 'Imagen del Cóctel',
-          directory: 'public/images/cocktails',
-          publicPath: '/images/cocktails',
-        }),
-        featured: fields.checkbox({
-          label: 'Cóctel de la Casa',
-          description: 'Destacar este cóctel en la sección principal',
-          defaultValue: false,
-        }),
-        price: fields.text({
-          label: 'Precio',
-          description: 'Ej. "$220 MXN"',
-        }),
+        ticketUrl: fields.url({ label: 'URL de entradas (tickets.houdinni.com)' }),
+        featured: fields.checkbox({ label: 'Destacado', defaultValue: false }),
+        tag: fields.text({ label: 'Tag / Etiqueta', defaultValue: 'PRÓXIMAMENTE' }),
       },
     }),
 
     gallery: collection({
-      label: 'Galería',
+      label: 'Galería de fotos',
       slugField: 'title',
       path: 'content/gallery/*',
       schema: {
-        title: fields.slug({
-          name: {
-            label: 'Título / Descripción',
-          },
-        }),
+        title: fields.slug({ name: { label: 'Título / Descripción' } }),
         image: fields.image({
           label: 'Imagen',
           directory: 'public/images/gallery',
@@ -270,17 +108,13 @@ export default config({
         category: fields.select({
           label: 'Categoría',
           options: [
-            { label: 'Venue / Local', value: 'venue' },
-            { label: 'Shows y Espectáculos', value: 'shows' },
-            { label: 'Cócteles', value: 'cocktails' },
+            { label: 'Venue', value: 'venue' },
+            { label: 'Eventos', value: 'events' },
+            { label: 'DJ / Artistas', value: 'dj' },
           ],
           defaultValue: 'venue',
         }),
-        order: fields.integer({
-          label: 'Orden de Aparición',
-          description: 'Número menor aparece primero',
-          defaultValue: 99,
-        }),
+        order: fields.integer({ label: 'Orden', defaultValue: 99 }),
       },
     }),
   },
