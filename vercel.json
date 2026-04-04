@@ -1,5 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "turbo build --filter=@mg/$VERCEL_PROJECT_NAME",
-  "ignoreCommand": "npx turbo-ignore"
-}
