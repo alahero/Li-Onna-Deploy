@@ -88,7 +88,7 @@ export default function Hero() {
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to bottom, rgba(13,14,17,0.2) 0%, rgba(13,14,17,0.4) 60%, rgba(13,14,17,0.85) 100%)',
+          background: 'linear-gradient(to bottom, rgba(13,14,17,0.5) 0%, rgba(13,14,17,0.65) 40%, rgba(13,14,17,0.9) 100%)',
           zIndex: 3,
         }}
         aria-hidden="true"
@@ -106,40 +106,41 @@ export default function Hero() {
           paddingTop: 60, // nav height
         }}
       >
-        {/* VIP TABLES label */}
-        <p
-          style={{
-            fontFamily: '"Source Sans 3", sans-serif',
-            fontSize: 18,
-            fontWeight: 400,
-            color: 'rgb(239, 128, 36)',
-            letterSpacing: '0.14em',
-            lineHeight: '1em',
-            marginBottom: 16,
-            textTransform: 'uppercase',
-          }}
-        >
-          VIP TABLES
-        </p>
-
-        {/* Main headline — Basteleur + Austin Cyr Italic mix */}
+        {/* Main headline — Austin Cyr Italic + Basteleur Moonlight mix */}
         <h1
           style={{
             fontSize: 39,
-            lineHeight: '1em',
+            lineHeight: '1.15em',
             color: '#ffffff',
             marginBottom: 40,
-            textTransform: 'uppercase',
           }}
         >
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
-            ELEVATE{' '}
+          <span style={{ display: 'block' }}>
+            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+              welcome
+            </span>
           </span>
-          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-            YOUR TULUM{' '}
+          <span style={{ display: 'block' }}>
+            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+              to the{' '}
+            </span>
+            <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              REAL
+            </span>
+            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+              {' '}Tulum
+            </span>
           </span>
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
-            EXPERIENCE
+          <span style={{ display: 'block', marginTop: 8 }}>
+            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+              let the{' '}
+            </span>
+            <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+              GATHERING
+            </span>
+            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+              {' '}begin
+            </span>
           </span>
         </h1>
       </div>

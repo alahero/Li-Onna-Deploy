@@ -10,26 +10,7 @@ export function HomepageClient() {
 
   return (
     <>
-      {/* Background fills entire viewport */}
-      <div
-        style={{
-          position: 'fixed',
-          inset: 0,
-          zIndex: 0,
-          backgroundColor: '#224366',
-        }}
-      >
-        <Image
-          src="/hero-bg.png"
-          alt=""
-          fill
-          style={{ objectFit: 'cover', objectPosition: 'center' }}
-          priority
-          aria-hidden
-        />
-      </div>
-
-      {/* Page container — positioned above background */}
+      {/* Page container — bg gradient is on body via CSS */}
       <div className="page-container" style={{ position: 'relative', zIndex: 1 }}>
         <div className="hero">
 

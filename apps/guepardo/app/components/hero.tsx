@@ -11,12 +11,12 @@ export function HeroSection() {
         width: '100%',
         height: '85.5vh',
         overflow: 'clip',
-        backgroundColor: '#ffffff',
+        backgroundColor: '#3d1010',
       }}
     >
       {/* Hero background image */}
       <Image
-        src="/images/hero-bg.png"
+        src="/images/hero-bg-new.png"
         alt=""
         fill
         priority
@@ -95,7 +95,7 @@ export function HeroSection() {
         }}
       >
         <Image
-          src="/images/logo-cream.png"
+          src="/images/logo-stamp.png"
           alt="GUEPARDO"
           width={229}
           height={229}

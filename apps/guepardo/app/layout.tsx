@@ -57,7 +57,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es">
-      <body style={{ margin: 0, padding: 0, backgroundColor: '#ffffff' }}>
+      <body style={{ margin: 0, padding: 0, backgroundColor: '#3d1010' }}>
         {children}
       </body>
     </html>

@@ -3,283 +3,258 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-/**
- * Houdinni Hero Section — pixel-perfect from Framer design.
- *
- * Structure:
- *   - Sticky section (position: sticky, top: 0), height ~14vh on desktop
- *   - Background: desktop PNG + dual MP4 video backgrounds (loop, muted, autoplay)
- *   - Left column: cyan accent box, menu button
- *   - Center column: video player with hover filter
- *   - Right column: 4 nav buttons (Menu, Calendar, Events, Reservations) + Contact button
- */
 export function HeroSection() {
   return (
     <section
       id="scroll"
-      className="relative w-full overflow-clip"
       style={{
         position: 'sticky',
-        top: '34px', /* offset by nav height */
+        top: 34,
+        width: '100%',
         minHeight: '100vh',
-        background: '#050505',
+        overflow: 'hidden',
+        backgroundColor: '#050505',
       }}
     >
-      {/* Background image — desktop */}
-      <div className="absolute inset-0 z-0 hidden tablet:block">
+      {/* Subway station background — Desktop */}
+      <div className="houdinni-hero-desktop" style={{ position: 'absolute', inset: 0 }}>
         <Image
-          src="/hero-bg-desktop.png"
+          src="/subway-desktop.png"
           alt=""
           fill
-          className="object-cover object-top"
           priority
-          quality={90}
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center top' }}
+          aria-hidden
         />
       </div>
-      {/* Background image — mobile */}
-      <div className="absolute inset-0 z-0 tablet:hidden">
-        <Image
-          src="/hero-bg-mobile.png"
-          alt=""
-          fill
-          className="object-cover object-top"
-          priority
-          quality={90}
-        />
-      </div>
-      {/* Dark overlay */}
-      <div className="absolute inset-0 z-[1] bg-black/40" />
 
-      {/* ── Hero content ── */}
+      {/* Subway station background — Mobile */}
+      <div className="houdinni-hero-mobile" style={{ position: 'absolute', inset: 0 }}>
+        <Image
+          src="/subway-mobile.png"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          style={{ objectFit: 'cover', objectPosition: 'center top' }}
+          aria-hidden
+        />
+      </div>
+
+      {/* Dark overlay at bottom for tracks area */}
       <div
-        className="relative z-10 w-full h-full flex flex-col items-center justify-center"
-        style={{ paddingTop: '49px', paddingBottom: '49px', minHeight: '100vh' }}
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: '35%',
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(5,5,5,0.7) 50%, rgba(5,5,5,0.95) 100%)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }}
+        aria-hidden
+      />
+
+      {/* Hero content overlay */}
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 2,
+          width: '100%',
+          maxWidth: 1200,
+          margin: '0 auto',
+          minHeight: '100vh',
+          padding: '49px 40px',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
       >
-        {/* Desktop / Tablet 3-column layout */}
-        <div
-          className="hidden tablet:flex items-start justify-center gap-4 w-full"
-          style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}
-        >
-          {/* LEFT COLUMN */}
-          <div
-            className="flex flex-col justify-between shrink-0"
-            style={{ width: '315px', height: '530px' }}
-          >
-            {/* Cyan accent box */}
+        {/* Main content area */}
+        <div className="houdinni-hero-grid">
+          {/* LEFT — Menu poster */}
+          <div className="houdinni-hero-left">
+            <a
+              href="https://mandalagroup.menu/es/houdinni"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'block' }}
+            >
+              <Image
+                src="/btn-menu-1.png"
+                alt="Menu"
+                width={759}
+                height={268}
+                style={{
+                  width: '100%',
+                  maxWidth: 280,
+                  height: 'auto',
+                  display: 'block',
+                  filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.4))',
+                  cursor: 'pointer',
+                }}
+              />
+            </a>
+          </div>
+
+          {/* CENTER — HOUDINNI red sign + RESERVATIONS graffiti */}
+          <div className="houdinni-hero-center">
             <div
-              className="accent-cyan flex items-center justify-center"
-              style={{ flexShrink: 0 }}
+              style={{
+                backgroundColor: '#cc0000',
+                padding: '20px 48px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+                border: '3px solid #990000',
+              }}
             >
               <span
-                className="font-druk text-houdinni-black text-xs text-center px-2"
-                style={{ letterSpacing: '0.05em' }}
+                className="font-druk"
+                style={{
+                  fontSize: 'clamp(28px, 4vw, 52px)',
+                  fontWeight: 700,
+                  color: '#ffffff',
+                  letterSpacing: '0.02em',
+                  textTransform: 'uppercase',
+                  whiteSpace: 'nowrap',
+                }}
               >
                 HOUDINNI
               </span>
             </div>
 
-            {/* Gap spacer */}
-            <div style={{ flex: 1 }} />
-
-            {/* Menu button */}
-            <a
-              href="https://mandalagroup.menu/es/houdinni"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block relative overflow-hidden group"
-              style={{ width: '302px', height: '107px' }}
-            >
-              <Image
-                src="/btn-menu-1.png"
-                alt="Menú"
-                fill
-                className="object-cover group-hover:opacity-0 transition-opacity duration-200"
-              />
-              <Image
-                src="/btn-menu-2.png"
-                alt="Menú hover"
-                fill
-                className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-              />
-            </a>
-
-            {/* Blue accent bar */}
-            <div
-              style={{
-                background: '#3388ff',
-                height: '7px',
-                width: '100%',
-                marginTop: '8px',
-                overflow: 'clip',
-              }}
-            />
-          </div>
-
-          {/* CENTER COLUMN — Video player */}
-          <div
-            className="relative shrink-0 overflow-hidden"
-            style={{ width: '533px', height: '572px' }}
-          >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover video-hover"
-              poster="/videos/hero-poster.jpg"
-              style={{ filter: 'drop-shadow(0px 1px 1px rgba(0,0,0,0.25))' }}
-            >
-              <source src="/videos/hero-video-1.mp4" type="video/mp4" />
-              <source src="/videos/hero-video-2.mp4" type="video/mp4" />
-            </video>
-
-            {/* Center column buttons overlay */}
-            <div
-              className="absolute bottom-4 left-0 right-0 flex flex-col items-center gap-3 px-4"
-            >
-              <Link
-                href="/events"
-                className="block relative overflow-hidden group w-full"
-                style={{ height: '52px' }}
-              >
-                <Image
-                  src="/btn-events-1.png"
-                  alt="Eventos Privados"
-                  fill
-                  className="object-cover group-hover:opacity-0 transition-opacity duration-200"
-                />
-                <Image
-                  src="/btn-events-2.png"
-                  alt="Eventos Privados hover"
-                  fill
-                  className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                />
-              </Link>
-            </div>
-          </div>
-
-          {/* RIGHT COLUMN */}
-          <div
-            className="flex flex-col gap-2 shrink-0"
-            style={{ width: '302px', height: '525px' }}
-          >
-            {/* Calendar button */}
-            <Link
-              href="/calendar"
-              className="block relative overflow-hidden group"
-              style={{ width: '302px', height: '107px', flexShrink: 0 }}
-            >
-              <Image
-                src="/btn-calendar-1.png"
-                alt="Calendario"
-                fill
-                className="object-cover group-hover:opacity-0 transition-opacity duration-200"
-                style={{ filter: 'drop-shadow(0px 1px 1px rgba(0,0,0,0.25))' }}
-              />
-              <Image
-                src="/btn-calendar-2.png"
-                alt="Calendario hover"
-                fill
-                className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-              />
-            </Link>
-
-            {/* Contact button */}
-            <Link
-              href="/#contact"
-              className="block relative overflow-hidden group"
-              style={{ width: '302px', height: '100px', flexShrink: 0 }}
-            >
-              <Image
-                src="/btn-contact-1.png"
-                alt="Contacto"
-                fill
-                className="object-cover group-hover:opacity-0 transition-opacity duration-200"
-              />
-              <Image
-                src="/btn-contact-2.png"
-                alt="Contacto hover"
-                fill
-                className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-              />
-            </Link>
-
-            {/* Reservations button */}
+            {/* RESERVATIONS graffiti text */}
             <a
               href="https://tickets.houdinni.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="block relative overflow-hidden group"
-              style={{ width: '302px', height: '107px', flexShrink: 0 }}
+              className="font-druk"
+              style={{
+                fontSize: 'clamp(24px, 3.5vw, 44px)',
+                fontWeight: 700,
+                color: 'rgba(80, 80, 80, 0.7)',
+                letterSpacing: '0.01em',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
+                transform: 'rotate(-2deg)',
+                display: 'inline-block',
+                marginTop: 16,
+                cursor: 'pointer',
+              }}
+            >
+              RESERVATIONS
+            </a>
+          </div>
+
+          {/* RIGHT — Metro-style navigation buttons */}
+          <div className="houdinni-hero-right">
+            <a
+              href="https://mandalagroup.menu/es/houdinni"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'block' }}
             >
               <Image
-                src="/btn-reservations-1.png"
-                alt="Entradas"
-                fill
-                className="object-cover group-hover:opacity-0 transition-opacity duration-200"
+                src="/btn-menu-poster.png"
+                alt="Menu"
+                width={759}
+                height={268}
+                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
               />
+            </a>
+            <Link href="/events" style={{ display: 'block' }}>
               <Image
-                src="/btn-reservations-2.png"
-                alt="Entradas hover"
-                fill
-                className="object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                src="/btn-events.png"
+                alt="Events"
+                width={759}
+                height={268}
+                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
+              />
+            </Link>
+            <a href="/#contact" style={{ display: 'block' }}>
+              <Image
+                src="/btn-contact.png"
+                alt="Contact"
+                width={759}
+                height={268}
+                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
               />
             </a>
-
-            {/* Spacer */}
-            <div style={{ flex: 1 }} />
-
-            {/* Logo accent strip */}
-            <Image
-              src="/gallery/logo-strip-1.png"
-              alt=""
-              width={302}
-              height={74}
-              className="object-contain"
-            />
-          </div>
-        </div>
-
-        {/* ── MOBILE layout ── */}
-        <div className="tablet:hidden flex flex-col items-center gap-6 px-4 w-full max-w-sm mx-auto">
-          {/* Cyan accent */}
-          <div className="accent-cyan flex items-center justify-center">
-            <span className="font-druk text-houdinni-black text-xs">HOUDINNI</span>
-          </div>
-
-          {/* Video */}
-          <div className="relative w-full overflow-hidden" style={{ aspectRatio: '9/16', maxHeight: '60vh' }}>
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              poster="/videos/hero-poster.jpg"
-            >
-              <source src="/videos/hero-video-1.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          {/* Mobile nav buttons */}
-          <div className="grid grid-cols-2 gap-3 w-full">
-            <a href="https://mandalagroup.menu/es/houdinni" target="_blank" rel="noopener noreferrer"
-              className="relative overflow-hidden group" style={{ height: '80px' }}>
-              <Image src="/btn-menu-1.png" alt="Menú" fill className="object-cover" />
-            </a>
-            <Link href="/calendar" className="relative overflow-hidden group" style={{ height: '80px' }}>
-              <Image src="/btn-calendar-1.png" alt="Calendario" fill className="object-cover" />
+            <Link href="/calendar" style={{ display: 'block' }}>
+              <Image
+                src="/btn-calendar.png"
+                alt="Calendar"
+                width={717}
+                height={158}
+                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
+              />
             </Link>
-            <Link href="/events" className="relative overflow-hidden group" style={{ height: '80px' }}>
-              <Image src="/btn-events-1.png" alt="Privados" fill className="object-cover" />
-            </Link>
-            <a href="https://tickets.houdinni.com" target="_blank" rel="noopener noreferrer"
-              className="relative overflow-hidden group" style={{ height: '80px' }}>
-              <Image src="/btn-reservations-1.png" alt="Tickets" fill className="object-cover" />
-            </a>
           </div>
         </div>
       </div>
+
+      <style>{`
+        .houdinni-hero-mobile { display: none; }
+        .houdinni-hero-desktop { display: block; }
+
+        .houdinni-hero-grid {
+          display: grid;
+          grid-template-columns: 1fr 1.5fr 1fr;
+          gap: 24px;
+          align-items: center;
+          flex: 1;
+        }
+
+        .houdinni-hero-left {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .houdinni-hero-center {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+        }
+
+        .houdinni-hero-right {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          align-items: flex-end;
+        }
+
+        @media (max-width: 809px) {
+          .houdinni-hero-desktop { display: none !important; }
+          .houdinni-hero-mobile { display: block !important; }
+
+          .houdinni-hero-grid {
+            grid-template-columns: 1fr;
+            gap: 32px;
+          }
+
+          .houdinni-hero-left {
+            display: none;
+          }
+
+          .houdinni-hero-right {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            align-items: stretch;
+          }
+
+          .houdinni-hero-right img {
+            max-width: 100% !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
