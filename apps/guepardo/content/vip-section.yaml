@@ -1,0 +1,29 @@
+title: Experiencia VIP
+description: >-
+  Vive la noche en otro nivel. Nuestras mesas VIP te ofrecen atención
+  exclusiva, botella de bienvenida y el mejor lugar del recinto. Reserva ahora
+  y garantiza tu noche perfecta.
+whatsappLink: "https://wa.me/521234567890?text=Hola%2C%20quiero%20reservar%20mesa%20VIP%20en%20Guepardo"
+whatsappButtonText: Reservar por WhatsApp
+packages:
+  - name: Silver
+    description: Ideal para grupos de hasta 6 personas
+    price: "$2,500 MXN"
+    includes: >-
+      1 botella premium, entrada para 6 personas, mesa reservada toda la noche,
+      servicio personalizado
+    highlighted: false
+  - name: Gold
+    description: La experiencia completa para grupos de hasta 10 personas
+    price: "$5,000 MXN"
+    includes: >-
+      2 botellas premium, entrada para 10 personas, mesa en zona preferencial,
+      servicio VIP dedicado, botana incluida
+    highlighted: true
+  - name: Platinum
+    description: Para quienes exigen lo mejor. Grupos de hasta 15 personas
+    price: "$10,000 MXN"
+    includes: >-
+      4 botellas de lujo, entrada para 15 personas, mesa en área exclusiva,
+      servicio ultra-VIP, botana gourmet, acceso backstage
+    highlighted: false

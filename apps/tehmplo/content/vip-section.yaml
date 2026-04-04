@@ -1,0 +1,20 @@
+title: VIP TABLES
+description: Elevate your night with an exclusive VIP table experience. Personalized service, premium bottle selection, and the best views of the stage.
+whatsappNumber: "529841234567"
+whatsappMessage: "Hola! Me gustaría reservar una mesa VIP en Tehmplo."
+packages:
+  - name: Jungle Table
+    description: Perfect for small groups seeking the authentic Tehmplo experience.
+    minSpend: "$5,000 MXN"
+    features: "Table for 4 guests\nPremium bottle service\nDedicated host\nPriority entry"
+    highlighted: false
+  - name: Temple Suite
+    description: Our flagship VIP experience with the most exclusive positioning in the venue.
+    minSpend: "$12,000 MXN"
+    features: "Table for 8 guests\n2 Premium bottles\nDedicated host & server\nPriority entry\nWelcome bottle of champagne\nBest view of the stage"
+    highlighted: true
+  - name: Canopy Lounge
+    description: Semi-private lounge area nestled within the jungle canopy overhead.
+    minSpend: "$8,000 MXN"
+    features: "Lounge seating for 6\nPremium bottle service\nDedicated host\nPriority entry\nPersonal fan cooling"
+    highlighted: false

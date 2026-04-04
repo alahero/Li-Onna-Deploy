@@ -1,0 +1,8 @@
+question:
+  name: "¿Cuál es la edad mínima para entrar al festival?"
+  slug: acceso-general
+answer: >
+  El acceso al festival es exclusivo para mayores de 18 años.
+  Es obligatorio presentar identificación oficial vigente (INE, pasaporte o
+  licencia de conducir) en los filtros de acceso.
+order: 1

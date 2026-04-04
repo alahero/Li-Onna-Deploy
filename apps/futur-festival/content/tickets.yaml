@@ -1,0 +1,21 @@
+title: BOLETOS
+description: Elige tu experiencia. Acceso limitado.
+tiers:
+  - name: General
+    price: "$1,200 MXN"
+    description: Acceso general al festival los 3 días
+    features: "Acceso a todos los escenarios\nNo incluye zona VIP\nEntrada digital al correo"
+    soldOut: false
+    featured: false
+  - name: VIP
+    price: "$3,500 MXN"
+    description: La experiencia completa con beneficios exclusivos
+    features: "Acceso a zona VIP\nBar VIP con bebida de bienvenida\nAcceso a todos los escenarios\nEntrada digital al correo\nKit de bienvenida FUTUR"
+    soldOut: false
+    featured: true
+  - name: Platinum
+    price: "$7,000 MXN"
+    description: El máximo nivel de experiencia en FUTUR
+    features: "Zona Platinum exclusiva\nBar premium ilimitado\nAcceso a backstage limitado\nKit coleccionable FUTUR\nEntrada digital prioritaria\nMesa reservada"
+    soldOut: false
+    featured: false

@@ -1,0 +1,8 @@
+question:
+  name: "¿Los boletos son transferibles?"
+  slug: boletos
+answer: >
+  Los boletos son personales e intransferibles. Cada entrada digital está
+  vinculada al nombre del comprador. Al ingresar se verificará tu identidad
+  junto con la entrada digital enviada a tu correo electrónico.
+order: 2

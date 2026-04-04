@@ -1,0 +1,20 @@
+day:
+  name: "Sábado 15 Nov"
+  slug: sabado
+stages:
+  - stageName: Escenario Principal
+    sets:
+      - artistName: Bonobo
+        startTime: "21:30"
+        endTime: "23:00"
+        headliner: false
+      - artistName: Peggy Gou
+        startTime: "23:30"
+        endTime: "01:30"
+        headliner: true
+  - stageName: Escenario Techno
+    sets:
+      - artistName: Surgeon
+        startTime: "20:00"
+        endTime: "22:30"
+        headliner: false

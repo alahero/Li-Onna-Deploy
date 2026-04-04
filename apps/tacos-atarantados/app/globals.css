@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Fredoka+One&display=swap');
+
+:root {
+  --font-sans: 'Nunito', system-ui, sans-serif;
+  --font-display: 'Fredoka One', system-ui, sans-serif;
+
+  --brand-red: #E63946;
+  --brand-yellow: #FFB703;
+  --brand-dark: #1A1A2E;
+  --brand-cream: #FFF8E7;
+  --brand-orange: #FB8500;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--brand-cream);
+  color: var(--brand-dark);
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-red text-white font-bold text-lg
+           shadow-lg hover:bg-red-600 active:scale-95 transition-all duration-200 cursor-pointer;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-yellow text-brand-dark font-bold text-lg
+           shadow-lg hover:bg-yellow-400 active:scale-95 transition-all duration-200 cursor-pointer;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-brand-dark text-brand-dark font-bold text-lg
+           hover:bg-brand-dark hover:text-brand-cream active:scale-95 transition-all duration-200 cursor-pointer;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-display text-brand-dark mb-4;
+  }
+
+  .section-subtitle {
+    @apply text-xl text-gray-600 max-w-2xl mx-auto;
+  }
+
+  .card-base {
+    @apply bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300;
+  }
+
+  .badge-spicy {
+    @apply inline-flex items-center gap-0.5 text-sm font-semibold text-brand-orange;
+  }
+
+  .badge-veg {
+    @apply inline-flex items-center gap-1 text-sm font-semibold text-green-600 bg-green-50 px-2 py-0.5 rounded-full;
+  }
+
+  .badge-featured {
+    @apply inline-flex items-center gap-1 text-xs font-bold text-white bg-brand-red px-2.5 py-1 rounded-full uppercase tracking-wide;
+  }
+}
+
+/* Zigzag divider */
+.zigzag-bottom {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 20px), 95% 100%, 90% calc(100% - 20px), 85% 100%, 80% calc(100% - 20px), 75% 100%, 70% calc(100% - 20px), 65% 100%, 60% calc(100% - 20px), 55% 100%, 50% calc(100% - 20px), 45% 100%, 40% calc(100% - 20px), 35% 100%, 30% calc(100% - 20px), 25% 100%, 20% calc(100% - 20px), 15% 100%, 10% calc(100% - 20px), 5% 100%, 0 calc(100% - 20px));
+}
+
+.zigzag-top {
+  clip-path: polygon(0 20px, 5% 0, 10% 20px, 15% 0, 20% 20px, 25% 0, 30% 20px, 35% 0, 40% 20px, 45% 0, 50% 20px, 55% 0, 60% 20px, 65% 0, 70% 20px, 75% 0, 80% 20px, 85% 0, 90% 20px, 95% 0, 100% 20px, 100% 100%, 0 100%);
+}
+
+/* Animated underline */
+.animated-underline {
+  position: relative;
+}
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--brand-yellow);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.animated-underline:hover::after {
+  transform: scaleX(1);
+}
+
+/* Food emoji bounce on hover */
+.food-bounce:hover {
+  animation: foodBounce 0.4s ease;
+}
+@keyframes foodBounce {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.2) rotate(-5deg); }
+  60%  { transform: scale(1.1) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--brand-cream); }
+::-webkit-scrollbar-thumb { background: var(--brand-red); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--brand-orange); }

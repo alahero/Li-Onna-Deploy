@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Cormorant Garamond', serif;
+    --font-body: 'Jost', sans-serif;
+    --font-japanese: 'Noto Serif JP', serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-black text-brand-cream antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    @apply tracking-wide;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  /* Elegant scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-gold rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-gold-light;
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-brand-crimson text-brand-cream;
+  }
+}
+
+@layer components {
+  /* Typography */
+  .display-title {
+    font-family: var(--font-display);
+    @apply text-brand-cream tracking-widest;
+  }
+
+  .japanese-text {
+    font-family: var(--font-japanese);
+    @apply tracking-widest;
+  }
+
+  /* Gold accents */
+  .gold-text {
+    @apply text-brand-gold;
+  }
+
+  .crimson-text {
+    @apply text-brand-crimson;
+  }
+
+  .gold-border {
+    @apply border border-brand-gold/40;
+  }
+
+  .gold-divider {
+    @apply w-12 h-px bg-brand-gold mx-auto my-6;
+  }
+
+  .gold-divider-left {
+    @apply w-12 h-px bg-brand-gold my-6;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-10 py-4 bg-brand-crimson text-brand-cream
+           font-body font-medium uppercase tracking-widest text-xs
+           transition-all duration-500 hover:bg-brand-crimson-light
+           hover:-translate-y-0.5 active:translate-y-0
+           border border-brand-crimson hover:border-brand-crimson-light;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-10 py-4 bg-transparent text-brand-gold
+           font-body font-medium uppercase tracking-widest text-xs
+           transition-all duration-500 border border-brand-gold/60
+           hover:bg-brand-gold hover:text-brand-black hover:border-brand-gold
+           hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center px-10 py-4 bg-transparent text-brand-cream
+           font-body font-medium uppercase tracking-widest text-xs
+           transition-all duration-500 border border-brand-cream/30
+           hover:border-brand-cream/70 hover:text-brand-cream
+           hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  /* Cards */
+  .card-dark {
+    @apply bg-brand-charcoal/50 border border-brand-gold/10
+           hover:border-brand-gold/30 transition-all duration-500;
+  }
+
+  /* Section styles */
+  .section-padding {
+    @apply py-24 px-6 md:px-12 lg:px-20;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    @apply text-4xl md:text-5xl lg:text-6xl text-brand-cream tracking-wide;
+  }
+
+  .section-subtitle {
+    @apply text-xs uppercase tracking-widest2 text-brand-gold font-body;
+  }
+
+  /* Overlays */
+  .overlay-dark {
+    @apply absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/90;
+  }
+
+  .overlay-subtle {
+    @apply absolute inset-0 bg-brand-black/60;
+  }
+
+  /* Decorative elements */
+  .ornament-line {
+    @apply w-px h-16 bg-brand-gold/40 mx-auto;
+  }
+
+  .ornament-diamond {
+    @apply w-1.5 h-1.5 bg-brand-gold rotate-45 inline-block mx-3;
+  }
+
+  /* Nav link style */
+  .nav-link {
+    @apply text-brand-cream/70 hover:text-brand-cream text-xs uppercase tracking-widest
+           transition-colors duration-300 font-body font-medium;
+  }
+
+  .nav-link-active {
+    @apply text-brand-gold;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 40px rgba(200, 169, 126, 0.4);
+  }
+
+  .text-shadow-sm {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 30px rgba(200, 169, 126, 0.2);
+  }
+
+  .glow-crimson {
+    box-shadow: 0 0 30px rgba(155, 35, 53, 0.3);
+  }
+
+  .border-gradient-gold {
+    border-image: linear-gradient(135deg, transparent, #C8A97E, transparent) 1;
+  }
+
+  /* Japanese-inspired grid overlay */
+  .bg-grid-subtle {
+    background-image: linear-gradient(rgba(200, 169, 126, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(200, 169, 126, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+}

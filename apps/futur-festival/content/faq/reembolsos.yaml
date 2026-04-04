@@ -1,0 +1,9 @@
+question:
+  name: "¿Hay política de reembolsos?"
+  slug: reembolsos
+answer: >
+  Los boletos no son reembolsables una vez adquiridos. En caso de cancelación
+  del evento por causas de fuerza mayor, se notificará a los compradores y se
+  aplicará el procedimiento correspondiente según los términos y condiciones
+  de la plataforma de venta.
+order: 3

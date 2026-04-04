@@ -1,0 +1,10 @@
+question:
+  name: "¿Qué objetos están prohibidos en el festival?"
+  slug: objetos-prohibidos
+answer: >
+  Está prohibido ingresar con: armas de cualquier tipo, alcohol externo,
+  cámaras profesionales con lente intercambiable, drones, sombrillas,
+  sillas de ruedas no plegables, y cualquier objeto que pueda representar
+  un riesgo para otros asistentes. El equipo de seguridad se reserva el
+  derecho de negar el acceso si se detectan objetos prohibidos.
+order: 4

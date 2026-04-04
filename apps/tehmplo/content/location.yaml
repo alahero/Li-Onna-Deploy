@@ -1,0 +1,19 @@
+address: Carretera Tulum-Boca Paila Km 5.5, Tulum, Quintana Roo, Mexico
+mapUrl: null
+mapDirectionsUrl: "https://maps.google.com/?q=Carretera+Tulum-Boca+Paila+Km+5.5+Tulum+Mexico"
+phone: "+52 984 123 4567"
+email: hello@tehmplo.mx
+openingHours: "Thursday – Sunday\n10:00 PM – 5:00 AM"
+travelTimes:
+  - from: Tulum Town Center
+    duration: 10 min
+    method: car
+  - from: Tulum Beach Hotels
+    duration: 5 min
+    method: car
+  - from: Cancun Airport
+    duration: 2 hrs
+    method: car
+  - from: Playa del Carmen
+    duration: 1 hr
+    method: car

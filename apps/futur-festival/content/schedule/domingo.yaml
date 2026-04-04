@@ -1,0 +1,14 @@
+day:
+  name: "Domingo 16 Nov"
+  slug: domingo
+stages:
+  - stageName: Escenario Principal
+    sets:
+      - artistName: Maceo Plex
+        startTime: "22:00"
+        endTime: "00:00"
+        headliner: false
+      - artistName: Charlotte de Witte
+        startTime: "00:00"
+        endTime: "02:00"
+        headliner: true

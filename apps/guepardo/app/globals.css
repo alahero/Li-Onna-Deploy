@@ -1,0 +1,98 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-black text-brand-white antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    @apply tracking-wider;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-brand-black;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-brand-gold rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-gold-light;
+  }
+}
+
+@layer components {
+  .gold-text {
+    @apply text-brand-gold;
+  }
+
+  .gold-border {
+    @apply border border-brand-gold;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3 bg-brand-gold text-brand-black font-bold uppercase tracking-widest text-sm transition-all duration-300 hover:bg-brand-gold-light hover:scale-105 active:scale-95;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-8 py-3 border border-brand-gold text-brand-gold font-bold uppercase tracking-widest text-sm transition-all duration-300 hover:bg-brand-gold hover:text-brand-black hover:scale-105 active:scale-95;
+  }
+
+  .section-title {
+    @apply font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-widest text-brand-white;
+  }
+
+  .gold-divider {
+    @apply w-16 h-px bg-brand-gold mx-auto my-4;
+  }
+
+  .card-dark {
+    @apply bg-brand-dark border border-white/10 hover:border-brand-gold/50 transition-all duration-300;
+  }
+
+  .overlay-dark {
+    @apply absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80;
+  }
+}
+
+@layer utilities {
+  .text-shadow-gold {
+    text-shadow: 0 0 30px rgba(201, 168, 76, 0.5);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+  }
+
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  }
+}

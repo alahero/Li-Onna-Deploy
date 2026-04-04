@@ -1,0 +1,28 @@
+day:
+  name: "Viernes 14 Nov"
+  slug: viernes
+stages:
+  - stageName: Escenario Principal
+    sets:
+      - artistName: Warm Up DJ
+        startTime: "18:00"
+        endTime: "20:00"
+        headliner: false
+      - artistName: Nathy Peluso
+        startTime: "20:00"
+        endTime: "21:30"
+        headliner: false
+      - artistName: Bicep
+        startTime: "23:00"
+        endTime: "01:00"
+        headliner: true
+  - stageName: Escenario Secundario
+    sets:
+      - artistName: Opening Act
+        startTime: "17:00"
+        endTime: "19:00"
+        headliner: false
+      - artistName: Proyecto Local
+        startTime: "19:00"
+        endTime: "21:00"
+        headliner: false

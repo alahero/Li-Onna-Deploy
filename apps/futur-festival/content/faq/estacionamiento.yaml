@@ -1,0 +1,9 @@
+question:
+  name: "¿Hay estacionamiento en el venue?"
+  slug: estacionamiento
+answer: >
+  Foro Sol cuenta con estacionamiento propio con cupo limitado.
+  Recomendamos llegar en transporte público (Metro Velódromo o Ciudad
+  Deportiva, Línea 9), en taxi, Uber o transporte compartido para evitar
+  contratiempos. Habrá zonas de descenso designadas en los alrededores.
+order: 5
