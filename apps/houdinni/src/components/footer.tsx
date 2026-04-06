@@ -33,7 +33,7 @@ export function Footer() {
           overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column' as const,
-          gap: '0px',
+          gap: '24px',
         }}
       >
         {/* ── INFOS SECTION ── */}
