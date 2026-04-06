@@ -76,7 +76,7 @@ export default function CalendarPage() {
 
         {/* Framer Events widget — scroll anchor: vZ1hwO0ep */}
         <section
-          id="trigger"
+          id="vZ1hwO0ep"
           className="bg-houdinni-black"
           style={{ padding: '80px 24px', minHeight: '60vh' }}
         >

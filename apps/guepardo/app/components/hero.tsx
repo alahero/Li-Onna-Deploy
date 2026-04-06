@@ -40,6 +40,7 @@ export function HeroSection() {
           overflow: 'visible',
           willChange: 'transform',
           pointerEvents: 'none',
+          mixBlendMode: 'multiply',
         }}
       >
         <Image
@@ -67,6 +68,7 @@ export function HeroSection() {
           overflow: 'hidden',
           willChange: 'transform',
           pointerEvents: 'none',
+          mixBlendMode: 'multiply',
         }}
       >
         <Image

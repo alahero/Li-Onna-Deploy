@@ -47,10 +47,11 @@ export function Navbar() {
           />
         </div>
 
-        {/* Hamburger button */}
+        {/* Hamburger button — mobile only (<810px) */}
         <button
           onClick={() => setOpen(true)}
           aria-label="Abrir menú"
+          className="hamburger-btn"
           style={{
             position: 'absolute',
             right: '24px',
@@ -59,7 +60,6 @@ export function Navbar() {
             background: 'none',
             border: 'none',
             padding: '8px',
-            display: 'flex',
             flexDirection: 'column',
             gap: '5px',
             cursor: 'inherit',

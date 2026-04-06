@@ -15,18 +15,7 @@ export default function Hero() {
       }}
       aria-label="Hero"
     >
-      {/* Hero background image */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: 'url(/images/hero-bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
-        aria-hidden="true"
-      />
+      {/* Dark atmospheric background — the Spline 3D scene provides the visual */}
 
       {/* Vimeo video overlay — very low opacity */}
       <div

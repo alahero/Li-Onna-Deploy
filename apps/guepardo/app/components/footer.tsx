@@ -114,7 +114,7 @@ export function Footer({
           {/* Address */}
           <p
             style={{
-              fontFamily: '"Editorial New Regular", "Playfair Display", serif',
+              fontFamily: '"Editorial New Regular", serif',
               fontSize: '14px',
               letterSpacing: '0.1em',
               textAlign: 'right',
@@ -307,7 +307,7 @@ export function Footer({
         {/* Copyright text */}
         <p
           style={{
-            fontFamily: '"Editorial New Regular", "Playfair Display", serif',
+            fontFamily: '"Editorial New Regular", serif',
             fontSize: '12px',
             letterSpacing: '0.02em',
             textAlign: 'center',

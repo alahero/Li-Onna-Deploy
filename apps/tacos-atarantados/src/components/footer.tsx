@@ -104,7 +104,7 @@ export function Footer() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           {/* SVG horizontal rule */}
           <svg width="100%" height="2" viewBox="0 0 1089 2" fill="none">
-            <path d="M 0 0 L 1089 0" stroke="#0c7528" strokeWidth="2" fill="#0c7528" />
+            <path d="M 0 0 L 1089 0" stroke="#0c7528" strokeWidth="2" fill="none" />
           </svg>
 
           <div style={{ display: 'flex', flexDirection: 'row', gap: '43px', alignItems: 'center', padding: '0 41px', flexWrap: 'wrap' }}>

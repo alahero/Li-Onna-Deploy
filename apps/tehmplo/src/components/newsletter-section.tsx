@@ -76,7 +76,7 @@ export default function NewsletterSection() {
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
-            gap: 16,
+            gap: 20,
           }}
         >
           {/* 2×2 grid of fields */}
@@ -148,7 +148,7 @@ export default function NewsletterSection() {
               borderRadius: 5,
               fontFamily: '"Source Sans 3", sans-serif',
               fontSize: 16,
-              fontWeight: 500,
+              fontWeight: 400,
               color: '#ffffff',
               letterSpacing: '0.14em',
               cursor: 'pointer',

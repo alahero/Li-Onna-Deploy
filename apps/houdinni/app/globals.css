@@ -37,6 +37,14 @@
   font-weight: 700;
 }
 
+@font-face {
+  font-family: "Editorial New Regular";
+  src: url("/fonts/editorial-new-regular.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
 /* ============================================================
    BASE STYLES
    ============================================================ */

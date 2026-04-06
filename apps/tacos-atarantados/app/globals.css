@@ -113,6 +113,25 @@ html {
 }
 
 /* ============================================================
+   RESPONSIVE NAV — desktop shows grid in hero, mobile uses hamburger
+   ============================================================ */
+.hero-nav-grid {
+  display: none;
+}
+.hamburger-btn {
+  display: flex;
+}
+
+@media (min-width: 810px) {
+  .hero-nav-grid {
+    display: flex;
+  }
+  .hamburger-btn {
+    display: none !important;
+  }
+}
+
+/* ============================================================
    UTIL
    ============================================================ */
 .overflow-clip {

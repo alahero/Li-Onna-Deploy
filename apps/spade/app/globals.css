@@ -3,13 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --font-display: "Arial Black", Arial, sans-serif;
+  }
+
   html {
     scroll-behavior: smooth;
-    background-color: #ffffff;
+    background-color: #1c1c1c;
   }
 
   body {
-    background-color: #ffffff;
+    background-color: #1c1c1c;
     color: #ffffff;
     min-height: 100vh;
     overflow-x: hidden;

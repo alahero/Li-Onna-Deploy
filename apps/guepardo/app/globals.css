@@ -16,9 +16,14 @@
   size-adjust: 109.48%;
 }
 
-/* Editorial New Regular — Framer internal font
-   Using Playfair Display as open-source substitute. */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400&display=swap');
+/* Editorial New Regular — original Framer font */
+@font-face {
+  font-family: 'Editorial New Regular';
+  src: url('/fonts/editorial-new-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 @layer base {
   :root {

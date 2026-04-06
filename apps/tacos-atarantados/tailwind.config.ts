@@ -11,11 +11,17 @@ const config: Config = {
         'brand-green': '#0c7528',
         'brand-dark-green': '#085e1f',
         'brand-white': '#ffffff',
+        'brand-black': '#000000',
       },
       fontFamily: {
         gothic: ['"Gothic Regular"', 'sans-serif'],
         oswald: ['Oswald', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+      },
+      screens: {
+        'sm': '390px',
+        'md': '810px',
+        'lg': '1200px',
       },
       keyframes: {
         marquee: {

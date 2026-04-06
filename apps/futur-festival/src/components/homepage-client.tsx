@@ -22,7 +22,7 @@ export function HomepageClient() {
             transition={{ type: 'spring', bounce: 0.2, delay: 0, duration: 0.4 }}
           >
             <a
-              href="https://kappafuturfestival.it"
+              href="https://www.kappafuturfestival.it/en/?utm_source=website&utm_medium=mexico&utm_campaign=kffmx_preregistration"
               target="_blank"
               rel="noopener noreferrer"
               className="nav-link"

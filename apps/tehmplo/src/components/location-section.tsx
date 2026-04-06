@@ -80,7 +80,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
               style={{
                 width: '100%',
                 maxWidth: 512,
-                height: 370,
+                height: 300,
                 overflow: 'hidden',
                 borderRadius: 4,
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -89,7 +89,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
               <iframe
                 src={embedUrl}
                 width="512"
-                height="370"
+                height="300"
                 style={{ border: 0, width: '100%', height: '100%' }}
                 allowFullScreen
                 loading="lazy"
