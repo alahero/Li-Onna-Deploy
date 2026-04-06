@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import './framer.css';
+import './fonts.css';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Mandala Group — World Class Experiences Crafters',
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>
+      <body style={{ backgroundColor: '#0e0e0f', color: '#fff', margin: 0, padding: 0, fontFamily: 'Inter, sans-serif' }}>
         {children}
       </body>
     </html>

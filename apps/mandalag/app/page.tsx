@@ -1,39 +1,138 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import Script from 'next/script';
-import Footer from './components/footer';
-import Press from './components/press';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../keystatic.config';
+import Navbar from './components/navbar';
+import Hero from './components/hero';
+import Divisions from './components/divisions';
+import Portfolio from './components/portfolio';
 import Newsletter from './components/newsletter';
+import Press from './components/press';
+import Footer from './components/footer';
 
-function readHTML(filename: string) {
-  return readFileSync(join(process.cwd(), 'app', filename), 'utf-8');
+const defaultDivisions = [
+  { title: 'Daylife', description: 'Transforming normal days into extraordinary experiences.', video: '/assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4' },
+  { title: 'Nightlife', description: 'Immersive experiences crafted for every type of guest.', video: '/assets/videos/7tiqi431R1KYIVCJlrK16dnLdIU.mp4' },
+  { title: 'Gastronomic', description: 'Innovative cuisine, captivating atmospheres, and extraordinary flavors.', video: '/assets/videos/eq7W1DDNviB31t2pfiwkBmYaviM.mp4' },
+  { title: 'Events', description: 'From roaring festivals to intimate, high-end gatherings.', video: '/assets/videos/aQSesW4Wk7lSRTbI5Fp1zEZArdw.mp4' },
+];
+
+const defaultVenues = [
+  { name: 'Bagatelle', image: '/assets/images/HSjEBFvbZVDMKm9IX4vwwfW3wlI_e442d74f.jpg', category: 'Gastronomic', url: 'https://bagatelle.com/' },
+  { name: 'Tehmplo', image: '/assets/images/JLsOFj6OpVVLpYO6TtJvJ37Kxg_e442d74f.jpg', category: 'Nightlife', url: 'https://www.tehmplo.com' },
+  { name: 'Sala de Despecho', image: '/assets/images/sqWnUy1KBncNEwAHNQpAKuaS79g_e442d74f.jpg', category: 'Nightlife', url: 'https://saladedespecho.mx' },
+  { name: 'Bonbonniere', image: '/assets/images/WOqCmD0j7ub3dpWN61gmjkukIsQ_e442d74f.jpg', category: 'Nightlife', url: 'https://bonbonniere.mx' },
+  { name: 'Houdinni', image: '/assets/images/iVWvmgTWKcKE5IuFp0aARq2xHk_e442d74f.jpg', category: 'Nightlife', url: 'https://www.instagram.com/houdinni.madrid' },
+  { name: 'FUTUR Festival', image: '/assets/images/O3DqJlhRNrm9K7rwRhK7x3PiTrw_e442d74f.jpg', category: 'Events', url: 'https://www.instagram.com/futurfestivalmexico' },
+];
+
+const defaultPress = [
+  {
+    title: "Graziano's se convertirá en el mejor restaurante en Puerta de Hierro",
+    source: 'El Heraldo',
+    image: '/assets/images/aX70cNCEqMI50hfgPTOyEGcE_5d2c854d.jpg',
+    url: 'https://heraldodemexico.com.mx/estilo-de-vida/2024/6/17/grazianos-se-convertira-en-el-mejor-restaurante-en-puerta-de-hierro-613161.html',
+  },
+];
+
+async function getData() {
+  try {
+    const reader = createReader(process.cwd(), keystaticConfig) as any;
+
+    const [homepage, navbar, newsletter, footer] = await Promise.all([
+      reader.singletons.homepage?.read().catch(() => null) ?? null,
+      reader.singletons.navbar?.read().catch(() => null) ?? null,
+      reader.singletons.newsletter?.read().catch(() => null) ?? null,
+      reader.singletons.footer?.read().catch(() => null) ?? null,
+    ]);
+
+    const [divisionSlugs, venueSlugs, pressSlugs] = await Promise.all([
+      reader.collections.divisions?.list().catch(() => []) ?? [],
+      reader.collections.venues?.list().catch(() => []) ?? [],
+      reader.collections.press?.list().catch(() => []) ?? [],
+    ]);
+
+    const divisions = divisionSlugs.length > 0
+      ? (await Promise.all(divisionSlugs.map((s: string) => reader.collections.divisions.read(s).catch(() => null)))).filter(Boolean)
+      : null;
+
+    const venues = venueSlugs.length > 0
+      ? (await Promise.all(venueSlugs.map((s: string) => reader.collections.venues.read(s).catch(() => null)))).filter(Boolean)
+      : null;
+
+    const press = pressSlugs.length > 0
+      ? (await Promise.all(pressSlugs.map((s: string) => reader.collections.press.read(s).catch(() => null)))).filter(Boolean)
+      : null;
+
+    return { homepage, navbar, newsletter, footer, divisions, venues, press };
+  } catch {
+    return { homepage: null, navbar: null, newsletter: null, footer: null, divisions: null, venues: null, press: null };
+  }
 }
 
-export default function HomePage() {
-  const beforeNewsletter = readHTML('framer-before-newsletter.html');
-  const afterFooter = readHTML('framer-after-footer.html');
+export default async function HomePage() {
+  const data = await getData();
+
+  const hero = {
+    line1: data.homepage?.heroLine1 || 'WORLD CLASS',
+    line2: data.homepage?.heroLine2 || 'EXPERIENCES',
+    line3: data.homepage?.heroLine3 || 'CRAFTERS',
+    videoSrc: data.homepage?.heroVideo || '/assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4',
+    cta1Text: data.homepage?.cta1Text || 'EXPLORE OUR VENUES',
+    cta1Link: data.homepage?.cta1Link || '#venues',
+    cta2Text: data.homepage?.cta2Text || 'RESERVATIONS',
+    cta2Link: data.homepage?.cta2Link || '#reservations',
+  };
+
+  const nav = {
+    logoImage: data.navbar?.logoImage || '/assets/images/mandala-logo-nav.svg',
+    link1Text: data.navbar?.link1Text || 'Venues',
+    link2Text: data.navbar?.link2Text || 'Corporate Events',
+    link3Text: data.navbar?.link3Text || 'Private Events',
+  };
+
+  const divisions = data.divisions && data.divisions.length > 0
+    ? (data.divisions as any[]).sort((a, b) => (a.order || 0) - (b.order || 0)).map(d => ({ title: d.title, description: d.description, video: d.video }))
+    : defaultDivisions;
+
+  const venues = data.venues && data.venues.length > 0
+    ? (data.venues as any[]).sort((a, b) => (a.order || 0) - (b.order || 0)).map(v => ({ name: v.name, image: v.image || '', category: v.category, url: v.url || '#' }))
+    : defaultVenues;
+
+  const venueCategories = [...new Set(venues.map(v => v.category))];
+
+  const nl = {
+    description: data.newsletter?.description || "Subscribe to the ultimate insider's guide to unforgettable experiences.",
+    buttonText: data.newsletter?.buttonText || 'Submit',
+    image: data.newsletter?.image || '/assets/images/wDCJ6PQEkdOh0itp6dwputtehl4_f0569aea.png',
+  };
+
+  const press = data.press && data.press.length > 0
+    ? (data.press as any[]).sort((a, b) => (a.order || 0) - (b.order || 0)).map(p => ({ title: p.title, source: p.source || '', image: p.image || '', url: p.url || '#' }))
+    : defaultPress;
+
+  const footerLinks = data.footer
+    ? [
+        { text: data.footer.link1Text || 'PRIVACY', url: data.footer.link1Url || '/privacy' },
+        { text: data.footer.link2Text || 'TERMS & CONDITIONS', url: data.footer.link2Url || '/terms' },
+        { text: data.footer.link3Text || 'LEGAL', url: data.footer.link3Url || '/legal' },
+      ]
+    : [
+        { text: 'PRIVACY', url: '/privacy' },
+        { text: 'TERMS & CONDITIONS', url: '/terms' },
+        { text: 'LEGAL', url: '/legal' },
+      ];
 
   return (
-    <>
-      {/* Navbar + Hero + Divisions + Portfolio (still Framer HTML) */}
-      <div dangerouslySetInnerHTML={{ __html: beforeNewsletter }} />
-
-      {/* Migrated sections (React + Keystatic) */}
-      <Newsletter />
-      <Press />
-      <Footer />
-
-      {/* Framer handover data + SVG templates */}
-      <div dangerouslySetInnerHTML={{ __html: afterFooter }} />
-
-      {/* Framer scripts for remaining static sections */}
-      <Script src="/assets/js/rolldown-runtime.CYC24FXu.mjs" type="module" strategy="afterInteractive" />
-      <Script src="/assets/js/react.C31UNSk5.mjs" type="module" strategy="afterInteractive" />
-      <Script src="/assets/js/motion.BewZN2YG.mjs" type="module" strategy="afterInteractive" />
-      <Script src="/assets/js/framer.BMeUTG1O.mjs" type="module" strategy="afterInteractive" />
-      <Script src="/assets/js/shared-lib.C_Z5cBVP.mjs" type="module" strategy="afterInteractive" />
-      <Script src="/assets/js/dJTGG6EOX-FUNsI-jZ7QN19opHYHcO5KYGETpWSEZ8w.DwYR7GYs.mjs" type="module" strategy="afterInteractive" />
-      <Script src="/assets/js/script_main.Dv_Ysazf.mjs" type="module" strategy="afterInteractive" />
-    </>
+    <main>
+      <Navbar {...nav} />
+      <Hero {...hero} />
+      <Divisions divisions={divisions} />
+      <Portfolio venues={venues} categories={venueCategories} />
+      <Newsletter {...nl} />
+      <Press articles={press} />
+      <Footer
+        logoImage={data.footer?.logoImage || '/assets/images/mandala-logo-white.svg'}
+        links={footerLinks}
+      />
+    </main>
   );
 }
