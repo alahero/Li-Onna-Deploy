@@ -120,7 +120,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
             <p
               style={{
                 fontFamily: '"Austin Cyr Italic", serif',
-                fontSize: 22,
+                fontSize: 24,
                 fontWeight: 400,
                 fontStyle: 'italic',
                 color: '#ffffff',
@@ -128,7 +128,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
                 marginBottom: 8,
               }}
             >
-              Parcela, Carretera Tulum - Boca Paila 1678-Km. 5.5,
+              Parcela, Carretera Tulum - Boca Paila
             </p>
             <p
               style={{
@@ -140,7 +140,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
                 marginBottom: 32,
               }}
             >
-              77780 Tulum, Q.R.
+              1678-Km. 5.5, 77780 Tulum, Q.R.
             </p>
 
             {/* OPEN IN MAPS button */}
@@ -153,7 +153,7 @@ export default function LocationSection({ data }: LocationSectionProps) {
                 fontSize: 19,
                 fontWeight: 400,
                 color: '#ffffff',
-                letterSpacing: '0.14em',
+                letterSpacing: '2.66px',
                 lineHeight: '1.5em',
                 border: '2px solid #ef8024',
                 borderRadius: 5,
@@ -185,8 +185,8 @@ export default function LocationSection({ data }: LocationSectionProps) {
                 <p
                   style={{
                     fontFamily: '"Source Sans 3", sans-serif',
-                    fontSize: 17,
-                    fontWeight: 500,
+                    fontSize: 15,
+                    fontWeight: 400,
                     color: '#ffffff',
                     letterSpacing: '0.14em',
                     lineHeight: '1.5em',
@@ -198,8 +198,8 @@ export default function LocationSection({ data }: LocationSectionProps) {
                 <p
                   style={{
                     fontFamily: '"Source Sans 3", sans-serif',
-                    fontSize: 17,
-                    fontWeight: 500,
+                    fontSize: 15,
+                    fontWeight: 400,
                     color: '#ffffff',
                     letterSpacing: '0.14em',
                     lineHeight: '1.5em',
@@ -226,11 +226,11 @@ export default function LocationSection({ data }: LocationSectionProps) {
                   <p
                     style={{
                       fontFamily: '"Source Sans 3", sans-serif',
-                      fontSize: 17,
-                      fontWeight: 500,
+                      fontSize: 12,
+                      fontWeight: 400,
                       color: '#ffffff',
                       letterSpacing: '0.14em',
-                      lineHeight: '1.5em',
+                      lineHeight: '24px',
                     }}
                   >
                     {row.label}
@@ -238,10 +238,11 @@ export default function LocationSection({ data }: LocationSectionProps) {
                   <p
                     style={{
                       fontFamily: '"Source Sans 3", sans-serif',
-                      fontSize: 17,
+                      fontSize: 12,
+                      fontWeight: 400,
                       color: '#ffffff',
                       letterSpacing: '0.14em',
-                      lineHeight: '1.5em',
+                      lineHeight: '24px',
                     }}
                   >
                     {row.hotelZone}
@@ -249,10 +250,11 @@ export default function LocationSection({ data }: LocationSectionProps) {
                   <p
                     style={{
                       fontFamily: '"Source Sans 3", sans-serif',
-                      fontSize: 17,
+                      fontSize: 12,
+                      fontWeight: 400,
                       color: '#ffffff',
                       letterSpacing: '0.14em',
-                      lineHeight: '1.5em',
+                      lineHeight: '24px',
                     }}
                   >
                     {row.aldeaZama}

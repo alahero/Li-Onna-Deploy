@@ -89,6 +89,22 @@ export default function VipSection({ data }: VipSectionProps) {
           padding: '0 24px',
         }}
       >
+        {/* VIP TABLES label */}
+        <p
+          style={{
+            fontFamily: '"Source Sans 3", sans-serif',
+            fontSize: 18,
+            fontWeight: 400,
+            color: 'rgb(239, 128, 36)',
+            letterSpacing: '2.52px',
+            lineHeight: '1em',
+            marginBottom: 12,
+            textTransform: 'uppercase',
+          }}
+        >
+          VIP TABLES
+        </p>
+
         {/* Headline */}
         <h2
           style={{
@@ -99,13 +115,17 @@ export default function VipSection({ data }: VipSectionProps) {
             textTransform: 'uppercase',
           }}
         >
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 400 }}>
             ELEVATE{' '}
           </span>
           <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-            YOUR TULUM{' '}
+            YOUR
           </span>
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+          <br />
+          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+            TULUM{' '}
+          </span>
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 400 }}>
             EXPERIENCE.
           </span>
         </h2>
@@ -120,7 +140,7 @@ export default function VipSection({ data }: VipSectionProps) {
             fontSize: 19,
             fontWeight: 400,
             color: 'rgb(239, 128, 36)',
-            letterSpacing: '0.14em',
+            letterSpacing: '2.66px',
             lineHeight: '1.5em',
             border: '2px solid rgb(239, 128, 36)',
             borderRadius: 5,
@@ -144,7 +164,7 @@ export default function VipSection({ data }: VipSectionProps) {
             fontSize: 14,
             fontWeight: 400,
             color: '#ffffff',
-            letterSpacing: '0.14em',
+            letterSpacing: '1.96px',
             lineHeight: '1em',
             textTransform: 'uppercase',
           }}

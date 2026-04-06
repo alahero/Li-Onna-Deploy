@@ -37,7 +37,7 @@ export default function NewsletterSection() {
             fontSize: 18,
             fontWeight: 400,
             color: 'rgb(239, 128, 36)',
-            letterSpacing: '0.14em',
+            letterSpacing: '2.52px',
             lineHeight: '1em',
             marginBottom: 8,
             textTransform: 'uppercase',
@@ -53,10 +53,16 @@ export default function NewsletterSection() {
             textTransform: 'uppercase',
           }}
         >
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
-            JOIN THE REAL{' '}
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 400 }}>
+            JOIN{' '}
           </span>
           <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontStyle: 'italic', fontWeight: 400 }}>
+            THE{' '}
+          </span>
+          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontStyle: 'italic', fontWeight: 400 }}>
+            REAL{' '}
+          </span>
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 400 }}>
             TULUM
           </span>
         </h2>
@@ -88,17 +94,17 @@ export default function NewsletterSection() {
             }}
           >
             {[
-              { label: 'NAME', name: 'name', type: 'text', placeholder: 'Your name' },
-              { label: 'LAST NAME', name: 'lastName', type: 'text', placeholder: 'Your last name' },
-              { label: 'EMAIL', name: 'email', type: 'email', placeholder: 'your@email.com' },
-              { label: 'CELLPHONE', name: 'cellphone', type: 'tel', placeholder: '+52 000 000 0000' },
+              { label: 'NAME', name: 'name', type: 'text', placeholder: 'Your name', labelFont: '"Source Sans 3", sans-serif' },
+              { label: 'LAST NAME', name: 'lastName', type: 'text', placeholder: 'Your last name', labelFont: '"Source Sans 3", sans-serif' },
+              { label: 'EMAIL', name: 'email', type: 'email', placeholder: 'your@email.com', labelFont: 'Inter, sans-serif' },
+              { label: 'CELLPHONE', name: 'cellphone', type: 'tel', placeholder: '+52 000 000 0000', labelFont: 'Inter, sans-serif' },
             ].map((field) => (
               <div key={field.name}>
                 <label
                   htmlFor={field.name}
                   style={{
                     display: 'block',
-                    fontFamily: '"Source Sans 3", sans-serif',
+                    fontFamily: field.labelFont,
                     fontSize: 12,
                     fontWeight: 500,
                     color: '#ffffff',
@@ -147,10 +153,10 @@ export default function NewsletterSection() {
               border: 'none',
               borderRadius: 5,
               fontFamily: '"Source Sans 3", sans-serif',
-              fontSize: 16,
+              fontSize: 15,
               fontWeight: 400,
               color: '#ffffff',
-              letterSpacing: '0.14em',
+              letterSpacing: '2.1px',
               cursor: 'pointer',
               textTransform: 'uppercase',
               alignSelf: 'center',
@@ -164,8 +170,8 @@ export default function NewsletterSection() {
           <p
             style={{
               fontFamily: '"Source Sans 3", sans-serif',
-              fontSize: 12,
-              color: '#ffffff',
+              fontSize: 11,
+              color: 'rgb(136, 136, 136)',
               textAlign: 'center',
               lineHeight: 1.5,
             }}

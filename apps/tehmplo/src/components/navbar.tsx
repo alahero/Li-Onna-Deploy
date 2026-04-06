@@ -34,7 +34,7 @@ function NavLinkItem({ label, href, image, onClick }: NavLinkItemProps) {
         onMouseLeave={() => setHovered(false)}
         style={{
           fontFamily: '"Source Sans 3", sans-serif',
-          fontSize: 'inherit',
+          fontSize: 16,
           fontWeight: 500,
           color: hovered ? '#0088ff' : 'rgb(156, 155, 155)',
           letterSpacing: '0.05em',
@@ -137,7 +137,7 @@ export default function Navbar() {
 
         {/* Center logo */}
         <Link href="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-          <div style={{ position: 'relative', width: 157, height: 25 }}>
+          <div style={{ position: 'relative', width: 126, height: 20 }}>
             <Image
               src="/images/logo.png"
               alt="Tehmplo"

@@ -173,8 +173,8 @@ export default function AboutSection({ data }: AboutSectionProps) {
         <div style={{ textAlign: 'center', marginBottom: 64 }}>
           <h3
             style={{
-              fontFamily: '"Austin Cyr Roman", serif',
-              fontSize: 38,
+              fontFamily: '"Basteleur Moonlight", sans-serif',
+              fontSize: 23,
               fontWeight: 400,
               color: '#ffffff',
               lineHeight: '1em',
@@ -188,10 +188,10 @@ export default function AboutSection({ data }: AboutSectionProps) {
           <p
             style={{
               fontFamily: '"Source Sans 3", sans-serif',
-              fontSize: 13,
+              fontSize: 14,
               fontWeight: 400,
               color: '#ffffff',
-              lineHeight: 1.6,
+              lineHeight: 1.2,
               maxWidth: 700,
               margin: '0 auto 8px',
               letterSpacing: '0.05em',
@@ -203,10 +203,10 @@ export default function AboutSection({ data }: AboutSectionProps) {
           <p
             style={{
               fontFamily: '"Source Sans 3", sans-serif',
-              fontSize: 15,
+              fontSize: 14,
               fontWeight: 400,
               color: '#ffffff',
-              lineHeight: 1.7,
+              lineHeight: '16.8px',
               maxWidth: 600,
               margin: '0 auto',
               opacity: 0.8,
@@ -276,7 +276,7 @@ export default function AboutSection({ data }: AboutSectionProps) {
                   fontSize: 13,
                   fontWeight: 400,
                   color: '#ffffff',
-                  lineHeight: 1.7,
+                  lineHeight: '15.6px',
                   textAlign: 'center',
                   maxWidth: 255,
                   opacity: 0.85,

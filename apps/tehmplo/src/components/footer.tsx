@@ -183,23 +183,20 @@ export default function Footer({ siteSettings, location }: FooterProps) {
             >
               PRIVACY POLICY
             </Link>
-            <button
-              type="button"
+            <a
+              href="mailto:hello@tehmplo.mx"
               style={{
                 fontFamily: '"General Sans", sans-serif',
                 fontSize: 10,
                 fontWeight: 400,
                 color: '#ffffff',
-                background: 'none',
-                border: 'none',
-                cursor: 'pointer',
+                textDecoration: 'none',
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em',
-                padding: 0,
               }}
             >
-              COOKIES
-            </button>
+              CONTACT
+            </a>
 
             {/* Language selector */}
             <div

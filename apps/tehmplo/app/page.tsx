@@ -32,8 +32,33 @@ export default async function HomePage() {
         {/* Hero — full viewport */}
         <Hero />
 
-        {/* Events anchor (zero-height, per Framer design) */}
-        <header id="events" style={{ height: 0, overflow: 'hidden' }} aria-hidden="true" />
+        {/* Event Banner Section */}
+        <header
+          id="events"
+          style={{
+            width: '100%',
+            height: 244,
+            backgroundColor: '#0d0e11',
+            padding: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            position: 'relative',
+          }}
+        >
+          {/* Event banner image (e.g. Solomun) */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: 'url(/images/event-banner.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}
+          />
+        </header>
 
         {/* VIP Tables */}
         <VipSection data={vipSection} />
