@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import './framer.css';
 
 export const metadata: Metadata = {
   title: 'Mandala Group — World Class Experiences Crafters',
@@ -9,17 +9,12 @@ export const metadata: Metadata = {
     description: 'World class experiences crafters.',
     type: 'website',
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Mandala Group — World Class Experiences Crafters',
-    description: 'World class experiences crafters.',
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-mg-bg text-white antialiased font-inter">
+      <body>
         {children}
       </body>
     </html>

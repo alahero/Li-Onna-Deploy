@@ -1,21 +1,18 @@
-import Navbar from './components/navbar';
-import Hero from './components/hero';
-import Divisions from './components/divisions';
-import Portfolio from './components/portfolio';
-import Newsletter from './components/newsletter';
-import Press from './components/press';
-import Footer from './components/footer';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import VideoAutoplay from './video-autoplay';
+
+function getFramerHTML() {
+  const filePath = join(process.cwd(), 'app', 'framer-body.html');
+  return readFileSync(filePath, 'utf-8');
+}
 
 export default function HomePage() {
+  const html = getFramerHTML();
   return (
-    <main>
-      <Navbar />
-      <Hero />
-      <Divisions />
-      <Portfolio />
-      <Newsletter />
-      <Press />
-      <Footer />
-    </main>
+    <>
+      <VideoAutoplay />
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </>
   );
 }
