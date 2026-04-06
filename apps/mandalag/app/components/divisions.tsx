@@ -1,27 +1,31 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 const divisions = [
   {
     title: 'Daylife',
     description: 'Transforming normal days into extraordinary experiences.',
     video: '/videos/daylife.mp4',
+    hasBgBlack: false,
   },
   {
     title: 'Nightlife',
     description: 'Immersive experiences crafted for every type of guest.',
     video: '/videos/nightlife.mp4',
+    hasBgBlack: false,
   },
   {
     title: 'Gastronomic',
     description: 'Innovative cuisine, captivating atmospheres, and extraordinary flavors.',
     video: '/videos/gastronomic.mp4',
+    hasBgBlack: true,
   },
   {
     title: 'Events',
     description: 'From roaring festivals to intimate, high-end gatherings.',
     video: '/videos/events.mp4',
+    hasBgBlack: true,
   },
 ];
 
@@ -29,13 +33,14 @@ function DivisionCard({
   title,
   description,
   video,
+  hasBgBlack,
 }: {
   title: string;
   description: string;
   video: string;
+  hasBgBlack: boolean;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -45,36 +50,38 @@ function DivisionCard({
 
   return (
     <div
-      className="relative overflow-hidden rounded-[13px] cursor-pointer"
-      style={{ width: '100%', height: '100%' }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      className="relative overflow-hidden rounded-[13px]"
+      style={{
+        width: '100%',
+        height: '100%',
+        backgroundColor: hasBgBlack ? '#000' : 'transparent',
+      }}
     >
       {/* Video background */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        src={video}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+      <div className="absolute inset-0 z-0">
+        <video
+          ref={videoRef}
+          className="absolute inset-0 w-full h-full object-cover"
+          src={video}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+        />
+      </div>
 
-      {/* Dark overlay */}
+      {/* Dark overlay rgba(0,0,0,0.8) */}
       <div
-        className="absolute inset-0 z-[1] transition-opacity duration-500"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', opacity: hovered ? 0.5 : 0.8 }}
+        className="absolute inset-0 z-[1]"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
       />
 
-      {/* Stripe pattern */}
+      {/* Content - positioned at TOP-LEFT */}
       <div
-        className="absolute inset-0 z-[1] bg-stripe-pattern opacity-30"
-        style={{ backgroundSize: '126px 126px' }}
-      />
-
-      {/* Content - positioned at bottom-left */}
-      <div className="relative z-[2] flex h-full flex-col justify-end p-[30px] gap-[10px]">
+        className="relative z-[2] flex flex-col items-start gap-[5px]"
+        style={{ padding: '10px 0 0 20px' }}
+      >
         <h2
           className="font-figtree text-white"
           style={{
@@ -87,16 +94,13 @@ function DivisionCard({
           {title}
         </h2>
         <p
-          className="font-figtree text-white transition-all duration-500"
+          className="font-figtree text-white"
           style={{
             fontSize: '20px',
             fontWeight: 300,
             letterSpacing: '-0.03em',
             lineHeight: '1em',
-            textAlign: 'center',
-            maxHeight: hovered ? '80px' : '0px',
-            opacity: hovered ? 1 : 0,
-            overflow: 'hidden',
+            width: '50%',
           }}
         >
           {description}
@@ -113,14 +117,19 @@ export default function Divisions() {
       style={{ height: '100vh', backgroundColor: '#3d3e39' }}
     >
       <div
-        className="mx-auto h-full"
         style={{
           maxWidth: '1500px',
+          height: '100vh',
           display: 'grid',
           gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
           gridTemplateColumns: 'repeat(2, minmax(50px, 1fr))',
-          gap: '5px',
-          padding: '5px',
+          gap: '20px',
+          padding: '40px',
+          position: 'absolute',
+          top: 'calc(50% - 50vh)',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '100%',
         }}
       >
         {divisions.map((div) => (
@@ -129,6 +138,7 @@ export default function Divisions() {
             title={div.title}
             description={div.description}
             video={div.video}
+            hasBgBlack={div.hasBgBlack}
           />
         ))}
       </div>

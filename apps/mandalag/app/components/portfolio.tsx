@@ -21,112 +21,121 @@ const venues: Venue[] = [
 
 const categories: Category[] = ['All', 'Gastronomic', 'Events', 'Daylife', 'Nightlife'];
 
-function FilterTab({
-  label,
-  active,
-  onClick,
-}: {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className="flex items-center gap-[12px] rounded-[8px] px-[15px] py-[15px] font-inter text-[14px] transition-all cursor-pointer"
-      style={{
-        color: active ? '#000' : '#6e6e6e',
-        backgroundColor: active ? '#fff' : 'transparent',
-        fontWeight: active ? 500 : 400,
-      }}
-    >
-      {active && (
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <circle cx="7" cy="7" r="5" fill="#000" />
-        </svg>
-      )}
-      {label}
-    </button>
-  );
-}
-
-function VenueCard({ venue }: { venue: Venue }) {
-  return (
-    <div
-      className="relative overflow-hidden rounded-[10px] cursor-pointer group"
-      style={{ aspectRatio: '350 / 180' }}
-    >
-      <Image
-        src={venue.image}
-        alt=""
-        fill
-        sizes="(max-width: 768px) 100vw, 33vw"
-        className="object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-    </div>
-  );
-}
-
 export default function Portfolio() {
   const [active, setActive] = useState<Category>('All');
-  const [showAll, setShowAll] = useState(false);
 
   const filtered = active === 'All'
     ? venues
     : venues.filter((v) => v.category === active);
 
-  const displayed = showAll ? filtered : filtered.slice(0, 6);
-
   return (
-    <section id="venues" className="w-full bg-mg-bg py-16 md:py-24">
-      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
-        {/* Filter tabs row */}
-        <div className="mb-8 flex flex-wrap items-center gap-0">
-          {categories.map((cat) => (
-            <FilterTab
-              key={cat}
-              label={cat}
-              active={active === cat}
-              onClick={() => {
-                setActive(cat);
-                setShowAll(false);
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Venue Grid - 3 columns */}
+    <section
+      id="venues"
+      className="relative w-full"
+      style={{
+        background: 'linear-gradient(#3d3e39 0%, #1b1c1d 100%)',
+      }}
+    >
+      <div
+        className="mx-auto"
+        style={{
+          minWidth: '320px',
+          maxWidth: '1500px',
+          padding: '40px',
+          display: 'flex',
+          flexFlow: 'row',
+          gap: '50px',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
+        }}
+      >
+        {/* Left column - Browser/filter + text */}
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '8px',
+            display: 'flex',
+            flexFlow: 'column',
+            gap: '31px',
+            flex: '1 0 0',
+            height: '720px',
           }}
         >
-          {displayed.map((venue, i) => (
-            <VenueCard key={i} venue={venue} />
-          ))}
+          {/* Section heading */}
+          <h2
+            className="font-figtree text-white"
+            style={{
+              fontSize: '44px',
+              fontWeight: 300,
+              letterSpacing: '0.06em',
+              lineHeight: '1.2em',
+            }}
+          >
+            Our Venues
+          </h2>
+
+          {/* Filter tabs */}
+          <div className="flex flex-wrap gap-2">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActive(cat)}
+                className="font-inter text-[14px] transition-all cursor-pointer"
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '8px',
+                  color: active === cat ? '#000' : '#888',
+                  backgroundColor: active === cat ? '#fff' : 'transparent',
+                  fontWeight: active === cat ? 500 : 400,
+                }}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+
+          {/* Load More */}
+          <span className="font-inter text-[14px] text-[#888] cursor-pointer hover:text-white transition-colors">
+            Load More
+          </span>
         </div>
 
-        {/* Load More */}
-        {!showAll && filtered.length > 6 && (
-          <div className="mt-10 flex justify-center">
-            <button
-              onClick={() => setShowAll(true)}
-              className="font-inter text-[14px] text-white underline hover:no-underline transition-all cursor-pointer"
+        {/* Right column - Venue card grid */}
+        <div
+          style={{
+            flex: '2 0 0',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, minmax(50px, 1fr))',
+            gridAutoRows: '200px',
+            gap: '0 20px',
+          }}
+        >
+          {filtered.map((venue, i) => (
+            <div
+              key={i}
+              className="flex items-center justify-start"
+              style={{ width: '100%', height: '180px' }}
             >
-              Load More
-            </button>
-          </div>
-        )}
-
-        {filtered.length <= 6 && (
-          <div className="mt-6 flex justify-center">
-            <span className="font-inter text-[14px] text-[#6e6e6e] cursor-pointer hover:text-white transition-colors">
-              Load More
-            </span>
-          </div>
-        )}
+              <div
+                className="relative overflow-hidden"
+                style={{
+                  width: '350px',
+                  maxWidth: '100%',
+                  height: 'auto',
+                  borderRadius: '15px',
+                  boxShadow: '0.4px 0.4px 0.5px -0.875px rgba(0,0,0,0.34), 1.2px 1.2px 1.5px -1.75px rgba(0,0,0,0.33), 3.2px 3.2px 4px -2.625px rgba(0,0,0,0.29), 10px 10px 12.7px -3.5px rgba(0,0,0,0.15)',
+                  aspectRatio: '350 / 180',
+                }}
+              >
+                <Image
+                  src={venue.image}
+                  alt=""
+                  fill
+                  sizes="350px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

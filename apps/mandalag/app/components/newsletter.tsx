@@ -7,69 +7,68 @@ export default function Newsletter() {
   const [email, setEmail] = useState('');
 
   return (
-    <section className="w-full bg-mg-bg">
-      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
-        <div
-          className="relative overflow-hidden rounded-[10px]"
-          style={{ backgroundColor: '#000' }}
-        >
-          <div className="flex flex-col md:flex-row min-h-[400px]">
-            {/* Left: Tall vertical phone collage image */}
-            <div
-              className="relative hidden md:block"
-              style={{ width: '50%', aspectRatio: '0.5482' }}
-            >
+    <section
+      className="relative w-full overflow-hidden"
+      style={{
+        backgroundColor: '#525252',
+        padding: '100px 180px 0 0',
+      }}
+    >
+      <div
+        className="mx-auto flex flex-col items-center"
+        style={{ gap: '40px', maxWidth: '1500px' }}
+      >
+        {/* Top row: image + text */}
+        <div className="flex w-full items-start" style={{ gap: '146px' }}>
+          {/* Left: Image */}
+          <div className="flex-1 flex items-start gap-[20px] pr-[20px]">
+            <div className="relative" style={{ height: '300px', width: 'auto' }}>
               <Image
                 src="/images/hero/phone-collage.png"
                 alt=""
-                fill
-                sizes="50vw"
-                className="object-cover"
-                style={{ borderRadius: '10px' }}
+                width={300}
+                height={300}
+                className="object-contain"
               />
             </div>
-
-            {/* Right: Newsletter content */}
-            <div
-              className="flex flex-1 flex-col justify-center px-8 py-12 md:px-12 lg:px-16"
-              style={{ gap: '20px' }}
+            <p
+              className="font-inter text-white flex-1"
+              style={{
+                fontSize: '15px',
+                lineHeight: '2em',
+                letterSpacing: '-0.01em',
+              }}
             >
-              <p
+              Subscribe to the ultimate insider&apos;s guide to unforgettable experiences.
+            </p>
+          </div>
+
+          {/* Right: Newsletter form */}
+          <div className="flex flex-1 flex-col items-center" style={{ gap: '10px' }}>
+            <div className="flex flex-col gap-3 w-full">
+              <label
                 className="font-inter text-white"
                 style={{
-                  fontSize: '15px',
-                  lineHeight: '2em',
-                  letterSpacing: '-0.01em',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  letterSpacing: '0.05em',
                 }}
               >
-                Subscribe to the ultimate insider&apos;s guide to unforgettable experiences.
-              </p>
-
-              <div className="flex flex-col gap-3">
-                <label
-                  className="font-inter text-white uppercase"
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    letterSpacing: '0.05em',
-                  }}
+                Newsletter
+              </label>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="your@email.com"
+                  className="flex-1 rounded-[8px] border border-white/20 bg-transparent px-4 py-3 font-inter text-[14px] text-white placeholder-white/30 outline-none focus:border-white/40 transition-colors"
+                />
+                <button
+                  className="rounded-[13px] border border-[#d9d9d9] bg-transparent px-6 py-3 font-figtree text-[15px] font-bold text-white text-center transition-colors hover:bg-white/10"
                 >
-                  Newsletter
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    className="flex-1 rounded-[8px] border border-white/20 bg-transparent px-4 py-3 font-inter text-[14px] text-white placeholder-[#525252] outline-none focus:border-white/40 transition-colors"
-                  />
-                  <button
-                    className="rounded-[8px] bg-white px-6 py-3 font-inter text-[14px] font-semibold text-black transition-colors hover:bg-white/90"
-                  >
-                    Submit
-                  </button>
-                </div>
+                  Submit
+                </button>
               </div>
             </div>
           </div>

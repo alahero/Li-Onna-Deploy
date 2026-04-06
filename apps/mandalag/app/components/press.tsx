@@ -11,60 +11,87 @@ const articles = [
 
 export default function Press() {
   return (
-    <section className="w-full bg-mg-bg py-12">
-      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
-        {/* PRESS label */}
-        <div className="mb-6 flex items-center gap-[10px] py-[5px]">
-          <span
-            className="font-inter text-white"
-            style={{ fontSize: '14px', fontWeight: 600 }}
+    <section
+      className="relative w-full overflow-hidden"
+      style={{
+        background: 'linear-gradient(#1b1c1d 0%, #373734 100%)',
+        height: '100vh',
+        padding: '40px',
+        display: 'flex',
+        flexFlow: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        gap: '10px',
+      }}
+    >
+      <div
+        className="mx-auto"
+        style={{
+          maxWidth: '1500px',
+          width: '100%',
+          height: '381px',
+          display: 'grid',
+          gap: '20px',
+        }}
+      >
+        {articles.map((article) => (
+          <a
+            key={article.title}
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center gap-[10px]"
+            style={{
+              width: '100%',
+              height: '200px',
+              textDecoration: 'none',
+            }}
           >
-            PRESS
-          </span>
-        </div>
-
-        {/* Articles */}
-        <div className="flex flex-col gap-6">
-          {articles.map((article) => (
-            <a
-              key={article.title}
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col sm:flex-row gap-[50px] items-start p-6 sm:p-[40px] rounded-[10px] transition-colors hover:bg-white/[0.02]"
+            {/* Card with stripe overlay */}
+            <div
+              className="relative overflow-hidden flex flex-col justify-end items-start gap-[10px]"
+              style={{
+                flex: '1 0 0',
+                height: '100%',
+                borderRadius: '8px',
+                padding: '10px',
+              }}
             >
-              {/* Article Image */}
+              <Image
+                src={article.image}
+                alt={article.title}
+                fill
+                sizes="100vw"
+                className="object-cover"
+              />
+              {/* Stripe overlay */}
               <div
-                className="relative w-full sm:w-[420px] shrink-0 overflow-hidden rounded-[10px]"
-                style={{ aspectRatio: '848 / 477' }}
-              >
-                <Image
-                  src={article.image}
-                  alt={article.title}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 420px"
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              {/* Article Text */}
-              <div className="flex flex-col justify-center gap-3">
+                className="absolute inset-0 z-[1] bg-stripe-pattern"
+                style={{ backgroundSize: '126px 126px', opacity: 0.3 }}
+              />
+              {/* Dark gradient overlay */}
+              <div
+                className="absolute inset-0 z-[1]"
+                style={{ background: 'linear-gradient(transparent 30%, rgba(0,0,0,0.7) 100%)' }}
+              />
+              {/* Text overlay */}
+              <div className="relative z-[2]">
                 <h3
-                  className="font-inter text-white group-hover:text-[#0099ff] transition-colors"
-                  style={{ fontSize: '16px', lineHeight: '1.6em' }}
+                  className="font-figtree text-white"
+                  style={{ fontSize: '20px', fontWeight: 700 }}
                 >
                   {article.title}
                 </h3>
                 <span
-                  className="font-inter"
-                  style={{ fontSize: '14px', color: '#888' }}
+                  className="font-inter text-white"
+                  style={{ fontSize: '14px', fontWeight: 400 }}
                 >
                   {article.source}
                 </span>
               </div>
-            </a>
-          ))}
-        </div>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
   );
