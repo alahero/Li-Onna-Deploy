@@ -85,7 +85,7 @@ export function Hero() {
                 /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   key={i}
-                  src="/images/logo-large.svg"
+                  src="/images/lionna-curve.png"
                   alt=""
                   style={{
                     width: 551,
@@ -125,9 +125,10 @@ export function Hero() {
               src="/images/logo-large.svg"
               alt="LI-ONNA"
               style={{
-                width: 461,
-                height: 120,
-                maxWidth: '80vw',
+                width: '36%',
+                minWidth: 300,
+                maxWidth: 520,
+                height: 'auto',
                 userSelect: 'none',
                 pointerEvents: 'none',
               }}

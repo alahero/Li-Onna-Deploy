@@ -1,18 +1,18 @@
 import Image from 'next/image';
 
-/* -- Photo card positions from Framer extraction --
-   All positions are absolute within a 1200px viewport.
-   We use percentage-based positioning for responsiveness. */
+/* -- Photo card positions from Playwright @ 1440px viewport --
+   Section starts at y=1032. Positions converted to % of 1440x1000 container. */
 const FLOAT_CARDS = [
-  { src: '/images/photo-dish-5.jpg',       w: 205, h: 241, top: '-5%',   left: '14.6%', zIndex: 0, alt: 'Plato' },
-  { src: '/images/photo-dish-2.jpg',       w: 179, h: 186, top: '16%',   left: '61.4%', zIndex: 6, alt: 'Plato Hamachi' },
-  { src: '/images/photo-dish-3.jpg',       w: 196, h: 277, top: '-3.3%', left: '74.2%', zIndex: 5, alt: 'Plato Atun' },
-  { src: '/images/photo-interior-1.png',   w: 232, h: 273, top: '18.8%', left: '-1.1%', zIndex: 5, alt: 'Interior LI-ONNA' },
-  { src: '/images/photo-dish-1.jpg',       w: 175, h: 217, top: '46.5%', left: '17.2%', zIndex: 6, alt: 'Plato Salmon' },
-  { src: '/images/photo-dish-4.jpg',       w: 212, h: 250, top: '31%',   left: '72.9%', zIndex: 5, alt: 'Plato Tataki' },
-  { src: '/images/photo-interior-2.png',   w: 183, h: 215, top: '68.3%', left: '4.6%',  zIndex: 5, alt: 'Sala LI-ONNA' },
-  { src: '/images/photo-interior-wide.jpg',w: 289, h: 186, top: '64.3%', left: '22%',   zIndex: 6, alt: 'Restaurante LI-ONNA' },
-  { src: '/images/photo-dish-6.jpg',       w: 185, h: 248, top: '27.2%', left: '83.5%', zIndex: 0, alt: 'Plato extra' },
+  { src: '/images/photo-interior-3.jpg',   w: 288, h: 339, top: '4.8%',  left: '25.7%', zIndex: 5, alt: 'Interior' },
+  { src: '/images/photo-dish-1.jpg',       w: 222, h: 231, top: '21.9%', left: '50%',   zIndex: 6, alt: 'Plato' },
+  { src: '/images/photo-dish-2.jpg',       w: 243, h: 344, top: '2.6%',  left: '67.2%', zIndex: 5, alt: 'Plato' },
+  { src: '/images/photo-dish-3.jpg',       w: 288, h: 339, top: '37%',   left: '10.8%', zIndex: 5, alt: 'Plato' },
+  { src: '/images/photo-dish-4.jpg',       w: 217, h: 215, top: '44.3%', left: '42.5%', zIndex: 6, alt: 'Plato' },
+  { src: '/images/photo-dish-5.jpg',       w: 264, h: 311, top: '52.1%', left: '64.2%', zIndex: 5, alt: 'Plato' },
+  { src: '/images/photo-interior-2.png',   w: 228, h: 267, top: '58.7%', left: '26.7%', zIndex: 5, alt: 'Interior' },
+  { src: '/images/photo-interior-wide.jpg',w: 359, h: 231, top: '70.9%', left: '45.1%', zIndex: 6, alt: 'Restaurante' },
+  { src: '/images/photo-dish-6.jpg',       w: 222, h: 298, top: '33.4%', left: '79%',   zIndex: 5, alt: 'Plato' },
+  { src: '/images/photo-interior-1.png',   w: 288, h: 339, top: '4.8%',  left: '3%',    zIndex: 4, alt: 'Interior' },
 ];
 
 /**
