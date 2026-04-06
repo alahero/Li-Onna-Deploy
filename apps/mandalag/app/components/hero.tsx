@@ -41,9 +41,9 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 flex h-full w-full flex-col items-center justify-center gap-[45px]">
         {/* Headline */}
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-start text-left w-full max-w-page px-10 md:px-20">
           <h1
-            className="font-figtree uppercase text-white"
+            className="font-figtree text-white"
             style={{
               fontSize: 'clamp(36px, 5.5vw, 65px)',
               fontWeight: 900,
@@ -51,11 +51,10 @@ export default function Hero() {
               letterSpacing: '0em',
             }}
           >
-            <span className="block">WORLD</span>
-            <span className="block">CLASS</span>
+            WORLD<br />CLASS
           </h1>
           <h1
-            className="font-figtree uppercase text-white"
+            className="font-figtree text-white"
             style={{
               fontSize: 'clamp(36px, 5.5vw, 65px)',
               fontWeight: 900,
@@ -66,7 +65,7 @@ export default function Hero() {
             EXPERIENCES
           </h1>
           <h1
-            className="font-figtree uppercase text-white"
+            className="font-figtree text-white"
             style={{
               fontSize: 'clamp(36px, 5.5vw, 65px)',
               fontWeight: 900,

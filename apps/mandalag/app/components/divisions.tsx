@@ -75,22 +75,25 @@ function DivisionCard({
 
       {/* Content - positioned at bottom-left */}
       <div className="relative z-[2] flex h-full flex-col justify-end p-[30px] gap-[10px]">
-        <h3
-          className="font-figtree text-white uppercase"
+        <h2
+          className="font-figtree text-white"
           style={{
-            fontSize: '20px',
-            fontWeight: 700,
-            letterSpacing: '-0.03em',
-            lineHeight: '1em',
+            fontSize: '44px',
+            fontWeight: 300,
+            letterSpacing: '0.06em',
+            lineHeight: '1.2em',
           }}
         >
           {title}
-        </h3>
+        </h2>
         <p
-          className="font-inter text-[#888] transition-all duration-500"
+          className="font-figtree text-white transition-all duration-500"
           style={{
-            fontSize: '15px',
-            lineHeight: '1.5em',
+            fontSize: '20px',
+            fontWeight: 300,
+            letterSpacing: '-0.03em',
+            lineHeight: '1em',
+            textAlign: 'center',
             maxHeight: hovered ? '80px' : '0px',
             opacity: hovered ? 1 : 0,
             overflow: 'hidden',
