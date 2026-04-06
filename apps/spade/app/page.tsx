@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
+import { SpadeHero } from '@/components/spade-hero';
 
 export default function HomePage() {
-  redirect('https://www.spade.mx/');
+  return <SpadeHero />;
 }
