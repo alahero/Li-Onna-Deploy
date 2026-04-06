@@ -1,66 +1,97 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const divisions = [
   {
     title: 'Daylife',
     description: 'Transforming normal days into extraordinary experiences.',
+    video: '/videos/daylife.mp4',
   },
   {
     title: 'Nightlife',
     description: 'Immersive experiences crafted for every type of guest.',
+    video: '/videos/nightlife.mp4',
   },
   {
     title: 'Gastronomic',
     description: 'Innovative cuisine, captivating atmospheres, and extraordinary flavors.',
+    video: '/videos/gastronomic.mp4',
   },
   {
     title: 'Events',
     description: 'From roaring festivals to intimate, high-end gatherings.',
+    video: '/videos/events.mp4',
   },
 ];
 
 function DivisionCard({
   title,
   description,
+  video,
 }: {
   title: string;
   description: string;
+  video: string;
 }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  }, []);
 
   return (
     <div
-      className="relative flex-1 flex flex-col justify-end overflow-hidden cursor-pointer transition-all duration-500"
-      style={{
-        aspectRatio: '1.0961',
-        minHeight: '280px',
-      }}
+      className="relative overflow-hidden rounded-[13px] cursor-pointer"
+      style={{ width: '100%', height: '100%' }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {/* Stripe pattern background */}
+      {/* Video background */}
+      <video
+        ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
+        src={video}
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+
+      {/* Dark overlay */}
       <div
-        className="absolute inset-0 bg-stripe-pattern opacity-100"
+        className="absolute inset-0 z-[1] transition-opacity duration-500"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.8)', opacity: hovered ? 0.5 : 0.8 }}
+      />
+
+      {/* Stripe pattern */}
+      <div
+        className="absolute inset-0 z-[1] bg-stripe-pattern opacity-30"
         style={{ backgroundSize: '126px 126px' }}
       />
 
-      {/* Overlay on hover */}
-      <div
-        className="absolute inset-0 bg-black transition-opacity duration-500"
-        style={{ opacity: hovered ? 0.6 : 0.3 }}
-      />
-
-      {/* Content */}
-      <div className="relative z-10 flex flex-col gap-3 p-8">
-        <h3 className="font-figtree text-division-title text-white font-bold">
+      {/* Content - positioned at bottom-left */}
+      <div className="relative z-[2] flex h-full flex-col justify-end p-[30px] gap-[10px]">
+        <h3
+          className="font-figtree text-white uppercase"
+          style={{
+            fontSize: '20px',
+            fontWeight: 700,
+            letterSpacing: '-0.03em',
+            lineHeight: '1em',
+          }}
+        >
           {title}
         </h3>
         <p
-          className="font-inter text-[15px] leading-[1.5em] text-mg-gray transition-all duration-500"
+          className="font-inter text-[#888] transition-all duration-500"
           style={{
-            maxHeight: hovered ? '100px' : '0px',
+            fontSize: '15px',
+            lineHeight: '1.5em',
+            maxHeight: hovered ? '80px' : '0px',
             opacity: hovered ? 1 : 0,
             overflow: 'hidden',
           }}
@@ -74,17 +105,29 @@ function DivisionCard({
 
 export default function Divisions() {
   return (
-    <section className="w-full bg-mg-bg py-16 md:py-24">
-      <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          {divisions.map((div) => (
-            <DivisionCard
-              key={div.title}
-              title={div.title}
-              description={div.description}
-            />
-          ))}
-        </div>
+    <section
+      className="relative w-full"
+      style={{ height: '100vh', backgroundColor: '#3d3e39' }}
+    >
+      <div
+        className="mx-auto h-full"
+        style={{
+          maxWidth: '1500px',
+          display: 'grid',
+          gridTemplateRows: 'repeat(2, minmax(0, 1fr))',
+          gridTemplateColumns: 'repeat(2, minmax(50px, 1fr))',
+          gap: '5px',
+          padding: '5px',
+        }}
+      >
+        {divisions.map((div) => (
+          <DivisionCard
+            key={div.title}
+            title={div.title}
+            description={div.description}
+            video={div.video}
+          />
+        ))}
       </div>
     </section>
   );

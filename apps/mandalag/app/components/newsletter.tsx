@@ -7,39 +7,66 @@ export default function Newsletter() {
   const [email, setEmail] = useState('');
 
   return (
-    <section className="w-full bg-mg-bg py-16 md:py-24">
+    <section className="w-full bg-mg-bg">
       <div className="mx-auto max-w-page px-4 sm:px-6 lg:px-10">
-        <div className="relative overflow-hidden rounded-[10px] bg-black">
-          <div className="flex flex-col md:flex-row">
-            {/* Left: Phone Collage Image */}
-            <div className="relative hidden md:block md:w-1/2" style={{ aspectRatio: '0.5482' }}>
+        <div
+          className="relative overflow-hidden rounded-[10px]"
+          style={{ backgroundColor: '#000' }}
+        >
+          <div className="flex flex-col md:flex-row min-h-[400px]">
+            {/* Left: Tall vertical phone collage image */}
+            <div
+              className="relative hidden md:block"
+              style={{ width: '50%', aspectRatio: '0.5482' }}
+            >
               <Image
                 src="/images/hero/phone-collage.png"
-                alt="Mandala Group experiences"
+                alt=""
                 fill
                 sizes="50vw"
                 className="object-cover"
+                style={{ borderRadius: '10px' }}
               />
             </div>
 
-            {/* Right: Newsletter Form */}
-            <div className="flex flex-1 flex-col justify-center gap-6 p-8 md:p-12 lg:p-16">
-              <p className="font-inter text-[15px] leading-[2em] tracking-[-0.01em] text-white">
+            {/* Right: Newsletter content */}
+            <div
+              className="flex flex-1 flex-col justify-center px-8 py-12 md:px-12 lg:px-16"
+              style={{ gap: '20px' }}
+            >
+              <p
+                className="font-inter text-white"
+                style={{
+                  fontSize: '15px',
+                  lineHeight: '2em',
+                  letterSpacing: '-0.01em',
+                }}
+              >
                 Subscribe to the ultimate insider&apos;s guide to unforgettable experiences.
               </p>
-              <div className="flex flex-col gap-4">
-                <label className="font-figtree text-[14px] font-semibold text-white uppercase tracking-wider">
+
+              <div className="flex flex-col gap-3">
+                <label
+                  className="font-inter text-white uppercase"
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    letterSpacing: '0.05em',
+                  }}
+                >
                   Newsletter
                 </label>
-                <div className="flex gap-3">
+                <div className="flex gap-2">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
-                    className="flex-1 rounded-lg border border-white/20 bg-transparent px-4 py-3 font-inter text-sm text-white placeholder-mg-gray-dark outline-none focus:border-white/40 transition-colors"
+                    className="flex-1 rounded-[8px] border border-white/20 bg-transparent px-4 py-3 font-inter text-[14px] text-white placeholder-[#525252] outline-none focus:border-white/40 transition-colors"
                   />
-                  <button className="rounded-lg bg-white px-6 py-3 font-figtree text-sm font-bold text-black transition-colors hover:bg-white/90">
+                  <button
+                    className="rounded-[8px] bg-white px-6 py-3 font-inter text-[14px] font-semibold text-black transition-colors hover:bg-white/90"
+                  >
                     Submit
                   </button>
                 </div>

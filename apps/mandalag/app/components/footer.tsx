@@ -1,38 +1,41 @@
-import Link from 'next/link';
-
 export default function Footer() {
   return (
-    <footer className="w-full bg-mg-bg border-t border-white/5">
-      <div className="mx-auto flex max-w-page flex-col md:flex-row items-center justify-between gap-6 px-4 sm:px-6 lg:px-10 py-8">
-        {/* Logo */}
-        <div className="flex items-center">
+    <footer
+      className="w-full"
+      style={{
+        backgroundColor: '#000',
+        height: '163px',
+      }}
+    >
+      <div
+        className="mx-auto flex h-full max-w-page items-center px-4 sm:px-6 lg:px-10"
+        style={{ gap: '10px' }}
+      >
+        {/* Left: Logo */}
+        <div className="flex flex-1 items-start h-full py-[30px]">
           <img
             src="/images/logo/mandala-group-logo.svg"
             alt="Mandala Group"
-            style={{ height: '30px', width: 'auto', opacity: 0.6 }}
+            style={{ height: '44px', width: 'auto', opacity: 0.6 }}
           />
         </div>
 
-        {/* Legal Links */}
-        <div className="flex items-center gap-6">
-          <Link
-            href="/privacy"
-            className="font-inter text-xs uppercase tracking-wider text-mg-gray hover:text-white transition-colors"
-          >
-            PRIVACY
-          </Link>
-          <Link
+        {/* Right: Legal Links */}
+        <div className="flex flex-1 flex-col items-end justify-end h-full py-[30px] gap-[2px]">
+          <a
             href="/terms"
-            className="font-inter text-xs uppercase tracking-wider text-mg-gray hover:text-white transition-colors"
+            className="font-inter text-[#888] hover:text-white transition-colors"
+            style={{ fontSize: '14px', fontWeight: 600 }}
           >
             TERMS & CONDITIONS
-          </Link>
-          <Link
+          </a>
+          <a
             href="/legal"
-            className="font-inter text-xs uppercase tracking-wider text-mg-gray hover:text-white transition-colors"
+            className="font-inter text-[#888] hover:text-white transition-colors"
+            style={{ fontSize: '14px', fontWeight: 600 }}
           >
             LEGAL
-          </Link>
+          </a>
         </div>
       </div>
     </footer>
