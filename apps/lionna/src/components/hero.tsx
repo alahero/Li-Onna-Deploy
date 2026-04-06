@@ -174,7 +174,7 @@ export function Hero() {
               }}
             >
               <textPath href="#badge-circle">
-                EXPLORA MAS ABAJO · EXPLORA MAS ABAJO ·{' '}
+                EXPLORA M&Aacute;S ABAJO &bull; &#x4E0B;&#x306B;&#x30B9;&#x30AF;&#x30ED;&#x30FC;&#x30EB; &bull;{' '}
               </textPath>
             </text>
           </svg>

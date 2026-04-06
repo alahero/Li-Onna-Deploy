@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-/* ── Photo card positions from Framer extraction ──
+/* -- Photo card positions from Framer extraction --
    All positions are absolute within a 1200px viewport.
    We use percentage-based positioning for responsiveness. */
 const FLOAT_CARDS = [
@@ -15,6 +15,54 @@ const FLOAT_CARDS = [
   { src: '/images/photo-dish-6.jpg',       w: 185, h: 248, top: '27.2%', left: '83.5%', zIndex: 0, alt: 'Plato extra' },
 ];
 
+/**
+ * Blue decorative curved lines on the left side of the gallery.
+ * These are vertical wavy/curved lines visible in the live site.
+ */
+function BlueDecorativeCurves() {
+  return (
+    <div
+      aria-hidden
+      className="gallery-blue-curves"
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: 140,
+        height: '100%',
+        zIndex: 0,
+        pointerEvents: 'none',
+        overflow: 'hidden',
+      }}
+    >
+      <svg
+        viewBox="0 0 140 800"
+        fill="none"
+        preserveAspectRatio="none"
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+        }}
+      >
+        {/* Multiple parallel curved vertical lines */}
+        {[0, 18, 36, 54, 72, 90, 108, 126].map((x) => (
+          <path
+            key={x}
+            d={`M${x},0 C${x + 30},200 ${x - 30},400 ${x + 20},600 C${x - 10},700 ${x + 30},750 ${x},800`}
+            stroke="rgb(0, 91, 255)"
+            strokeWidth="2.5"
+            fill="none"
+            opacity="0.15"
+          />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 export function PhotoGallery() {
   return (
     <section
@@ -24,6 +72,9 @@ export function PhotoGallery() {
         overflow: 'hidden',
       }}
     >
+      {/* Blue decorative curved lines on left side */}
+      <BlueDecorativeCurves />
+
       {/* Vector curve watermark behind photos */}
       <div
         aria-hidden
@@ -46,7 +97,7 @@ export function PhotoGallery() {
         />
       </div>
 
-      {/* Photo Section wrapper — padding: 120px 24px 80px */}
+      {/* Photo Section wrapper */}
       <div
         className="gallery-section-wrap"
         style={{
@@ -119,7 +170,7 @@ export function PhotoGallery() {
           </div>
         </div>
 
-        {/* ── "hola Madrid" text content ──────────────────── */}
+        {/* -- "hola Madrid" text content -- */}
         <div
           style={{
             maxWidth: 900,
@@ -154,7 +205,7 @@ export function PhotoGallery() {
               margin: 0,
             }}
           >
-            Desde esta esquina en el corazon de la capital perseguimos la sintonia perfecta entre la cocina japonesa y nuestras raices latinas creando una atmosfera atemporal y autentica.
+            Desde esta esquina en el coraz&oacute;n de la capital perseguimos la sinton&iacute;a perfecta entre la cocina japonesa y nuestras ra&iacute;ces latinas creando una atm&oacute;sfera atemporal y aut&eacute;ntica.
           </p>
         </div>
 
@@ -179,11 +230,11 @@ export function PhotoGallery() {
             }}
             className="lionna-katakana-text"
           >
-            リオンナ
+            &#x30EA;&#x30AA;&#x30F3;&#x30CA;
           </p>
         </div>
 
-        {/* ── MENU / RESERVAS buttons ─────────────────────── */}
+        {/* -- MENU / RESERVAS buttons -- */}
         <div
           style={{
             display: 'flex',
@@ -204,18 +255,19 @@ export function PhotoGallery() {
               color: '#fff',
               background: 'rgb(0, 92, 254)',
               borderRadius: 8,
-              padding: '8px 16px',
+              padding: '8px 48px',
               textDecoration: 'none',
               display: 'inline-flex',
-              flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               overflow: 'hidden',
+              textTransform: 'uppercase',
             }}
           >
-            <span>MENU</span>
-            <span>PRONTO</span>
+            Men&uacute;
           </a>
-          <span
+          <a
+            href="#reservas"
             style={{
               fontFamily: 'Inter, sans-serif',
               fontWeight: 400,
@@ -224,20 +276,22 @@ export function PhotoGallery() {
               color: 'rgb(0, 92, 254)',
               background: 'transparent',
               borderRadius: 8,
-              padding: '8px 16px',
+              padding: '8px 36px',
               display: 'inline-flex',
-              flexDirection: 'column',
               alignItems: 'center',
+              justifyContent: 'center',
               overflow: 'hidden',
               cursor: 'pointer',
+              textDecoration: 'none',
+              border: '1px solid rgb(0, 92, 254)',
+              textTransform: 'uppercase',
             }}
           >
-            <span>RESERVAS</span>
-            <span>PRONTO</span>
-          </span>
+            Reservas
+          </a>
         </div>
 
-        {/* ── Separator ──────────────────────────────────── */}
+        {/* -- Separator -- */}
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div
             style={{
@@ -260,6 +314,7 @@ export function PhotoGallery() {
           .gallery-section-wrap { padding: 80px 16px 60px !important; }
           .lionna-hero-heading { font-size: 36px !important; line-height: 43.2px !important; letter-spacing: 0.72px !important; }
           .lionna-katakana-text { font-size: 28px !important; line-height: 33.6px !important; }
+          .gallery-blue-curves { display: none; }
         }
       `}</style>
     </section>

@@ -1,10 +1,12 @@
+'use client';
+
 export function ContactCta() {
   return (
     <section
       className="contact-cta-section"
       style={{
         backgroundColor: '#F6F6F2',
-        padding: '32px 80px',
+        padding: '80px 80px 32px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
@@ -25,7 +27,7 @@ export function ContactCta() {
           }}
           className="contact-cta-text"
         >
-          !<span
+          &iexcl;<span
             style={{
               fontFamily: '"Odesta Regular Regular", Odesta, serif',
               fontWeight: 400,
@@ -35,107 +37,69 @@ export function ContactCta() {
             }}
             className="contact-cta-siguenos"
           >
-            Siguenos
+            S&iacute;guenos
           </span>{' '}
           para no perderte nada!
         </p>
       </div>
 
-      {/* Instagram button */}
-      <a
-        href="https://www.instagram.com/lionnaes"
-        target="_blank"
-        rel="noopener noreferrer"
+      {/* Contact form card — tan/beige background, horizontal layout */}
+      <div
         style={{
-          fontFamily: '"Editorial New Medium", EditorialNew, serif',
-          fontWeight: 400,
-          fontSize: 14,
-          letterSpacing: '0.56px',
-          lineHeight: '16.8px',
-          background: 'rgb(0, 92, 254)',
-          color: '#fff',
-          borderRadius: 10,
-          padding: '12px 24px',
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textDecoration: 'none',
-          border: 'none',
+          width: '100%',
+          maxWidth: 780,
+          background: 'rgb(216, 206, 198)',
+          borderRadius: 12,
+          padding: '24px 32px',
         }}
+        className="contact-form-card"
       >
-        Contactanos
-      </a>
-
-      {/* Contact form */}
-      <div style={{ width: '100%', maxWidth: 480, marginTop: 8 }}>
         <form
-          style={{ display: 'flex', flexDirection: 'column', gap: 12 }}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 12,
+            width: '100%',
+          }}
           action="mailto:hola@lionna.es"
           method="post"
           encType="text/plain"
+          className="contact-form-row"
         >
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-            <input
-              type="text"
-              name="nombre"
-              placeholder="Nombre"
-              required
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 14,
-                borderRadius: 30,
-                padding: '6px 16px',
-                background: '#fff',
-                border: '1px solid #E3E3E3',
-                outline: 'none',
-                color: '#000',
-              }}
-            />
-            <input
-              type="text"
-              name="apellido"
-              placeholder="Apellido"
-              style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: 14,
-                borderRadius: 30,
-                padding: '6px 16px',
-                background: '#fff',
-                border: '1px solid #E3E3E3',
-                outline: 'none',
-                color: '#000',
-              }}
-            />
-          </div>
           <input
-            type="tel"
-            name="telefono"
-            placeholder="Telefono"
+            type="text"
+            name="nombre"
+            placeholder="Nombre"
+            required
             style={{
               fontFamily: 'Inter, sans-serif',
               fontSize: 14,
-              borderRadius: 30,
-              padding: '6px 16px',
-              background: '#fff',
-              border: '1px solid #E3E3E3',
+              borderRadius: 8,
+              padding: '12px 16px',
+              background: 'rgba(255,255,255,0.7)',
+              border: 'none',
               outline: 'none',
               color: '#000',
+              flex: 1,
+              minWidth: 0,
             }}
           />
           <input
             type="email"
             name="email"
-            placeholder="Email"
+            placeholder="Correo"
             required
             style={{
               fontFamily: 'Inter, sans-serif',
               fontSize: 14,
-              borderRadius: 30,
-              padding: '6px 16px',
-              background: '#fff',
-              border: '1px solid #E3E3E3',
+              borderRadius: 8,
+              padding: '12px 16px',
+              background: 'rgba(255,255,255,0.7)',
+              border: 'none',
               outline: 'none',
               color: '#000',
+              flex: 1,
+              minWidth: 0,
             }}
           />
           <button
@@ -149,42 +113,72 @@ export function ContactCta() {
               background: 'rgb(0, 92, 254)',
               color: '#fff',
               borderRadius: 10,
-              padding: '12px 24px',
+              padding: '12px 32px',
               border: 'none',
               cursor: 'pointer',
-              marginTop: 4,
-              width: '100%',
-              maxWidth: 227,
-              height: 40,
-              alignSelf: 'flex-end',
+              whiteSpace: 'nowrap',
+              height: 44,
+              flexShrink: 0,
             }}
           >
-            Contactanos
+            Cont&aacute;ctanos
           </button>
-          <p
+
+          {/* Instagram icon circle */}
+          <a
+            href="https://www.instagram.com/lionnaes"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
-              fontFamily: 'Inter, sans-serif',
-              fontStyle: 'italic',
-              fontSize: 10,
-              lineHeight: '12px',
-              color: 'rgb(0, 0, 0)',
-              textAlign: 'center',
-              margin: 0,
+              width: 44,
+              height: 44,
+              borderRadius: '50%',
+              background: 'rgb(0, 92, 254)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              textDecoration: 'none',
             }}
+            aria-label="Instagram"
           >
-            *Al completar este formulario acceptas nuestro aviso de privacidad
-          </p>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="5" stroke="#fff" strokeWidth="2" />
+              <circle cx="12" cy="12" r="5" stroke="#fff" strokeWidth="2" />
+              <circle cx="17.5" cy="6.5" r="1.5" fill="#fff" />
+            </svg>
+          </a>
         </form>
+
+        <p
+          style={{
+            fontFamily: 'Inter, sans-serif',
+            fontStyle: 'italic',
+            fontSize: 10,
+            lineHeight: '12px',
+            color: 'rgb(0, 0, 0)',
+            textAlign: 'center',
+            margin: '12px 0 0',
+          }}
+        >
+          *Al completar este formulario acceptas nuestro aviso de privacidad
+        </p>
       </div>
 
       <style>{`
         @media (max-width: 1439px) {
-          .contact-cta-section { padding: 32px 24px !important; }
+          .contact-cta-section { padding: 60px 24px 24px !important; }
         }
         @media (max-width: 809px) {
-          .contact-cta-section { padding: 24px 16px !important; }
+          .contact-cta-section { padding: 40px 16px 16px !important; }
           .contact-cta-text { font-size: 24px !important; line-height: 28.8px !important; }
           .contact-cta-siguenos { font-size: 36px !important; line-height: 43.2px !important; }
+          .contact-form-row {
+            flex-direction: column !important;
+          }
+          .contact-form-card {
+            padding: 16px 16px !important;
+          }
         }
       `}</style>
     </section>

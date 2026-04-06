@@ -1,7 +1,7 @@
-// Exact dish names from Framer extraction
+// Exact dish names from Framer extraction (with proper accents)
 const TICKER_ROWS: { items: string[]; speed: number }[] = [
   {
-    items: ['Tostada de Atun', 'Tacos de Hamachi', 'Tataki de Res', 'Kushiage de Queso', 'Tacos de Bacalao', 'Fujiyama'],
+    items: ['Tostada de At\u00fan', 'Tacos de Hamachi', 'Tataki de Res', 'Kushiage de Queso', 'Tacos de Bacalao', 'Fujiyama'],
     speed: 28,
   },
   {
@@ -9,7 +9,7 @@ const TICKER_ROWS: { items: string[]; speed: number }[] = [
     speed: 45,
   },
   {
-    items: ['Salmon Gochugaru', 'Pulpo Anticucho', 'Atun Futomaki', 'Li-Onna Roll', 'Gogo Roll'],
+    items: ['Salm\u00f3n Gochugaru', 'Pulpo Anticucho', 'At\u00fan Futomaki', 'Li-Onna Roll', 'Gogo Roll'],
     speed: 32,
   },
 ];
@@ -22,25 +22,6 @@ function Sep() {
         display: 'inline-flex',
         alignItems: 'center',
         marginInline: 16,
-        color: 'rgba(0,0,0,0.3)',
-        fontSize: 22,
-        lineHeight: 1,
-        flexShrink: 0,
-      }}
-    >
-      |
-    </span>
-  );
-}
-
-function ZwnjSep() {
-  return (
-    <span
-      aria-hidden
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        marginInline: 8,
         color: 'rgba(0,0,0,0.3)',
         fontSize: 22,
         lineHeight: 1,
@@ -94,16 +75,59 @@ function TickerRow({ items, speed }: { items: string[]; speed: number }) {
   );
 }
 
+/**
+ * Blue vertical lines decoration on the sides of the section.
+ */
+function BlueVerticalLines({ side }: { side: 'left' | 'right' }) {
+  return (
+    <div
+      aria-hidden
+      className="ticker-vertical-lines"
+      style={{
+        position: 'absolute',
+        top: 0,
+        [side]: 0,
+        width: 60,
+        height: '100%',
+        zIndex: 0,
+        pointerEvents: 'none',
+        overflow: 'hidden',
+        opacity: 0.12,
+      }}
+    >
+      <svg
+        viewBox="0 0 60 300"
+        fill="none"
+        preserveAspectRatio="none"
+        style={{
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        {[8, 18, 28, 38, 48].map((x) => (
+          <line key={x} x1={x} y1="0" x2={x} y2="300" stroke="rgb(0, 91, 255)" strokeWidth="2.5" />
+        ))}
+      </svg>
+    </div>
+  );
+}
+
 export function DishTicker() {
   return (
     <section
       style={{
         backgroundColor: '#F6F6F2',
         padding: '32px 24px',
+        position: 'relative',
+        overflow: 'hidden',
       }}
     >
+      {/* Blue vertical line decorations on both sides */}
+      <BlueVerticalLines side="left" />
+      <BlueVerticalLines side="right" />
+
       {/* Star/Union decorative icon */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, position: 'relative', zIndex: 1 }}>
         <svg width="28" height="26" viewBox="0 0 28 26" fill="none" aria-hidden>
           <path d="M14 0L16.5 9.5L26 13L16.5 16.5L14 26L11.5 16.5L2 13L11.5 9.5L14 0Z" fill="rgb(0,92,254)" />
         </svg>
@@ -115,6 +139,8 @@ export function DishTicker() {
         style={{
           padding: '0 24px 32px',
           textAlign: 'center',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         <h2
@@ -144,6 +170,8 @@ export function DishTicker() {
           margin: '0 auto',
           overflow: 'hidden',
           padding: '8px',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {TICKER_ROWS.map((row, i) => (
@@ -151,8 +179,8 @@ export function DishTicker() {
         ))}
       </div>
 
-      {/* ── Separator ──────────────────────────────────── */}
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
+      {/* -- Separator -- */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48, position: 'relative', zIndex: 1 }}>
         <div
           style={{
             width: '50%',
@@ -175,6 +203,7 @@ export function DishTicker() {
           .ticker-text-responsive { font-size: 16px !important; }
           .ticker-heading { padding: 0 16px 24px !important; }
           .imprescindibles-title { font-size: 36px !important; line-height: 43.2px !important; }
+          .ticker-vertical-lines { display: none; }
         }
       `}</style>
     </section>

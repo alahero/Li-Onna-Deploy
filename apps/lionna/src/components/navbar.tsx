@@ -41,10 +41,10 @@ const pillStyle: React.CSSProperties = {
   background: 'rgba(255,255,255,0.1)',
   borderRadius: 8,
   color: '#fff',
-  padding: '8px 12px',
+  padding: '8px 20px',
   display: 'inline-flex',
   alignItems: 'center',
-  gap: 6,
+  justifyContent: 'center',
   whiteSpace: 'nowrap' as const,
   cursor: 'pointer',
   textDecoration: 'none',
@@ -57,7 +57,7 @@ export function Navbar() {
 
   return (
     <>
-      {/* Sticky nav bar — 60px, blue rgb(0,91,255) */}
+      {/* Sticky nav bar -- 60px, blue rgb(0,91,255) */}
       <nav style={navStyle} className="lionna-nav">
         {/* Left: Nav links (desktop) */}
         <div className="hidden md:flex items-center" style={{ gap: 24 }}>
@@ -94,12 +94,12 @@ export function Navbar() {
 
         {/* Right: RESERVAS pill button */}
         <div className="hidden md:flex items-center" style={{ gap: 8 }}>
-          <span style={pillStyle}>
-            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span>RESERVAS</span>
-              <span>PRONTO</span>
-            </span>
-          </span>
+          <a
+            href="#reservas"
+            style={pillStyle}
+          >
+            RESERVAS
+          </a>
         </div>
 
         {/* Mobile hamburger */}
@@ -149,12 +149,12 @@ export function Navbar() {
             </Link>
           ))}
           <div style={{ marginTop: 16 }}>
-            <span style={{ ...pillStyle, background: 'rgba(0,91,255,0.3)', color: '#005BFF' }}>
-              <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <span>RESERVAS</span>
-                <span>PRONTO</span>
-              </span>
-            </span>
+            <a
+              href="#reservas"
+              style={{ ...pillStyle, background: 'rgba(0,91,255,0.1)', color: '#005BFF' }}
+            >
+              RESERVAS
+            </a>
           </div>
         </div>
       </div>

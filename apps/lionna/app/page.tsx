@@ -4,6 +4,7 @@ import { PhotoGallery } from '@/components/photo-gallery';
 import { DishTicker } from '@/components/dish-ticker';
 import { ContactCta } from '@/components/contact-cta';
 import { BrandStatement } from '@/components/brand-statement';
+import { BrandMarquee } from '@/components/brand-marquee';
 import { Footer } from '@/components/footer';
 
 export default function HomePage() {
@@ -15,7 +16,7 @@ export default function HomePage() {
       {/* Sticky nav bar appears after hero scroll */}
       <Navbar />
 
-      {/* 8 progressive blur layers — exact from live site (y=960, h=72) */}
+      {/* 8 progressive blur layers -- exact from live site (y=960, h=72) */}
       <div
         aria-hidden
         style={{
@@ -50,7 +51,7 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* Main Content — bg #F6F6F2 */}
+      {/* Main Content -- bg #F6F6F2 */}
       <main style={{ backgroundColor: '#F6F6F2', position: 'relative', zIndex: 2 }}>
         {/* Photo gallery with floating cards + "hola Madrid" text */}
         <PhotoGallery />
@@ -61,11 +62,14 @@ export default function HomePage() {
         {/* Social CTA + contact form */}
         <ContactCta />
 
-        {/* Contact info + map + brand statement card */}
+        {/* Contact info + map */}
         <BrandStatement />
+
+        {/* Huge scrolling brand marquee */}
+        <BrandMarquee />
       </main>
 
-      {/* Footer — black bg */}
+      {/* Footer -- black bg */}
       <Footer />
     </>
   );
