@@ -24,17 +24,12 @@ const config: Config = {
         'lg': '1200px',
       },
       keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
         slideX: {
           '0%': { transform: 'translateX(300px)' },
           '100%': { transform: 'translateX(-200px)' },
         },
       },
       animation: {
-        marquee: 'marquee 18s linear infinite',
         slideX: 'slideX 8s ease-in-out infinite alternate',
       },
     },

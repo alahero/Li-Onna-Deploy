@@ -31,7 +31,7 @@
   --color-submit-btn: rgb(51, 51, 51);
   --color-submit-btn-hover: rgba(51, 51, 51, 0.85);
   --font-display: "NT Dapper Bold", "NT Dapper Bold Placeholder", sans-serif;
-  --font-body: "Inter", sans-serif;
+  --font-body: var(--font-inter, "Inter"), sans-serif;
 }
 
 html {
@@ -110,8 +110,10 @@ body {
   padding: 0px;
   position: relative;
   width: 100%;
-  max-width: 1440px;
   margin: 0 auto;
+}
+@media (min-width: 810px) and (max-width: 1199.98px) {
+  .page-container { width: 810px; }
 }
 @media (max-width: 809.98px) {
   .page-container { width: 390px; max-width: 100%; }

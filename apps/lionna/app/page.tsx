@@ -15,6 +15,28 @@ export default function HomePage() {
       {/* Sticky nav bar appears after hero scroll */}
       <Navbar />
 
+      {/* Blur gradient transition between nav and content */}
+      <div
+        aria-hidden
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: 72,
+          overflow: 'hidden',
+          zIndex: 2,
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            background: 'linear-gradient(to bottom, rgb(0, 91, 255) 0%, transparent 100%)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+          }}
+        />
+      </div>
+
       {/* Main Content — bg #F6F6F2 */}
       <main style={{ backgroundColor: '#F6F6F2', position: 'relative', zIndex: 2 }}>
         {/* Photo gallery with floating cards + "hola Madrid" text */}

@@ -4,15 +4,15 @@ import Image from 'next/image';
    All positions are absolute within a 1200px viewport.
    We use percentage-based positioning for responsiveness. */
 const FLOAT_CARDS = [
-  { src: '/images/photo-dish-5.jpg',  w: 205, h: 241, top: '0%',    left: '16%',  zIndex: 0, alt: 'Plato' },
-  { src: '/images/photo-dish-2.jpg',  w: 179, h: 186, top: '23.5%', left: '60.9%', zIndex: 6, alt: 'Plato Hamachi' },
-  { src: '/images/photo-dish-3.jpg',  w: 196, h: 277, top: '5.6%',  left: '73.3%', zIndex: 5, alt: 'Plato Atun' },
-  { src: '/images/photo-interior-1.png', w: 232, h: 273, top: '28%', left: '0.9%', zIndex: 5, alt: 'Interior LI-ONNA' },
-  { src: '/images/photo-dish-1.jpg',  w: 175, h: 217, top: '45.4%', left: '18.5%', zIndex: 6, alt: 'Plato Salmon' },
-  { src: '/images/photo-dish-4.jpg',  w: 212, h: 250, top: '33.9%', left: '72%',  zIndex: 5, alt: 'Plato Tataki' },
-  { src: '/images/photo-interior-2.png', w: 183, h: 215, top: '56.3%', left: '6.4%', zIndex: 5, alt: 'Sala LI-ONNA' },
-  { src: '/images/photo-interior-wide.jpg', w: 289, h: 186, top: '54.7%', left: '23.1%', zIndex: 6, alt: 'Restaurante LI-ONNA' },
-  { src: '/images/photo-dish-6.jpg',  w: 185, h: 248, top: '34%',  left: '82.2%', zIndex: 0, alt: 'Plato extra' },
+  { src: '/images/photo-dish-5.jpg',       w: 205, h: 241, top: '-5%',   left: '14.6%', zIndex: 0, alt: 'Plato' },
+  { src: '/images/photo-dish-2.jpg',       w: 179, h: 186, top: '16%',   left: '61.4%', zIndex: 6, alt: 'Plato Hamachi' },
+  { src: '/images/photo-dish-3.jpg',       w: 196, h: 277, top: '-3.3%', left: '74.2%', zIndex: 5, alt: 'Plato Atun' },
+  { src: '/images/photo-interior-1.png',   w: 232, h: 273, top: '18.8%', left: '-1.1%', zIndex: 5, alt: 'Interior LI-ONNA' },
+  { src: '/images/photo-dish-1.jpg',       w: 175, h: 217, top: '46.5%', left: '17.2%', zIndex: 6, alt: 'Plato Salmon' },
+  { src: '/images/photo-dish-4.jpg',       w: 212, h: 250, top: '31%',   left: '72.9%', zIndex: 5, alt: 'Plato Tataki' },
+  { src: '/images/photo-interior-2.png',   w: 183, h: 215, top: '68.3%', left: '4.6%',  zIndex: 5, alt: 'Sala LI-ONNA' },
+  { src: '/images/photo-interior-wide.jpg',w: 289, h: 186, top: '64.3%', left: '22%',   zIndex: 6, alt: 'Restaurante LI-ONNA' },
+  { src: '/images/photo-dish-6.jpg',       w: 185, h: 248, top: '27.2%', left: '83.5%', zIndex: 0, alt: 'Plato extra' },
 ];
 
 export function PhotoGallery() {

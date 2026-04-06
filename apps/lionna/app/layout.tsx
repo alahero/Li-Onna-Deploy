@@ -36,7 +36,21 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        {/* Fixed blue background — visible when hero scrolls away */}
+        <div
+          aria-hidden
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgb(0, 91, 255)',
+            zIndex: 0,
+          }}
+        />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

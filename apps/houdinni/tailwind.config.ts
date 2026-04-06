@@ -9,7 +9,7 @@ const config: Config = {
     extend: {
       colors: {
         'houdinni-black':      '#050505',
-        'houdinni-nav':        '#000000',
+        'houdinni-nav':        'rgba(0, 0, 0, 0.96)',
         'houdinni-white':      '#ffffff',
         'houdinni-blue':       '#0099ff',
         'houdinni-blue-light': '#3388ff',

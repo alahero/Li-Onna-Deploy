@@ -19,7 +19,7 @@ const config: Config = {
       },
       fontFamily: {
         display: ['"NT Dapper Bold"', '"NT Dapper Bold Placeholder"', 'sans-serif'],
-        body: ['"Inter"', 'sans-serif'],
+        body: ['var(--font-inter, "Inter")', 'sans-serif'],
       },
     },
   },

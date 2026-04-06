@@ -31,6 +31,9 @@ export function Footer() {
           maxWidth: '1190px',
           padding: '80px 80px 16px',
           overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column' as const,
+          gap: '0px',
         }}
       >
         {/* ── INFOS SECTION ── */}

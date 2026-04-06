@@ -6,7 +6,7 @@
 @font-face {
   font-family: 'Odesta';
   src: url('/fonts/odesta-regular.woff2') format('woff2');
-  font-weight: 600;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
@@ -46,7 +46,7 @@
   }
 
   body {
-    background-color: #F7F8F3;
+    background-color: #F6F6F2;
     color: #000000;
     font-family: 'EditorialNew', serif;
     font-weight: 400;
@@ -64,7 +64,7 @@
 @layer utilities {
   .font-odesta {
     font-family: 'Odesta', serif;
-    font-weight: 600;
+    font-weight: 400;
   }
   .font-editorial-medium {
     font-family: 'EditorialNew', serif;
@@ -79,34 +79,35 @@
     font-weight: 100;
   }
 
-  /* Hero heading — Odesta 84px blue right-aligned */
+  /* Hero heading — Odesta Regular 84px blue right-aligned */
   .text-hero {
     font-family: 'Odesta', serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 84px;
-    letter-spacing: 0.02em;
+    letter-spacing: 1.68px;
     color: rgb(0, 91, 255);
     text-align: right;
-    line-height: 1;
+    line-height: 100.8px;
   }
   @media (max-width: 1439px) {
-    .text-hero { font-size: 44px; }
+    .text-hero { font-size: 56px; line-height: 67.2px; letter-spacing: 1.12px; }
   }
   @media (max-width: 809px) {
-    .text-hero { font-size: 32px; }
+    .text-hero { font-size: 36px; line-height: 43.2px; letter-spacing: 0.72px; }
   }
 
-  /* "Imprescindibles" section title — Odesta 50px blue center */
+  /* "Imprescindibles" section title — Odesta Regular 50px blue center */
   .text-section-title {
     font-family: 'Odesta', serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 50px;
-    letter-spacing: 0.02em;
+    letter-spacing: 1px;
+    line-height: 60px;
     text-align: center;
     color: rgb(0, 92, 254);
   }
 
-  /* Section H2 — EditorialNew Regular 60px */
+  /* Section H2 — EditorialNew Regular */
   .text-h2 {
     font-family: 'EditorialNew', serif;
     font-weight: 400;
@@ -142,9 +143,9 @@
     font-family: 'EditorialNew', serif;
     font-weight: 400;
     font-size: 22px;
-    letter-spacing: -0.04em;
-    line-height: 1.4em;
-    color: #fff;
+    letter-spacing: -0.88px;
+    line-height: 30.8px;
+    color: rgb(0, 0, 0);
   }
   @media (max-width: 1199px) {
     .text-ticker { font-size: 18px; }
@@ -153,12 +154,12 @@
     .text-ticker { font-size: 16px; }
   }
 
-  /* Nav link — EditorialNew Medium 13px */
+  /* Nav link — EditorialNew Medium 16px */
   .text-nav {
     font-family: 'EditorialNew', serif;
-    font-weight: 500;
-    font-size: 13px;
-    letter-spacing: 0.04em;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19.2px;
     color: rgb(255, 255, 255);
     text-decoration: none;
     transition: color 0.2s;
@@ -172,21 +173,20 @@
     font-family: 'EditorialNew', serif;
     font-weight: 400;
     font-size: 16px;
-    letter-spacing: 0.02em;
-    line-height: 1.2em;
+    letter-spacing: 0.32px;
+    line-height: 19.2px;
   }
 
   /* Buttons */
   .btn-pill {
-    font-family: 'EditorialNew', serif;
-    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
     font-size: 13px;
-    letter-spacing: 0.04em;
+    line-height: 15.6px;
     background: rgba(255, 255, 255, 0.1);
-    border: 1px solid #fff;
     border-radius: 8px;
     color: #fff;
-    padding: 8px 16px;
+    padding: 8px 12px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -194,6 +194,7 @@
     cursor: pointer;
     transition: background 0.2s;
     text-decoration: none;
+    border: none;
   }
   .btn-pill:hover {
     background: rgba(255, 255, 255, 0.2);
@@ -201,9 +202,10 @@
 
   .btn-blue {
     font-family: 'EditorialNew', serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 14px;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.56px;
+    line-height: 16.8px;
     background: rgb(0, 92, 254);
     color: #fff;
     border-radius: 10px;
@@ -265,9 +267,9 @@
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: #F7F8F3;
+  background: #F6F6F2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #005BFF;
+  background: rgb(0, 91, 255);
   border-radius: 2px;
 }
