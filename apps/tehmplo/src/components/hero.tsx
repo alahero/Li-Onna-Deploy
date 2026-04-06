@@ -55,7 +55,7 @@ export default function Hero() {
         />
       </div>
 
-      {/* Spline 3D scene */}
+      {/* Spline 3D scene — provides the main visual hero text */}
       <div
         style={{
           position: 'absolute',
@@ -69,7 +69,6 @@ export default function Hero() {
           pointerEvents: 'none',
           overflow: 'hidden',
         }}
-        aria-hidden="true"
       >
         <iframe
           src="https://my.spline.design/untitled-a0437a7d64d3670e9d2c5846d0642085/"
@@ -83,18 +82,18 @@ export default function Hero() {
         />
       </div>
 
-      {/* Dark overlay to darken background */}
+      {/* Dark overlay — subtle fade at bottom */}
       <div
         style={{
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to bottom, rgba(13,14,17,0.5) 0%, rgba(13,14,17,0.65) 40%, rgba(13,14,17,0.9) 100%)',
+          background: 'linear-gradient(to bottom, rgba(13,14,17,0) 0%, rgba(13,14,17,0.15) 60%, rgba(13,14,17,0.7) 100%)',
           zIndex: 3,
+          pointerEvents: 'none',
         }}
         aria-hidden="true"
       />
 
-      {/* Content */}
       <div
         style={{
           position: 'relative',
@@ -103,44 +102,31 @@ export default function Hero() {
           maxWidth: 1200,
           width: '100%',
           padding: '0 24px',
-          paddingTop: 60, // nav height
+          paddingTop: 60,
+          pointerEvents: 'none',
         }}
       >
-        {/* Main headline — Austin Cyr Italic + Basteleur Moonlight mix */}
         <h1
           style={{
             fontSize: 39,
-            lineHeight: '1.15em',
+            lineHeight: '1em',
             color: '#ffffff',
-            marginBottom: 40,
+            margin: 0,
+            textTransform: 'uppercase',
+            letterSpacing: '0.01em',
           }}
         >
-          <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-              welcome
-            </span>
-          </span>
-          <span style={{ display: 'block' }}>
-            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-              to the{' '}
-            </span>
-            <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              REAL
-            </span>
-            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-              {' '}Tulum
-            </span>
-          </span>
-          <span style={{ display: 'block', marginTop: 8 }}>
-            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-              let the{' '}
-            </span>
-            <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-              GATHERING
-            </span>
-            <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-              {' '}begin
-            </span>
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+            ELEVATE
+          </span>{' '}
+          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+            YOUR
+          </span>{' '}
+          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+            TULUM
+          </span>{' '}
+          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+            EXPERIENCE
           </span>
         </h1>
       </div>

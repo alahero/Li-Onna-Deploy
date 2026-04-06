@@ -1,4 +1,4 @@
-import { HomepageClient } from '@/components/homepage-client';
+import { redirect } from 'next/navigation';
 
 export const metadata = {
   title: 'FUTUR Festival — Coming to Mexico',
@@ -13,5 +13,5 @@ export const metadata = {
 };
 
 export default function HomePage() {
-  return <HomepageClient />;
+  redirect('https://futurfestival.mx/');
 }

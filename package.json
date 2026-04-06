@@ -6,9 +6,13 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "turbo clean",
-    "new-brand": "node scripts/new-brand.js"
+    "new-brand": "node scripts/new-brand.js",
+    "check:pixel": "node scripts/pixel-check.mjs"
   },
   "devDependencies": {
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.59.1",
+    "pngjs": "^7.0.0",
     "turbo": "^2.4.0"
   },
   "packageManager": "pnpm@9.15.0"
