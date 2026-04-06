@@ -1,17 +1,21 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import Script from 'next/script';
+import Footer from './components/footer';
 
-function getFramerHTML() {
-  const filePath = join(process.cwd(), 'app', 'framer-body.html');
-  return readFileSync(filePath, 'utf-8');
+function readHTML(filename: string) {
+  return readFileSync(join(process.cwd(), 'app', filename), 'utf-8');
 }
 
 export default function HomePage() {
-  const html = getFramerHTML();
+  const beforeFooter = readHTML('framer-before-footer.html');
+  const afterFooter = readHTML('framer-after-footer.html');
+
   return (
     <>
-      <div dangerouslySetInnerHTML={{ __html: html }} />
+      <div dangerouslySetInnerHTML={{ __html: beforeFooter }} />
+      <Footer />
+      <div dangerouslySetInnerHTML={{ __html: afterFooter }} />
       <Script src="/assets/js/rolldown-runtime.CYC24FXu.mjs" type="module" strategy="afterInteractive" />
       <Script src="/assets/js/react.C31UNSk5.mjs" type="module" strategy="afterInteractive" />
       <Script src="/assets/js/motion.BewZN2YG.mjs" type="module" strategy="afterInteractive" />
