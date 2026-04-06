@@ -100,15 +100,17 @@
     justify-content: center !important;
   }
 
-  footer > div:last-child {
+  /* Logo row (second child) */
+  footer > div:nth-child(2) {
     flex-direction: column !important;
   }
 
-  footer > div:last-child > a {
+  footer > div:nth-child(2) > a {
     width: 60% !important;
   }
 
-  footer > div:last-child > p {
+  /* Copyright row (third child) */
+  footer > div:nth-child(3) > p {
     font-size: 6px !important;
   }
 }

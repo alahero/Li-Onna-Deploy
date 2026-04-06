@@ -23,7 +23,7 @@ const socialLinks = [
     icon: '/images/social-tiktok.png',
     iconW: 23,
     iconH: 26,
-    handle: 'tacosatarantados',
+    handle: 'atarantados',
     url: 'https://www.tiktok.com/@tacosatarantados?lang=es',
   },
   {
@@ -31,7 +31,7 @@ const socialLinks = [
     icon: '/images/social-twitter.png',
     iconW: 27,
     iconH: 25,
-    handle: 'atarantados',
+    handle: 'tacosatarantados',
     url: 'https://x.com/atarantados',
   },
 ];
@@ -41,111 +41,116 @@ export function Footer() {
     <footer
       style={{
         width: '100%',
-        background: '#ffffff',
+        background: 'rgb(255, 255, 255)',
         padding: '24px',
         minHeight: '337px',
         display: 'flex',
         flexDirection: 'column',
-        gap: '16px',
+        overflow: 'hidden',
       }}
     >
-      <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div style={{ maxWidth: '1152px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: '0px' }}>
 
-        {/* TOP ROW: Logo + Socials */}
-        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '19px', flexWrap: 'wrap' }}>
-          {/* Footer mascot logo */}
-          <div style={{ width: '18%', minWidth: '80px', paddingRight: '17px' }}>
+        {/* TOP ROW: Logo mascot + Social links — Framer: h=72 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            height: '72px',
+            overflow: 'hidden',
+            gap: '0px',
+          }}
+        >
+          {/* Footer mascot logo — Framer: 72x71, padding-right=17px, objectFit=contain */}
+          <div style={{ flexShrink: 0, paddingRight: '17px' }}>
             <Image
               src="/images/footer-mascot.png"
               alt="Tacos Atarantados"
-              width={80}
-              height={80}
-              style={{ width: '100%', height: 'auto', aspectRatio: '1.013' }}
+              width={72}
+              height={71}
+              style={{ width: '72px', height: '71px', objectFit: 'contain' }}
             />
           </div>
 
-          {/* Social links */}
-          {socialLinks.map((s) => (
-            <Link
-              key={s.platform}
-              href={s.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '10px',
-                textDecoration: 'none',
-              }}
-            >
-              <Image
-                src={s.icon}
-                alt={s.platform}
-                width={s.iconW}
-                height={s.iconH}
-                style={{ width: s.iconW, height: s.iconH, objectFit: 'contain' }}
-              />
-              <span
+          {/* Social links — evenly distributed across remaining space */}
+          <div
+            className="footer-socials"
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-around',
+            }}
+          >
+            {socialLinks.map((s) => (
+              <Link
+                key={s.platform}
+                href={s.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: 700,
-                  fontSize: '13px',
-                  color: '#0c7528',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: '8px',
+                  textDecoration: 'none',
                 }}
               >
-                {s.handle}
-              </span>
-            </Link>
-          ))}
+                <Image
+                  src={s.icon}
+                  alt={s.platform}
+                  width={s.iconW}
+                  height={s.iconH}
+                  style={{ width: s.iconW, height: s.iconH, objectFit: 'cover' }}
+                />
+                <span
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontWeight: 700,
+                    fontSize: '16px',
+                    lineHeight: '19.2px',
+                    color: 'rgb(12, 117, 40)',
+                  }}
+                >
+                  {s.handle}
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* MIDDLE ROW: SVG Line + Partner Logos */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-          {/* SVG horizontal rule */}
-          <svg width="100%" height="2" viewBox="0 0 1089 2" fill="none">
-            <path d="M 0 0 L 1089 0" stroke="#0c7528" strokeWidth="2" fill="none" />
+        {/* CENTER ROW 1: Horizontal divider — Framer: y=3098, h=72 */}
+        <div
+          style={{
+            height: '72px',
+            display: 'flex',
+            alignItems: 'center',
+            overflow: 'hidden',
+          }}
+        >
+          <svg width="100%" height="2" viewBox="0 0 1152 2" preserveAspectRatio="none" fill="none">
+            <line x1="0" y1="1" x2="1152" y2="1" stroke="rgb(12, 117, 40)" strokeWidth="1" />
           </svg>
-
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '43px', alignItems: 'center', padding: '0 41px', flexWrap: 'wrap' }}>
-            {/* Mandala Group */}
-            <Link href="https://mandalagroup.mx/" target="_blank" rel="noopener noreferrer">
-              <Image
-                src="/images/mandala-group.png"
-                alt="Mandala Group"
-                width={230}
-                height={41}
-                style={{ width: '230px', height: '41px', objectFit: 'contain' }}
-              />
-            </Link>
-            {/* Grupo Buenas Vibras */}
-            <Link href="https://www.instagram.com/grupo_buenasvibras/?hl=es" target="_blank" rel="noopener noreferrer">
-              <Image
-                src="/images/grupo-buenas-vibras.png"
-                alt="Grupo Buenas Vibras"
-                width={85}
-                height={81}
-                style={{ width: '85px', height: '81px', objectFit: 'contain' }}
-              />
-            </Link>
-          </div>
         </div>
 
-        {/* BOTTOM ROW: Legal + Copyright */}
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '16px' }}>
-          {/* Copyright */}
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '63px', alignItems: 'center', flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '13px', color: '#0c7528' }}>
-              Copyright ® 2025 Mandala Group
-            </span>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '13px', color: '#0c7528' }}>
-              Copyright ® 2025 Grupo Buenas Vibras
-            </span>
-          </div>
-
-          {/* Legal links */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
-            {['POLÍTICAS DE PRIVACIDAD', 'POLÍTICA DE COOKIES', 'INFORMACIÓN LEGAL', 'CONTACTO'].map((label) => (
+        {/* CENTER ROW 2: Legal links + Partner logos — Framer: y=3171, h=72 */}
+        <div
+          className="footer-center-row"
+          style={{
+            height: '72px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            overflow: 'hidden',
+            gap: '24px',
+          }}
+        >
+          {/* Legal links column */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+            {['POL\u00CDTICAS DE PRIVACIDAD', 'POL\u00CDTICA DE COOKIES', 'INFORMACI\u00D3N LEGAL', 'CONTACTO'].map((label) => (
               <a
                 key={label}
                 href="#"
@@ -153,7 +158,8 @@ export function Footer() {
                   fontFamily: 'Inter, sans-serif',
                   fontWeight: 700,
                   fontSize: '13px',
-                  color: '#0c7528',
+                  lineHeight: '15.6px',
+                  color: 'rgb(12, 117, 40)',
                   textDecoration: 'none',
                 }}
               >
@@ -161,6 +167,47 @@ export function Footer() {
               </a>
             ))}
           </div>
+
+          {/* Partner logos */}
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '43px', alignItems: 'center' }}>
+            <Link href="https://mandalagroup.mx/" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/images/mandala-group.png"
+                alt="Mandala Group"
+                width={230}
+                height={41}
+                style={{ width: '230px', height: '41px', objectFit: 'cover' }}
+              />
+            </Link>
+            <Link href="https://www.instagram.com/grupo_buenasvibras/?hl=es" target="_blank" rel="noopener noreferrer">
+              <Image
+                src="/images/grupo-buenas-vibras.png"
+                alt="Grupo Buenas Vibras"
+                width={85}
+                height={81}
+                style={{ width: '85px', height: '81px', objectFit: 'cover' }}
+              />
+            </Link>
+          </div>
+        </div>
+
+        {/* BOTTOM ROW: Copyright — Framer: y=3243, h=72 */}
+        <div
+          style={{
+            height: '72px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            overflow: 'hidden',
+          }}
+        >
+          <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '13px', lineHeight: '15.6px', color: 'rgb(12, 117, 40)' }}>
+            Copyright &reg; 2025 Mandala Group
+          </span>
+          <span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '13px', lineHeight: '15.6px', color: 'rgb(12, 117, 40)' }}>
+            Copyright &reg; 2025 Grupo Buenas Vibras
+          </span>
         </div>
 
       </div>

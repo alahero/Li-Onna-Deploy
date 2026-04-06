@@ -12,40 +12,44 @@ const navLinks = [
 
 const navStyle: React.CSSProperties = {
   height: 60,
-  backgroundColor: '#005BFF',
+  backgroundColor: 'rgb(0, 91, 255)',
   position: 'sticky',
   top: 0,
   zIndex: 4,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  padding: '0 80px',
+  padding: '0 64px',
 };
 
 const linkStyle: React.CSSProperties = {
-  fontFamily: 'EditorialNew, serif',
-  fontWeight: 500,
-  fontSize: 13,
-  letterSpacing: '0.04em',
-  color: '#fff',
+  fontFamily: '"Editorial New Medium", EditorialNew, serif',
+  fontWeight: 400,
+  fontSize: 16,
+  letterSpacing: 'normal',
+  lineHeight: '19.2px',
+  color: 'rgb(255, 255, 255)',
   textDecoration: 'none',
 };
 
 const pillStyle: React.CSSProperties = {
-  fontFamily: 'EditorialNew, serif',
-  fontWeight: 500,
+  fontFamily: 'Inter, sans-serif',
+  fontWeight: 400,
   fontSize: 13,
-  letterSpacing: '0.04em',
+  letterSpacing: 'normal',
+  lineHeight: '15.6px',
   background: 'rgba(255,255,255,0.1)',
-  border: '1px solid #fff',
   borderRadius: 8,
   color: '#fff',
-  padding: '8px 16px',
+  padding: '8px 12px',
   display: 'inline-flex',
   alignItems: 'center',
   gap: 6,
   whiteSpace: 'nowrap' as const,
   cursor: 'pointer',
+  textDecoration: 'none',
+  border: 'none',
+  overflow: 'hidden',
 };
 
 export function Navbar() {
@@ -53,10 +57,31 @@ export function Navbar() {
 
   return (
     <>
-      {/* Sticky nav bar — 60px, blue #005BFF */}
+      {/* Sticky nav bar — 60px, blue rgb(0,91,255) */}
       <nav style={navStyle} className="lionna-nav">
-        {/* Left: Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', width: '7%', minWidth: 80 }}>
+        {/* Left: Nav links (desktop) */}
+        <div className="hidden md:flex items-center" style={{ gap: 24 }}>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} style={linkStyle}>
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* Center: Logo */}
+        <Link
+          href="/"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'center',
+            overflow: 'hidden',
+            width: 108,
+            height: 28,
+          }}
+        >
           <Image
             src="/images/logo-navbar.png"
             alt="LI-ONNA"
@@ -67,18 +92,14 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Center: Nav links (desktop) */}
-        <div className="hidden md:flex items-center" style={{ gap: 24 }}>
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} style={linkStyle}>
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
         {/* Right: RESERVAS pill button */}
-        <div className="hidden md:block">
-          <span style={pillStyle}>RESERVAS / PRONTO</span>
+        <div className="hidden md:flex items-center" style={{ gap: 8 }}>
+          <span style={pillStyle}>
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <span>RESERVAS</span>
+              <span>PRONTO</span>
+            </span>
+          </span>
         </div>
 
         {/* Mobile hamburger */}
@@ -86,7 +107,7 @@ export function Navbar() {
           className="md:hidden"
           style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
+          aria-label={menuOpen ? 'Cerrar menu' : 'Abrir menu'}
         >
           <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', transform: menuOpen ? 'rotate(45deg) translate(4px,4px)' : 'none' }} />
           <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', opacity: menuOpen ? 0 : 1 }} />
@@ -102,7 +123,7 @@ export function Navbar() {
         />
       )}
 
-      {/* Mobile drawer — right-anchored, white, border-radius 12px, width 371px */}
+      {/* Mobile drawer */}
       <div
         className="mobile-drawer md:hidden"
         style={{
@@ -117,10 +138,9 @@ export function Navbar() {
               href={link.href}
               onClick={() => setMenuOpen(false)}
               style={{
-                fontFamily: 'EditorialNew, serif',
-                fontWeight: 500,
+                fontFamily: '"Editorial New Medium", EditorialNew, serif',
+                fontWeight: 400,
                 fontSize: 20,
-                letterSpacing: '0.04em',
                 color: '#000',
                 textDecoration: 'none',
               }}
@@ -129,8 +149,11 @@ export function Navbar() {
             </Link>
           ))}
           <div style={{ marginTop: 16 }}>
-            <span style={{ ...pillStyle, background: 'rgba(0,91,255,0.3)', border: '1px solid #005BFF', color: '#005BFF' }}>
-              RESERVAS / PRONTO
+            <span style={{ ...pillStyle, background: 'rgba(0,91,255,0.3)', color: '#005BFF' }}>
+              <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <span>RESERVAS</span>
+                <span>PRONTO</span>
+              </span>
             </span>
           </div>
         </div>

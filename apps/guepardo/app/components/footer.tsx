@@ -116,7 +116,9 @@ export function Footer({
             style={{
               fontFamily: '"Editorial New Regular", serif',
               fontSize: '14px',
-              letterSpacing: '0.1em',
+              fontWeight: 400,
+              letterSpacing: '1.4px',
+              lineHeight: '16.8px',
               textAlign: 'right',
               color: 'rgb(255, 255, 255)',
               margin: '0',
@@ -138,7 +140,7 @@ export function Footer({
               gap: '10px',
               height: 'min-content',
               justifyContent: 'flex-end',
-              padding: '0px 0px 16px 0px',
+              padding: '0px',
               position: 'relative',
               width: '100%',
             }}
@@ -254,7 +256,7 @@ export function Footer({
         </div>
       </div>
 
-      {/* Logo/Copyright row */}
+      {/* Logo row */}
       <div
         style={{
           alignContent: 'center',
@@ -286,7 +288,7 @@ export function Footer({
             overflow: 'hidden',
             padding: '0px',
             textDecoration: 'none',
-            width: '20%',
+            width: 'min-content',
           }}
         >
           <Image
@@ -295,26 +297,42 @@ export function Footer({
             width={442}
             height={84}
             style={{
-              flex: '1 0 0px',
-              height: '48px',
-              width: '100%',
-              objectFit: 'contain',
-              aspectRatio: '5.136 / 1',
+              width: '198px',
+              height: '39px',
+              objectFit: 'cover',
             }}
           />
         </a>
+      </div>
 
-        {/* Copyright text */}
+      {/* Copyright row */}
+      <div
+        style={{
+          alignContent: 'center',
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'row',
+          flexWrap: 'nowrap',
+          height: 'min-content',
+          justifyContent: 'center',
+          maxWidth: '1280px',
+          overflow: 'hidden',
+          padding: '0px',
+          position: 'relative',
+          width: '100%',
+        }}
+      >
         <p
           style={{
             fontFamily: '"Editorial New Regular", serif',
             fontSize: '12px',
-            letterSpacing: '0.02em',
+            fontWeight: 400,
+            letterSpacing: '0.24px',
+            lineHeight: '14.4px',
             textAlign: 'center',
             color: 'rgb(255, 255, 255)',
             margin: '0',
             padding: '0',
-            flex: '1 0 0px',
           }}
         >
           {copyright}

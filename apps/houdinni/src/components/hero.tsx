@@ -3,258 +3,298 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+/**
+ * HeroSection — pixel-perfect from Framer extraction.
+ *
+ * Layout (viewport 1200px):
+ *   - Background image: subway-desktop.png, 1200x561, objectFit cover
+ *   - XL section: sticky, top 24px, positioned at x:86, w:1028, h:434, padding 24px, z-index 1
+ *   - Left poster (menu): x:75, y:181, 230x289
+ *   - Center top image: x:384, y:73, 428x272
+ *   - Center bottom (reservations): x:392, y:338, 411x147
+ *   - Right buttons: menu(911,141 193x68), events(911,227 193x68), contact(911,312 193x68)
+ *   - Calendar button: (918,397 180x64) objectFit contain
+ *   - Calendar screen video: (919,410 178x38) z-index -1, position absolute
+ */
 export function HeroSection() {
   return (
-    <section
-      id="scroll"
-      style={{
-        position: 'sticky',
-        top: 34,
-        width: '100%',
-        minHeight: '100vh',
-        overflow: 'hidden',
-        backgroundColor: '#050505',
-      }}
-    >
-      {/* Subway station background — Desktop */}
-      <div className="houdinni-hero-desktop" style={{ position: 'absolute', inset: 0 }}>
-        <Image
-          src="/subway-desktop.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-          aria-hidden
-        />
-      </div>
-
-      {/* Subway station background — Mobile */}
-      <div className="houdinni-hero-mobile" style={{ position: 'absolute', inset: 0 }}>
-        <Image
-          src="/subway-mobile.png"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          style={{ objectFit: 'cover', objectPosition: 'center top' }}
-          aria-hidden
-        />
-      </div>
-
-      {/* Dark overlay at bottom for tracks area */}
-      <div
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: '35%',
-          background: 'linear-gradient(to bottom, transparent 0%, rgba(5,5,5,0.7) 50%, rgba(5,5,5,0.95) 100%)',
-          zIndex: 1,
-          pointerEvents: 'none',
-        }}
-        aria-hidden
-      />
-
-      {/* Hero content overlay */}
+    <>
+      {/* Full background image — spans entire hero area 0–561px */}
       <div
         style={{
           position: 'relative',
-          zIndex: 2,
           width: '100%',
-          maxWidth: 1200,
-          margin: '0 auto',
-          minHeight: '100vh',
-          padding: '49px 40px',
-          display: 'flex',
-          flexDirection: 'column',
+          height: 0,
+          paddingBottom: `${(561 / 1200) * 100}%`, /* aspect ratio 1200:561 */
         }}
       >
-        {/* Main content area */}
-        <div className="houdinni-hero-grid">
-          {/* LEFT — Menu poster */}
-          <div className="houdinni-hero-left">
+        {/* Desktop background */}
+        <div className="houdinni-hero-desktop" style={{ position: 'absolute', inset: 0 }}>
+          <Image
+            src="/subway-desktop.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+            aria-hidden
+          />
+        </div>
+
+        {/* Mobile background */}
+        <div className="houdinni-hero-mobile" style={{ position: 'absolute', inset: 0 }}>
+          <Image
+            src="/subway-mobile.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover' }}
+            aria-hidden
+          />
+        </div>
+
+        {/* XL section overlay — sticky, z-index 1 */}
+        <section
+          className="houdinni-hero-overlay"
+          style={{
+            position: 'sticky',
+            top: '24px',
+            zIndex: 1,
+            width: '100%',
+            maxWidth: '1028px',
+            margin: '0 auto',
+            padding: '24px',
+            height: '434px',
+          }}
+        >
+          {/* Left — Menu poster: 230x289, positioned at relative (75,181) → ~left side */}
+          <div
+            className="houdinni-hero-left"
+            style={{
+              position: 'absolute',
+              left: '0',
+              top: '157px', /* 181 - 24 (section padding) */
+              width: '230px',
+              height: '289px',
+            }}
+          >
             <a
               href="https://mandalagroup.menu/es/houdinni"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ display: 'block' }}
+              style={{ display: 'block', width: '100%', height: '100%' }}
             >
               <Image
-                src="/btn-menu-1.png"
+                src="/hero-left-poster.png"
                 alt="Menu"
-                width={759}
-                height={268}
-                style={{
-                  width: '100%',
-                  maxWidth: 280,
-                  height: 'auto',
-                  display: 'block',
-                  filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.4))',
-                  cursor: 'pointer',
-                }}
+                fill
+                style={{ objectFit: 'cover' }}
               />
             </a>
           </div>
 
-          {/* CENTER — HOUDINNI red sign + RESERVATIONS graffiti */}
-          <div className="houdinni-hero-center">
+          {/* Center top image: 428x272, at (384,73) relative to viewport → within section at ~(298,49) */}
+          <div
+            className="houdinni-hero-center-top"
+            style={{
+              position: 'absolute',
+              left: '298px', /* 384 - 86 (section x offset) */
+              top: '49px',  /* 73 - 24 (section top) */
+              width: '428px',
+              height: '272px',
+            }}
+          >
+            <Image
+              src="/hero-center-top.png"
+              alt="Houdinni"
+              fill
+              style={{ objectFit: 'cover' }}
+              priority
+            />
+          </div>
+
+          {/* Center bottom — Reservations link: 411x147, at (392,338) */}
+          <a
+            href="https://tickets.houdinni.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="houdinni-hero-center-bottom"
+            style={{
+              position: 'absolute',
+              left: '306px', /* 392 - 86 */
+              top: '314px',  /* 338 - 24 */
+              width: '411px',
+              height: '147px',
+              display: 'block',
+            }}
+          >
+            <Image
+              src="/hero-center-bottom.png"
+              alt="Reservations"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </a>
+
+          {/* Right column — Metro-style nav buttons */}
+          {/* Menu button: 193x68 at (911,141) → within section (825,117) */}
+          <a
+            href="https://mandalagroup.menu/es/houdinni"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="houdinni-hero-btn-right"
+            style={{
+              position: 'absolute',
+              right: '0',
+              top: '117px', /* 141 - 24 */
+              width: '193px',
+              height: '68px',
+              display: 'block',
+            }}
+          >
+            <Image
+              src="/btn-menu-poster.png"
+              alt="Menu"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </a>
+
+          {/* Events button: 193x68 at (911,227) */}
+          <Link
+            href="/events"
+            className="houdinni-hero-btn-right"
+            style={{
+              position: 'absolute',
+              right: '0',
+              top: '203px', /* 227 - 24 */
+              width: '193px',
+              height: '68px',
+              display: 'block',
+            }}
+          >
+            <Image
+              src="/btn-events.png"
+              alt="Events"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </Link>
+
+          {/* Contact button: 193x68 at (911,312) */}
+          <a
+            href="/#contact"
+            className="houdinni-hero-btn-right"
+            style={{
+              position: 'absolute',
+              right: '0',
+              top: '288px', /* 312 - 24 */
+              width: '193px',
+              height: '68px',
+              display: 'block',
+            }}
+          >
+            <Image
+              src="/btn-contact.png"
+              alt="Contact"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </a>
+
+          {/* Calendar button: 180x64 at (918,397) — objectFit contain */}
+          <Link
+            href="/calendar"
+            className="houdinni-hero-btn-calendar"
+            style={{
+              position: 'absolute',
+              right: '0',
+              top: '373px', /* 397 - 24 */
+              width: '180px',
+              height: '64px',
+              display: 'block',
+            }}
+          >
+            <Image
+              src="/btn-calendar.png"
+              alt="Calendar"
+              fill
+              style={{ objectFit: 'contain' }}
+            />
+            {/* Calendar screen video overlay: 178x38 at (919,410), z-index -1, absolute */}
             <div
               style={{
-                backgroundColor: '#cc0000',
-                padding: '20px 48px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
-                border: '3px solid #990000',
+                position: 'absolute',
+                left: '1px',
+                top: '13px',
+                width: '178px',
+                height: '38px',
+                zIndex: -1,
               }}
             >
-              <span
-                className="font-druk"
-                style={{
-                  fontSize: 'clamp(28px, 4vw, 52px)',
-                  fontWeight: 700,
-                  color: '#ffffff',
-                  letterSpacing: '0.02em',
-                  textTransform: 'uppercase',
-                  whiteSpace: 'nowrap',
-                }}
+              <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               >
-                HOUDINNI
-              </span>
+                <source src="/videos/calendar-screen.mp4" type="video/mp4" />
+              </video>
             </div>
-
-            {/* RESERVATIONS graffiti text */}
-            <a
-              href="https://tickets.houdinni.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-druk"
-              style={{
-                fontSize: 'clamp(24px, 3.5vw, 44px)',
-                fontWeight: 700,
-                color: 'rgba(80, 80, 80, 0.7)',
-                letterSpacing: '0.01em',
-                textTransform: 'uppercase',
-                textDecoration: 'none',
-                textShadow: '2px 2px 4px rgba(0,0,0,0.3)',
-                transform: 'rotate(-2deg)',
-                display: 'inline-block',
-                marginTop: 16,
-                cursor: 'pointer',
-              }}
-            >
-              RESERVATIONS
-            </a>
-          </div>
-
-          {/* RIGHT — Metro-style navigation buttons */}
-          <div className="houdinni-hero-right">
-            <a
-              href="https://mandalagroup.menu/es/houdinni"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ display: 'block' }}
-            >
-              <Image
-                src="/btn-menu-poster.png"
-                alt="Menu"
-                width={759}
-                height={268}
-                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
-              />
-            </a>
-            <Link href="/events" style={{ display: 'block' }}>
-              <Image
-                src="/btn-events.png"
-                alt="Events"
-                width={759}
-                height={268}
-                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
-              />
-            </Link>
-            <a href="/#contact" style={{ display: 'block' }}>
-              <Image
-                src="/btn-contact.png"
-                alt="Contact"
-                width={759}
-                height={268}
-                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
-              />
-            </a>
-            <Link href="/calendar" style={{ display: 'block' }}>
-              <Image
-                src="/btn-calendar.png"
-                alt="Calendar"
-                width={717}
-                height={158}
-                style={{ width: '100%', maxWidth: 220, height: 'auto', cursor: 'pointer' }}
-              />
-            </Link>
-          </div>
-        </div>
+          </Link>
+        </section>
       </div>
 
       <style>{`
         .houdinni-hero-mobile { display: none; }
         .houdinni-hero-desktop { display: block; }
 
-        .houdinni-hero-grid {
-          display: grid;
-          grid-template-columns: 1fr 1.5fr 1fr;
-          gap: 24px;
-          align-items: center;
-          flex: 1;
-        }
-
-        .houdinni-hero-left {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .houdinni-hero-center {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 8px;
-        }
-
-        .houdinni-hero-right {
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          align-items: flex-end;
-        }
-
         @media (max-width: 809px) {
           .houdinni-hero-desktop { display: none !important; }
           .houdinni-hero-mobile { display: block !important; }
 
-          .houdinni-hero-grid {
-            grid-template-columns: 1fr;
-            gap: 32px;
-          }
-
-          .houdinni-hero-left {
-            display: none;
-          }
-
-          .houdinni-hero-right {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            align-items: stretch;
-          }
-
-          .houdinni-hero-right img {
+          .houdinni-hero-overlay {
+            position: relative !important;
+            height: auto !important;
             max-width: 100% !important;
+            padding: 16px !important;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+          }
+
+          .houdinni-hero-left,
+          .houdinni-hero-center-top {
+            display: none !important;
+          }
+
+          .houdinni-hero-center-bottom,
+          .houdinni-hero-btn-right,
+          .houdinni-hero-btn-calendar {
+            position: relative !important;
+            left: auto !important;
+            right: auto !important;
+            top: auto !important;
+            width: 100% !important;
+            max-width: 300px;
+            margin: 0 auto;
+          }
+
+          .houdinni-hero-center-bottom {
+            height: 80px !important;
+          }
+
+          .houdinni-hero-btn-right {
+            height: 48px !important;
+          }
+
+          .houdinni-hero-btn-calendar {
+            height: 48px !important;
           }
         }
       `}</style>
-    </section>
+    </>
   );
 }

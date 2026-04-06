@@ -16,7 +16,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
         flexDirection: 'column',
         flexWrap: 'nowrap',
         height: 'min-content',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         overflow: 'clip',
         padding: '0px',
         position: 'relative',
@@ -30,7 +30,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
         fill
         sizes="100vw"
         style={{
-          objectFit: 'fill',
+          objectFit: 'cover',
           borderRadius: 'inherit',
           zIndex: 0,
         }}
@@ -99,7 +99,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
           src={reservationUrl}
           allow="payment"
           frameBorder={0}
-          height={550}
+          height={745}
           width="100%"
           style={{ display: 'block', border: 'none' }}
         />

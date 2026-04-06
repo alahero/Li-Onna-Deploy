@@ -1,34 +1,36 @@
-import { Navbar } from '@/components/navbar';
 import { Hero } from '@/components/hero';
+import { Navbar } from '@/components/navbar';
 import { PhotoGallery } from '@/components/photo-gallery';
 import { DishTicker } from '@/components/dish-ticker';
-import { BrandStatement } from '@/components/brand-statement';
 import { ContactCta } from '@/components/contact-cta';
+import { BrandStatement } from '@/components/brand-statement';
 import { Footer } from '@/components/footer';
 
 export default function HomePage() {
   return (
     <>
-      {/* Sticky nav bar (z-index: 4, #005BFF, 60px) */}
+      {/* Full-viewport video hero (100vh, #005BFF) */}
+      <Hero />
+
+      {/* Sticky nav bar appears after hero scroll */}
       <Navbar />
 
-      <main style={{ backgroundColor: '#F7F8F3' }}>
-        {/* Full-viewport video hero */}
-        <Hero />
-
-        {/* Photo gallery with 7 floating cards */}
+      {/* Main Content — bg #F6F6F2 */}
+      <main style={{ backgroundColor: '#F6F6F2', position: 'relative', zIndex: 2 }}>
+        {/* Photo gallery with floating cards + "hola Madrid" text */}
         <PhotoGallery />
 
-        {/* Imprescindibles + 3-row dish ticker */}
+        {/* Imprescindibles dish ticker */}
         <DishTicker />
 
-        {/* Brand statement */}
-        <BrandStatement />
-
-        {/* Instagram + contact form CTA */}
+        {/* Social CTA + contact form */}
         <ContactCta />
+
+        {/* Contact info + map + brand statement card */}
+        <BrandStatement />
       </main>
 
+      {/* Footer — black bg */}
       <Footer />
     </>
   );

@@ -4,39 +4,55 @@ export function ContactCta() {
       className="contact-cta-section"
       style={{
         backgroundColor: '#F6F6F2',
-        padding: '80px 80px',
+        padding: '32px 80px',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        gap: 32,
+        gap: 24,
       }}
     >
-      <h2
-        style={{
-          fontFamily: 'EditorialNew, serif',
-          fontWeight: 400,
-          fontSize: 34,
-          letterSpacing: '-0.04em',
-          lineHeight: 1.4,
-          color: '#000',
-          textAlign: 'center',
-          margin: 0,
-        }}
-        className="contact-cta-h2"
-      >
-        ¡Síguenos para no perderte nada!
-      </h2>
+      {/* Mixed-font heading: "!Siguenos para no perderte nada!" */}
+      <div style={{ maxWidth: 800, width: '100%', padding: '0 8px', textAlign: 'center' }}>
+        <p
+          style={{
+            fontFamily: '"Editorial New Regular", EditorialNew, serif',
+            fontWeight: 400,
+            fontSize: 32,
+            letterSpacing: '0.64px',
+            lineHeight: '38.4px',
+            color: 'rgb(0, 0, 0)',
+            margin: 0,
+          }}
+          className="contact-cta-text"
+        >
+          !<span
+            style={{
+              fontFamily: '"Odesta Regular Regular", Odesta, serif',
+              fontWeight: 400,
+              fontSize: 50,
+              letterSpacing: '1px',
+              lineHeight: '60px',
+            }}
+            className="contact-cta-siguenos"
+          >
+            Siguenos
+          </span>{' '}
+          para no perderte nada!
+        </p>
+      </div>
 
+      {/* Instagram button */}
       <a
         href="https://www.instagram.com/lionnaes"
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          fontFamily: 'EditorialNew, serif',
-          fontWeight: 500,
+          fontFamily: '"Editorial New Medium", EditorialNew, serif',
+          fontWeight: 400,
           fontSize: 14,
-          letterSpacing: '0.04em',
-          background: 'rgb(0,92,254)',
+          letterSpacing: '0.56px',
+          lineHeight: '16.8px',
+          background: 'rgb(0, 92, 254)',
           color: '#fff',
           borderRadius: 10,
           padding: '12px 24px',
@@ -47,11 +63,11 @@ export function ContactCta() {
           border: 'none',
         }}
       >
-        Siguenos en Instagram @lionnaes
+        Contactanos
       </a>
 
       {/* Contact form */}
-      <div style={{ width: '100%', maxWidth: 480, marginTop: 16 }}>
+      <div style={{ width: '100%', maxWidth: 480, marginTop: 8 }}>
         <form
           style={{ display: 'flex', flexDirection: 'column', gap: 12 }}
           action="mailto:hola@lionna.es"
@@ -94,7 +110,7 @@ export function ContactCta() {
           <input
             type="tel"
             name="telefono"
-            placeholder="Teléfono"
+            placeholder="Telefono"
             style={{
               fontFamily: 'Inter, sans-serif',
               fontSize: 14,
@@ -125,27 +141,33 @@ export function ContactCta() {
           <button
             type="submit"
             style={{
-              fontFamily: 'EditorialNew, serif',
-              fontWeight: 500,
+              fontFamily: '"Editorial New Medium", EditorialNew, serif',
+              fontWeight: 400,
               fontSize: 14,
-              letterSpacing: '0.04em',
-              background: 'rgb(0,92,254)',
+              letterSpacing: '0.56px',
+              lineHeight: '16.8px',
+              background: 'rgb(0, 92, 254)',
               color: '#fff',
               borderRadius: 10,
               padding: '12px 24px',
               border: 'none',
               cursor: 'pointer',
               marginTop: 4,
+              width: '100%',
+              maxWidth: 227,
+              height: 40,
+              alignSelf: 'flex-end',
             }}
           >
-            Contáctanos
+            Contactanos
           </button>
           <p
             style={{
               fontFamily: 'Inter, sans-serif',
               fontStyle: 'italic',
               fontSize: 10,
-              color: '#8C8C8C',
+              lineHeight: '12px',
+              color: 'rgb(0, 0, 0)',
               textAlign: 'center',
               margin: 0,
             }}
@@ -157,11 +179,12 @@ export function ContactCta() {
 
       <style>{`
         @media (max-width: 1439px) {
-          .contact-cta-section { padding: 80px 24px !important; }
+          .contact-cta-section { padding: 32px 24px !important; }
         }
         @media (max-width: 809px) {
-          .contact-cta-section { padding: 40px 16px !important; }
-          .contact-cta-h2 { font-size: 26px !important; }
+          .contact-cta-section { padding: 24px 16px !important; }
+          .contact-cta-text { font-size: 24px !important; line-height: 28.8px !important; }
+          .contact-cta-siguenos { font-size: 36px !important; line-height: 43.2px !important; }
         }
       `}</style>
     </section>

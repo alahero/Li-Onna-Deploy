@@ -65,6 +65,7 @@ body {
   font-family: 'Gothic Regular', sans-serif;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 a, button, [role="button"] {
@@ -73,20 +74,6 @@ a, button, [role="button"] {
 
 html {
   scroll-behavior: smooth;
-}
-
-/* ============================================================
-   MARQUEE / TICKER
-   ============================================================ */
-.marquee-track {
-  display: flex;
-  width: max-content;
-  animation: marquee 18s linear infinite;
-}
-
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
 }
 
 /* ============================================================
@@ -100,7 +87,7 @@ html {
 }
 
 /* ============================================================
-   STICKY MOVEMENT BANNER
+   STICKY MOVEMENT BANNER — Framer: 1602x769 image, slides horizontally
    ============================================================ */
 .movement-image {
   will-change: transform;
@@ -128,6 +115,45 @@ html {
   }
   .hamburger-btn {
     display: none !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE ABOUT SECTION
+   ============================================================ */
+@media (max-width: 809px) {
+  .about-inner {
+    flex-direction: column !important;
+  }
+  .about-photo-col {
+    width: 100% !important;
+    aspect-ratio: 4 / 5 !important;
+  }
+  .about-right-col {
+    display: none;
+  }
+  .about-text-overlay {
+    left: 20px !important;
+    right: 20px !important;
+    bottom: 20px !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE FOOTER
+   ============================================================ */
+@media (max-width: 809px) {
+  .footer-socials {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: flex-start !important;
+  }
+  .footer-center-row {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 16px !important;
+    padding: 16px 0 !important;
+    align-items: flex-start !important;
   }
 }
 

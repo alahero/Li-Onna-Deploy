@@ -32,11 +32,10 @@ export function HeroSection() {
         transition={{ type: 'spring', bounce: 0.2, duration: 10 }}
         style={{
           position: 'absolute',
-          aspectRatio: '0.9817 / 1',
-          height: '1222px',
-          left: '1px',
-          right: '0px',
-          top: '-269px',
+          width: '1219px',
+          height: '1241px',
+          left: '-9px',
+          top: '-279px',
           overflow: 'visible',
           willChange: 'transform',
           pointerEvents: 'none',
@@ -80,7 +79,7 @@ export function HeroSection() {
         />
       </motion.div>
 
-      {/* GUEPARDO Logo — centered */}
+      {/* GUEPARDO Logo — centered both axes */}
       <motion.div
         initial={{ scale: 0.9 }}
         animate={{ scale: 1 }}
@@ -89,9 +88,14 @@ export function HeroSection() {
           position: 'absolute',
           width: '229px',
           height: '229px',
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
+          left: '0',
+          right: '0',
+          top: '0',
+          bottom: '0',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: 'auto',
+          marginBottom: 'auto',
           overflow: 'visible',
           aspectRatio: '1 / 1',
         }}

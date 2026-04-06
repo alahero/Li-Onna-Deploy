@@ -14,15 +14,13 @@ export function Hero() {
           backgroundColor: '#005BFF',
         }}
       >
-        {/* Video background — loops, muted, 30% opacity, gradient mask */}
+        {/* Video background — loops, muted, 30% opacity */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             zIndex: 0,
             opacity: 0.3,
-            WebkitMaskImage: 'linear-gradient(#000 63.5%, transparent 100%)',
-            maskImage: 'linear-gradient(#000 63.5%, transparent 100%)',
           }}
         >
           <video
@@ -42,6 +40,45 @@ export function Hero() {
           </video>
         </div>
 
+        {/* Scrolling curve ticker overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: 262,
+            zIndex: 2,
+            overflow: 'hidden',
+            pointerEvents: 'none',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              width: 'max-content',
+              animation: 'lionna-curve-scroll 20s linear infinite',
+              willChange: 'transform',
+            }}
+          >
+            {Array.from({ length: 16 }).map((_, i) => (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img
+                key={i}
+                src="/images/logo-large.svg"
+                alt=""
+                style={{
+                  width: 551,
+                  height: 262,
+                  objectFit: 'cover',
+                  opacity: 0.12,
+                  flexShrink: 0,
+                }}
+              />
+            ))}
+          </div>
+        </div>
+
         {/* Large centered logo SVG */}
         <div
           style={{
@@ -59,45 +96,13 @@ export function Hero() {
             src="/images/logo-large.svg"
             alt="LI-ONNA"
             style={{
-              width: '36%',
+              width: '39%',
               height: 'auto',
-              maxWidth: 600,
+              maxWidth: 468,
               userSelect: 'none',
               pointerEvents: 'none',
             }}
           />
-        </div>
-
-        {/* ── Decorative concentric semicircle arches ────── */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '30%',
-            zIndex: 2,
-            overflow: 'hidden',
-            pointerEvents: 'none',
-          }}
-        >
-          <svg
-            viewBox="0 0 1440 300"
-            width="100%"
-            height="100%"
-            preserveAspectRatio="xMidYMax meet"
-            style={{ display: 'block' }}
-          >
-            {[200, 240, 280, 320, 360, 400, 440].map((r, i) => (
-              <path
-                key={i}
-                d={`M${720 - r},300 A${r},${r} 0 0,1 ${720 + r},300`}
-                fill="none"
-                stroke="rgba(246, 244, 240, 0.15)"
-                strokeWidth="1"
-              />
-            ))}
-          </svg>
         </div>
 
         {/* ── Rotating circular badge / scroll indicator ─── */}
@@ -139,7 +144,7 @@ export function Hero() {
               }}
             >
               <textPath href="#badge-circle">
-                EXPLORA MÁS ABAJO · EXPLORA MÁS ABAJO ·{' '}
+                EXPLORA MAS ABAJO · EXPLORA MAS ABAJO ·{' '}
               </textPath>
             </text>
           </svg>
@@ -153,60 +158,12 @@ export function Hero() {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
           }
+          @keyframes lionna-curve-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
         `}</style>
       </section>
-
-      {/* ── Section 4: Hero Text — "hola Madrid" ─────────── */}
-      <section
-        style={{
-          backgroundColor: '#F7F8F3',
-          padding: '120px 80px 80px',
-        }}
-        className="lionna-hero-text"
-      >
-        <div style={{ maxWidth: 1440, margin: '0 auto' }}>
-          <h2
-            style={{
-              fontFamily: 'Odesta, serif',
-              fontSize: 84,
-              fontWeight: 600,
-              color: 'rgb(0, 91, 255)',
-              letterSpacing: '0.02em',
-              textAlign: 'right',
-              lineHeight: 1,
-              margin: '0 0 48px 0',
-            }}
-            className="lionna-hero-heading"
-          >
-            hola Madrid
-          </h2>
-          <p
-            style={{
-              fontFamily: 'EditorialNew, serif',
-              fontSize: 24,
-              fontWeight: 400,
-              color: '#000000',
-              letterSpacing: '0.02em',
-              textAlign: 'justify',
-              lineHeight: 1.4,
-              margin: 0,
-            }}
-          >
-            Desde esta esquina en el corazón de la capital perseguimos la sintonía perfecta entre la cocina japonesa y nuestras raíces latinas creando una atmósfera atemporal y auténtica.
-          </p>
-        </div>
-      </section>
-
-      <style>{`
-        @media (max-width: 1439px) {
-          .lionna-hero-heading { font-size: 44px !important; }
-          .lionna-hero-text { padding: 80px 64px 60px !important; }
-        }
-        @media (max-width: 809px) {
-          .lionna-hero-heading { font-size: 30px !important; }
-          .lionna-hero-text { padding: 60px 16px 40px !important; }
-        }
-      `}</style>
     </>
   );
 }

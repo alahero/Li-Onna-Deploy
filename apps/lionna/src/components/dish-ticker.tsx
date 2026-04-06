@@ -1,7 +1,7 @@
 // Exact dish names from Framer extraction
 const TICKER_ROWS: { items: string[]; speed: number }[] = [
   {
-    items: ['Tostada de Atún', 'Tacos de Hamachi', 'Tataki de Res', 'Kushiage de Queso', 'Tacos de Bacalao', 'Fujiyama'],
+    items: ['Tostada de Atun', 'Tacos de Hamachi', 'Tataki de Res', 'Kushiage de Queso', 'Tacos de Bacalao', 'Fujiyama'],
     speed: 28,
   },
   {
@@ -9,7 +9,7 @@ const TICKER_ROWS: { items: string[]; speed: number }[] = [
     speed: 45,
   },
   {
-    items: ['Salmón Gochugaru', 'Pulpo Anticucho', 'Atún Futomaki', 'Li-Onna Roll', 'Gogo Roll'],
+    items: ['Salmon Gochugaru', 'Pulpo Anticucho', 'Atun Futomaki', 'Li-Onna Roll', 'Gogo Roll'],
     speed: 32,
   },
 ];
@@ -21,14 +21,33 @@ function Sep() {
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        marginInline: 20,
-        color: 'rgba(255,255,255,0.5)',
+        marginInline: 16,
+        color: 'rgba(0,0,0,0.3)',
         fontSize: 22,
         lineHeight: 1,
         flexShrink: 0,
       }}
     >
-      ·
+      |
+    </span>
+  );
+}
+
+function ZwnjSep() {
+  return (
+    <span
+      aria-hidden
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        marginInline: 8,
+        color: 'rgba(0,0,0,0.3)',
+        fontSize: 22,
+        lineHeight: 1,
+        flexShrink: 0,
+      }}
+    >
+      |
     </span>
   );
 }
@@ -54,12 +73,12 @@ function TickerRow({ items, speed }: { items: string[]; speed: number }) {
           <span key={i} style={{ display: 'inline-flex', alignItems: 'center', flexShrink: 0 }}>
             <span
               style={{
-                fontFamily: 'EditorialNew, serif',
+                fontFamily: '"Editorial New Regular", EditorialNew, serif',
                 fontWeight: 400,
                 fontSize: 22,
-                letterSpacing: '-0.04em',
-                lineHeight: '1.4em',
-                color: '#fff',
+                letterSpacing: '-0.88px',
+                lineHeight: '30.8px',
+                color: 'rgb(0, 0, 0)',
                 whiteSpace: 'nowrap',
                 flexShrink: 0,
               }}
@@ -67,7 +86,7 @@ function TickerRow({ items, speed }: { items: string[]; speed: number }) {
             >
               {item}
             </span>
-            <Sep />
+            {i < repeated.length - 1 && <Sep />}
           </span>
         ))}
       </div>
@@ -79,27 +98,34 @@ export function DishTicker() {
   return (
     <section
       style={{
-        backgroundColor: '#005BFF',
-        paddingTop: 80,
-        paddingBottom: 80,
+        backgroundColor: '#F6F6F2',
+        padding: '32px 24px',
       }}
     >
+      {/* Star/Union decorative icon */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+        <svg width="28" height="26" viewBox="0 0 28 26" fill="none" aria-hidden>
+          <path d="M14 0L16.5 9.5L26 13L16.5 16.5L14 26L11.5 16.5L2 13L11.5 9.5L14 0Z" fill="rgb(0,92,254)" />
+        </svg>
+      </div>
+
       {/* "Imprescindibles" heading */}
       <div
         className="ticker-heading"
         style={{
-          padding: '0 80px 48px',
+          padding: '0 24px 32px',
           textAlign: 'center',
         }}
       >
         <h2
           style={{
-            fontFamily: 'Odesta, serif',
-            fontWeight: 600,
+            fontFamily: '"Odesta Regular Regular", Odesta, serif',
+            fontWeight: 400,
             fontSize: 50,
-            letterSpacing: '0.02em',
+            letterSpacing: '1px',
+            lineHeight: '60px',
             textAlign: 'center',
-            color: '#fff',
+            color: 'rgb(0, 92, 254)',
             margin: 0,
           }}
           className="imprescindibles-title"
@@ -109,47 +135,46 @@ export function DishTicker() {
       </div>
 
       {/* Three ticker rows */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 8,
+          maxWidth: 900,
+          margin: '0 auto',
+          overflow: 'hidden',
+          padding: '8px',
+        }}
+      >
         {TICKER_ROWS.map((row, i) => (
           <TickerRow key={i} items={row.items} speed={row.speed} />
         ))}
       </div>
 
-      {/* MENÚ external link */}
-      <div style={{ padding: '48px 80px 0', display: 'flex', justifyContent: 'center' }}>
-        <a
-          href="https://www.mnu.bio/lionna"
-          target="_blank"
-          rel="noopener noreferrer"
+      {/* ── Separator ──────────────────────────────────── */}
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: 48 }}>
+        <div
           style={{
-            fontFamily: 'EditorialNew, serif',
-            fontWeight: 500,
-            fontSize: 12,
-            letterSpacing: '0.21em',
-            color: '#fff',
-            textDecoration: 'none',
-            border: '1px solid rgba(255,255,255,0.6)',
-            borderRadius: 8,
-            padding: '10px 20px',
-            display: 'inline-block',
-            textTransform: 'uppercase',
+            width: '50%',
+            maxWidth: 600,
+            height: 2,
+            background: 'rgb(0, 0, 0)',
+            opacity: 0.4,
           }}
-        >
-          MENÚ
-        </a>
+        />
       </div>
 
       <style>{`
         @media (max-width: 1439px) {
-          .ticker-heading { padding: 0 24px 40px !important; }
+          .ticker-heading { padding: 0 24px 32px !important; }
         }
         @media (max-width: 1199px) {
           .ticker-text-responsive { font-size: 18px !important; }
         }
         @media (max-width: 809px) {
           .ticker-text-responsive { font-size: 16px !important; }
-          .ticker-heading { padding: 0 16px 32px !important; }
-          .imprescindibles-title { font-size: 36px !important; }
+          .ticker-heading { padding: 0 16px 24px !important; }
+          .imprescindibles-title { font-size: 36px !important; line-height: 43.2px !important; }
         }
       `}</style>
     </section>

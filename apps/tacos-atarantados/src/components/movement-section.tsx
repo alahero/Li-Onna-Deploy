@@ -8,7 +8,8 @@ export function MovementSection() {
         top: 0,
         zIndex: 1,
         width: '100%',
-        height: '958px',
+        height: '100vh',
+        maxHeight: '978px',
         background: '#0c7528',
         overflow: 'hidden',
         display: 'flex',
@@ -16,12 +17,14 @@ export function MovementSection() {
         justifyContent: 'center',
       }}
     >
+      {/* ATARANTADOS MOVEMENT image — Framer: x=688, y offset centered, 1602x769, objectFit=cover */}
       <div
         style={{
           position: 'absolute',
-          top: 'calc(49.9% - 384.5px)',
-          right: '-790px',
-          width: '1602px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          right: '-33.5%',
+          width: '133.5%',
           height: '769px',
         }}
       >
@@ -31,7 +34,7 @@ export function MovementSection() {
           width={1602}
           height={769}
           className="movement-image"
-          style={{ width: '1602px', height: '769px', objectFit: 'contain' }}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         />
       </div>
     </section>

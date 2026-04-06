@@ -1,52 +1,46 @@
 import { Navbar } from '@/components/navbar';
 import { HeroSection } from '@/components/hero';
-import { MarqueeTicker, EventsTicker } from '@/components/marquee-ticker';
-import { ConceptSection } from '@/components/concept-section';
 import { GallerySection } from '@/components/gallery-section';
-import { ContactSection } from '@/components/contact-section';
+import { CTASection } from '@/components/cta-section';
 import { Footer } from '@/components/footer';
 
 export const revalidate = 3600;
 
+/**
+ * Houdinni homepage — pixel-perfect from Framer extraction.
+ *
+ * Structure (from houdinni.json):
+ *   1. NAV — 34px marquee ticker, fixed top, bg rgba(0,0,0,0.96)
+ *   2. Main container: 1200x4004
+ *      a. Hero background (subway-desktop.png, 1200x561)
+ *      b. XL section (sticky interactive hero with buttons)
+ *      c. Example 1 — Gallery (3000px scroll height, sticky 900px viewport)
+ *      d. Example 2 — CTA section (sticky, 683px, link to tickets)
+ *   3. Footer — Houdinni/Footer component (1190x441)
+ */
 export default function HomePage() {
   return (
     <>
       <Navbar />
 
-      <main style={{ paddingTop: '34px' /* offset fixed nav */ }}>
-        {/* ── Hero (sticky, position sticky top: 34px) ── */}
+      <main
+        style={{
+          position: 'relative',
+          width: '100%',
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0px',
+          overflow: 'visible',
+        }}
+      >
+        {/* ── Hero (subway background + interactive elements) ── */}
         <HeroSection />
 
-        {/* ── Marquee Ticker 1 — brand manifesto ── */}
-        <MarqueeTicker background="#000000" color="#ffffff" speed="normal" />
-
-        {/* ── Events teaser ticker ── */}
-        <EventsTicker />
-
-        {/* ── Marquee Ticker 2 — slower, cyan accent ── */}
-        <MarqueeTicker
-          background="#050505"
-          color="#99eeff"
-          speed="slow"
-          text="HOUDINNI // 一 會兒你看見我 一 會兒你看不見我 // NOW YOU SEE ME, NOW YOU DON'T // LA MÚSICA VA PRIMERO // HOUDINNI OR NOWHERE"
-        />
-
-        {/* ── Brand Manifesto + Streets + DJ Booth ── */}
-        <ConceptSection />
-
-        {/* ── Gallery: sticky scroll + horizontal pan ── */}
+        {/* ── Gallery: sticky scroll + horizontal pan (Example 1, h:3000) ── */}
         <GallerySection />
 
-        {/* ── Marquee Ticker 3 — between gallery and contact ── */}
-        <MarqueeTicker
-          background="#000000"
-          color="#3388ff"
-          speed="fast"
-          text="HOUDINNI OR NOWHERE // MUSIC IS THE ANSWER // AUTHENTICITY, COMMUNITY, AND IRREVERENCE // CRAFTING A COMMUNITY OF LOUD MUSIC-LOVERS FREAKS"
-        />
-
-        {/* ── Contact / Info ── */}
-        <ContactSection />
+        {/* ── CTA Section (Example 2, h:683, sticky) ── */}
+        <CTASection />
       </main>
 
       {/* ── Footer ── */}

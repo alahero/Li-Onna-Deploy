@@ -1,37 +1,43 @@
-export function Ticker() {
-  const text = 'tacosatarantados';
-  const repeat = 20;
+import Image from 'next/image';
 
+export function Ticker() {
   return (
-    <div
+    <section
       style={{
+        position: 'relative',
         width: '100%',
-        background: '#ffffff',
+        aspectRatio: '1200 / 623',
         overflow: 'hidden',
-        height: '48px',
-        display: 'flex',
-        alignItems: 'center',
-        borderTop: '1px solid #0c7528',
-        borderBottom: '1px solid #0c7528',
       }}
     >
-      <div className="marquee-track">
-        {Array.from({ length: repeat }).map((_, i) => (
-          <span
-            key={i}
-            style={{
-              fontFamily: '"Gothic Regular", sans-serif',
-              fontWeight: 400,
-              fontSize: '18px',
-              color: '#0c7528',
-              whiteSpace: 'nowrap',
-              paddingRight: '40px',
-            }}
-          >
-            {text}
-          </span>
-        ))}
+      {/* Full-bleed banner background image */}
+      <Image
+        src="/images/ticker-bg.png"
+        alt="Tacos Atarantados banner"
+        fill
+        style={{ objectFit: 'cover' }}
+      />
+
+      {/* Centered trompo logo */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '304px',
+          height: '304px',
+          zIndex: 2,
+        }}
+      >
+        <Image
+          src="/images/trompo-logo.png"
+          alt="Trompo logo"
+          width={304}
+          height={304}
+          style={{ width: '304px', height: '304px', objectFit: 'contain' }}
+        />
       </div>
-    </div>
+    </section>
   );
 }

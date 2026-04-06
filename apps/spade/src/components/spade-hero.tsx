@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -85,8 +84,10 @@ function MobileDropdown({ open, onClose }: { open: boolean; onClose: () => void 
               onClick={onClose}
               style={{
                 display: 'block', padding: '10px 20px', color: '#ffffff',
-                fontFamily: 'Inter, sans-serif', fontSize: 13, fontWeight: 500,
-                letterSpacing: '0.04em', textDecoration: 'none', textTransform: 'uppercase',
+                fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+                fontSize: 15, fontWeight: 500,
+                letterSpacing: '-0.15px', lineHeight: '30px',
+                textDecoration: 'none', textTransform: 'uppercase',
               }}
             >
               {link.label}
@@ -98,20 +99,21 @@ function MobileDropdown({ open, onClose }: { open: boolean; onClose: () => void 
   );
 }
 
-// ─── Nav link style ─────────────────────────────────────────────────────────
+// ─── Nav link style (matches live Framer: Inter 15px/500, -0.15px spacing) ──
 
 const navLinkStyle: React.CSSProperties = {
   color: '#ffffff',
-  fontFamily: 'Inter, sans-serif',
-  fontSize: 12,
+  fontFamily: 'Inter, "Inter Placeholder", sans-serif',
+  fontSize: 15,
   fontWeight: 500,
-  letterSpacing: '0.04em',
+  letterSpacing: '-0.15px',
+  lineHeight: '30px',
   textDecoration: 'none',
   textTransform: 'uppercase',
   transition: 'opacity 0.2s ease',
 };
 
-// ─── Top navigation — split left/right with centered wordmark ───────────────
+// ─── Top navigation — split left/right (matches live Framer NAV: h=98, p=20) ─
 
 function SpadeNav() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -121,15 +123,15 @@ function SpadeNav() {
       style={{
         position: 'absolute',
         top: 0, left: 0, right: 0, zIndex: 50,
-        height: 72,
+        height: 98,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 clamp(20px, 4vw, 60px)',
+        padding: '20px',
       }}
     >
-      {/* Left links */}
-      <div className="spade-nav-desktop" style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+      {/* Left links (live gap ~28px between INSTAGRAM and TIKTOK) */}
+      <div className="spade-nav-desktop" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
         {NAV_LEFT.map((link) => (
           <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" style={navLinkStyle}>
             {link.label}
@@ -137,8 +139,8 @@ function SpadeNav() {
         ))}
       </div>
 
-      {/* Right links */}
-      <div className="spade-nav-desktop" style={{ display: 'flex', gap: 32, alignItems: 'center' }}>
+      {/* Right links (live gap ~50px between ABOUT and CONTACT) */}
+      <div className="spade-nav-desktop" style={{ display: 'flex', gap: 50, alignItems: 'center' }}>
         {NAV_RIGHT.map((link) => (
           <a key={link.label} href={link.href} style={navLinkStyle}>
             {link.label}
@@ -169,14 +171,16 @@ export function SpadeHero() {
         }
       `}</style>
 
-      <section
+      <header
         style={{
           position: 'relative',
           width: '100%',
           height: '100vh',
           minHeight: 600,
+          maxHeight: 900,
           overflow: 'hidden',
           backgroundColor: 'rgb(28,28,28)',
+          padding: '40px 50px',
         }}
       >
         {/* Hero background — entrance animation */}
@@ -201,130 +205,153 @@ export function SpadeHero() {
         {/* Navigation */}
         <SpadeNav />
 
-        {/* Centered content */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 10,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 0,
-            pointerEvents: 'none',
-          }}
-        >
-          {/* Top wordmark */}
-          <motion.div
-            initial={{ opacity: 0.001, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 3, ease: ENTRANCE_EASE }}
-            style={{ marginBottom: 24 }}
-          >
-            <Image
-              src="/wordmark.png"
-              alt="SPADE"
-              width={177}
-              height={60}
-              priority
-              style={{
-                width: 'clamp(114px, 12.3vw, 177px)',
-                height: 'auto',
-                objectFit: 'contain',
-                display: 'block',
-              }}
-            />
-          </motion.div>
+        {/*
+          Content layout uses absolute positioning to match the live Framer site exactly.
+          Live coordinates (at 1200px viewport, 900px header):
+            Top wordmark:      (535, 49,  130, 44)  — centered horizontally
+            GUADALAJARA, MX:   y=194                 — left-aligned at x=50 (padding)
+            Metallic spade:    (428, 309, 344, 212)  — centered horizontally, z-index 10
+            Address line 1:    y=645                 — center-aligned
+            Address line 2:    y=662                 — center-aligned
+            Bottom wordmark:   (535, 807, 130, 44)  — centered, rotated 180deg
+        */}
 
-          {/* GUADALAJARA, MX */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1.5 }}
-            style={{
-              fontFamily: '"Arial Black", Arial, sans-serif',
-              fontSize: 14,
-              fontWeight: 900,
-              letterSpacing: '0.1em',
-              color: '#ffffff',
-              textTransform: 'uppercase',
-              margin: '0 0 32px 0',
-            }}
-          >
-            GUADALAJARA, MX
-          </motion.p>
-
-          {/* Metallic spade — static, centered */}
-          <motion.div
-            initial={{ opacity: 0.001, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 3, ease: ENTRANCE_EASE }}
-          >
-            <Image
-              src="/metallic-spade.png"
-              alt="SPADE"
-              width={393}
-              height={237}
-              priority
-              style={{
-                width: 'clamp(214px, 27.3vw, 393px)',
-                height: 'auto',
-                objectFit: 'contain',
-                display: 'block',
-              }}
-              sizes="(max-width: 390px) 214px, (max-width: 810px) 340px, 393px"
-            />
-          </motion.div>
-
-          {/* Address */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 1.5 }}
-            style={{
-              marginTop: 32,
-              textAlign: 'center',
-            }}
-          >
-            <p
-              style={{
-                fontFamily: '"Arial Black", Arial, sans-serif',
-                fontSize: 14,
-                fontWeight: 900,
-                letterSpacing: '0.015em',
-                color: '#ffffff',
-                lineHeight: 1.6,
-                textTransform: 'uppercase',
-                margin: 0,
-              }}
-            >
-              AV. REAL DE ACUEDUCTO 300,<br />
-              PUERTA DE HIERRO 45116
-            </p>
-          </motion.div>
-        </div>
-
-        {/* Bottom inverted wordmark */}
+        {/* Top wordmark (live: 130x44 at y=49, centered) */}
         <motion.div
           initial={{ opacity: 0.001, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 3, ease: ENTRANCE_EASE }}
           style={{
             position: 'absolute',
-            bottom: 36,
+            top: '5.44%',    /* 49/900 */
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+            pointerEvents: 'none',
+          }}
+        >
+          <Image
+            src="/wordmark.png"
+            alt="SPADE"
+            width={130}
+            height={44}
+            priority
+            style={{
+              width: 'clamp(90px, 10.8vw, 130px)',
+              height: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+          />
+        </motion.div>
+
+        {/* GUADALAJARA, MX (live: y=194, Arial-Black 14px/400, spacing 0.21px, lh 16.8px, left-aligned at padding edge) */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 1.5 }}
+          style={{
+            position: 'absolute',
+            top: '21.56%',    /* 194/900 */
+            left: 50,
+            zIndex: 10,
+            fontFamily: 'Arial-Black, "Arial Black", sans-serif',
+            fontSize: 14,
+            fontWeight: 400,
+            letterSpacing: '0.21px',
+            lineHeight: '16.8px',
+            color: '#ffffff',
+            textTransform: 'uppercase',
+            margin: 0,
+            pointerEvents: 'none',
+          }}
+        >
+          GUADALAJARA, MX
+        </motion.p>
+
+        {/* Metallic spade (live: 344x212 at y=309, centered, z-index 10) */}
+        <motion.div
+          initial={{ opacity: 0.001, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 3, ease: ENTRANCE_EASE }}
+          style={{
+            position: 'absolute',
+            top: '34.33%',    /* 309/900 */
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+            pointerEvents: 'none',
+          }}
+        >
+          <Image
+            src="/metallic-spade.png"
+            alt="SPADE"
+            width={344}
+            height={212}
+            priority
+            style={{
+              width: 'clamp(200px, 28.7vw, 344px)',
+              height: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+            }}
+            sizes="(max-width: 390px) 200px, (max-width: 810px) 280px, 344px"
+          />
+        </motion.div>
+
+        {/* Address (live: y=645/662, Arial-Black 14px/400, spacing 0.21px, lh 16.8px, center-aligned) */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 1.5 }}
+          style={{
+            position: 'absolute',
+            top: '71.67%',    /* 645/900 */
+            left: 0,
+            right: 0,
+            zIndex: 10,
+            textAlign: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          <p
+            style={{
+              fontFamily: 'Arial-Black, "Arial Black", sans-serif',
+              fontSize: 14,
+              fontWeight: 400,
+              letterSpacing: '0.21px',
+              lineHeight: '16.8px',
+              color: '#ffffff',
+              textTransform: 'uppercase',
+              margin: 0,
+            }}
+          >
+            AV. REAL DE ACUEDUCTO 300,<br />
+            PUERTA DE HIERRO 45116
+          </p>
+        </motion.div>
+
+        {/* Bottom inverted wordmark (live: 130x44 at y=807, centered, rotated 180deg) */}
+        <motion.div
+          initial={{ opacity: 0.001, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 3, ease: ENTRANCE_EASE }}
+          style={{
+            position: 'absolute',
+            top: '89.67%',    /* 807/900 */
             left: '50%',
             transform: 'translateX(-50%) rotate(180deg)',
             zIndex: 30,
+            pointerEvents: 'none',
           }}
         >
           <Image
             src="/wordmark.png"
             alt=""
-            width={177}
-            height={60}
+            width={130}
+            height={44}
             style={{
-              width: 'clamp(114px, 12.3vw, 177px)',
+              width: 'clamp(90px, 10.8vw, 130px)',
               height: 'auto',
               objectFit: 'contain',
               display: 'block',
@@ -332,7 +359,7 @@ export function SpadeHero() {
             aria-hidden
           />
         </motion.div>
-      </section>
+      </header>
     </>
   );
 }
