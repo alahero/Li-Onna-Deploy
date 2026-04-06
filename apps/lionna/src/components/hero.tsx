@@ -1,9 +1,20 @@
 'use client';
 
+/**
+ * LI-ONNA Hero — matched to live site via Playwright extraction.
+ *
+ * Live structure (from Playwright at 1440px):
+ *   Background-color: position fixed, z=1, rgb(0,91,255) — in layout.tsx
+ *   Video wrapper: NO opacity, but mask: linear-gradient(black 63.5%, transparent 100%)
+ *   Thicker_Desktop: opacity 0.3, z=2, absolute — contains Lionna Curve ticker
+ *   Header: z=2, relative — contains sticky logo
+ *   8 progressive blur layers at y=960 (below hero)
+ */
+
 export function Hero() {
   return (
     <>
-      {/* ── Section 1: Full-Page Video Hero ──────────────── */}
+      {/* ── Hero section — transparent bg, the fixed blue in layout.tsx shows through ── */}
       <section
         style={{
           position: 'relative',
@@ -11,16 +22,16 @@ export function Hero() {
           height: '100vh',
           minHeight: 600,
           overflow: 'hidden',
-          backgroundColor: '#005BFF',
         }}
       >
-        {/* Video background — loops, muted, 30% opacity */}
+        {/* Video — full opacity, masked to fade out at bottom (blue shows through) */}
         <div
           style={{
             position: 'absolute',
             inset: 0,
             zIndex: 0,
-            opacity: 0.3,
+            WebkitMaskImage: 'linear-gradient(black 63.5%, transparent 100%)',
+            maskImage: 'linear-gradient(black 63.5%, transparent 100%)',
           }}
         >
           <video
@@ -40,69 +51,88 @@ export function Hero() {
           </video>
         </div>
 
-        {/* Scrolling curve ticker overlay */}
+        {/* Thicker_Desktop — curve ticker at 30% opacity on top of video */}
         <div
           style={{
             position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 262,
+            inset: 0,
             zIndex: 2,
+            opacity: 0.3,
             overflow: 'hidden',
             pointerEvents: 'none',
           }}
         >
           <div
             style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              height: 262,
               display: 'flex',
-              width: 'max-content',
-              animation: 'lionna-curve-scroll 20s linear infinite',
-              willChange: 'transform',
+              overflow: 'hidden',
             }}
           >
-            {Array.from({ length: 16 }).map((_, i) => (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img
-                key={i}
-                src="/images/logo-large.svg"
-                alt=""
-                style={{
-                  width: 551,
-                  height: 262,
-                  objectFit: 'cover',
-                  opacity: 0.12,
-                  flexShrink: 0,
-                }}
-              />
-            ))}
+            <div
+              style={{
+                display: 'flex',
+                width: 'max-content',
+                animation: 'lionna-curve-scroll 20s linear infinite',
+                willChange: 'transform',
+              }}
+            >
+              {Array.from({ length: 17 }).map((_, i) => (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  key={i}
+                  src="/images/logo-large.svg"
+                  alt=""
+                  style={{
+                    width: 551,
+                    height: 262,
+                    objectFit: 'cover',
+                    flexShrink: 0,
+                  }}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Large centered logo SVG */}
+        {/* Header — logo centered, sticky within hero */}
         <div
           style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 1,
+            position: 'relative',
+            zIndex: 2,
+            width: '100%',
+            height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             padding: '0 80px',
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/logo-large.svg"
-            alt="LI-ONNA"
+          {/* Logo Resized — sticky at center */}
+          <div
             style={{
-              width: '39%',
-              height: 'auto',
-              maxWidth: 468,
-              userSelect: 'none',
-              pointerEvents: 'none',
+              position: 'sticky',
+              top: '46%',
+              zIndex: 1,
             }}
-          />
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/logo-large.svg"
+              alt="LI-ONNA"
+              style={{
+                width: 461,
+                height: 120,
+                maxWidth: '80vw',
+                userSelect: 'none',
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
         </div>
 
         {/* ── Rotating circular badge / scroll indicator ─── */}
@@ -136,7 +166,7 @@ export function Hero() {
             </defs>
             <text
               style={{
-                fontFamily: 'EditorialNew, serif',
+                fontFamily: '"Editorial New Medium", serif',
                 fontWeight: 500,
                 fontSize: 11,
                 letterSpacing: '0.18em',
@@ -164,6 +194,7 @@ export function Hero() {
           }
         `}</style>
       </section>
+
     </>
   );
 }
