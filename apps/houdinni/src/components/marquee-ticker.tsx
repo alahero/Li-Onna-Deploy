@@ -61,8 +61,13 @@ export function MarqueeTicker({
 }
 
 /** Event teaser ticker — scrolling upcoming events */
-export function EventsTicker() {
-  const events = [
+interface EventsTickerProps {
+  /** CMS event ticker text — falls back to hardcoded default */
+  eventText?: string | null;
+}
+
+export function EventsTicker({ eventText }: EventsTickerProps = {}) {
+  const DEFAULT_EVENTS = [
     'BETICAL 23 OCT',
     'BENJA  06 NOV',
     'OKIO - ASIAN STREET MARKET',
@@ -70,7 +75,7 @@ export function EventsTicker() {
     'BENJA  06 NOV',
     'OKIO - ASIAN STREET MARKET',
   ];
-  const text = events.join(' // ');
+  const text = eventText || DEFAULT_EVENTS.join(' // ');
   const content = `${text} // ${text} //`;
 
   return (

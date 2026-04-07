@@ -51,7 +51,32 @@ function GlobeIcon() {
   );
 }
 
-export function Footer() {
+interface FooterProps {
+  siteSettings?: {
+    siteName?: string | null;
+    tagline?: string | null;
+    social?: {
+      instagram?: string | null;
+      whatsapp?: string | null;
+      [key: string]: string | null | undefined;
+    } | null;
+  } | null;
+  contact?: {
+    address?: string | null;
+    phone?: string | null;
+    whatsapp?: string | null;
+    email?: string | null;
+  } | null;
+}
+
+export function Footer({ siteSettings, contact }: FooterProps) {
+  const phoneNumber = contact?.phone ?? '+34 910 463 911';
+  const whatsappNumber = contact?.whatsapp ?? '+34 679 83 65 61';
+  const emailAddr = contact?.email ?? 'hola@lionna.es';
+  const instagramUrl = siteSettings?.social?.instagram ?? 'https://www.instagram.com/lionnaes';
+  const whatsappUrl = siteSettings?.social?.whatsapp
+    ? siteSettings.social.whatsapp
+    : `https://api.whatsapp.com/send?phone=${whatsappNumber.replace(/\D/g, '')}`;
   return (
     <footer
       className="lionna-footer"
@@ -124,7 +149,7 @@ export function Footer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             {/* WhatsApp */}
             <a
-              href="https://api.whatsapp.com/send?phone=34679836561"
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -144,7 +169,7 @@ export function Footer() {
 
             {/* Instagram */}
             <a
-              href="https://www.instagram.com/lionnaes"
+              href={instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -241,7 +266,7 @@ export function Footer() {
             Madrid, Espa&ntilde;a
           </p>
           <a
-            href="tel:+34910463911"
+            href={`tel:${phoneNumber.replace(/\s/g, '')}`}
             style={{
               fontFamily: '"Editorial New Regular", EditorialNew, serif',
               fontWeight: 400,
@@ -254,10 +279,10 @@ export function Footer() {
               textAlign: 'right',
             }}
           >
-            Tel: +34 910 463 911
+            Tel: {phoneNumber}
           </a>
           <a
-            href="https://api.whatsapp.com/send?phone=34679836561"
+            href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -272,10 +297,10 @@ export function Footer() {
               textAlign: 'right',
             }}
           >
-            Mob: +34 679 83 65 61
+            Mob: {whatsappNumber}
           </a>
           <a
-            href="mailto:hola@lionna.es"
+            href={`mailto:${emailAddr}`}
             style={{
               fontFamily: '"Editorial New Regular", EditorialNew, serif',
               fontWeight: 400,
@@ -288,7 +313,7 @@ export function Footer() {
               textAlign: 'right',
             }}
           >
-            hola@lionna.es
+            {emailAddr}
           </a>
         </div>
       </div>

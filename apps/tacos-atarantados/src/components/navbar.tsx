@@ -8,105 +8,57 @@ export function Navbar() {
 
   return (
     <>
-      {/* TOP BAR */}
-      <nav
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '90px',
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 50,
-          overflow: 'hidden',
-        }}
-      >
-        {/* Logo centered — Framer: x=508, y=19, 170x46 on 1200px width */}
-        <Link href="/" style={{ position: 'absolute', top: '19px', left: '50%', transform: 'translateX(-50%)' }}>
+      {/* TOP BAR — transparent, overlaid on hero */}
+      <nav className="absolute top-0 left-0 right-0 z-50 flex items-center justify-center h-[80px] px-6">
+        {/* Logo centered */}
+        <Link href="/" className="absolute top-4 left-1/2 -translate-x-1/2">
           <Image
             src="/images/logo.png"
             alt="Tacos Atarantados"
             width={170}
             height={46}
-            style={{ width: '170px', height: '46px', objectFit: 'cover' }}
+            className="w-[140px] md:w-[170px] h-auto object-contain"
             priority
           />
         </Link>
 
-        {/* Taco cursor icon — Framer: x=1067, y=31, 51x29 (right side) */}
-        <div style={{ position: 'absolute', top: '31px', right: '82px' }}>
+        {/* Taco cursor icon — desktop only */}
+        <div className="absolute top-[31px] right-[82px] hidden md:block">
           <Image
             src="/images/taco-cursor-nav.png"
             alt=""
             width={51}
             height={29}
-            style={{ width: '51px', height: '29px', objectFit: 'cover' }}
+            className="w-[51px] h-[29px] object-cover"
           />
         </div>
 
-        {/* Hamburger button — mobile only (<810px) */}
+        {/* Hamburger button — mobile only */}
         <button
           onClick={() => setOpen(true)}
           aria-label="Abrir menu"
-          className="hamburger-btn"
-          style={{
-            position: 'absolute',
-            right: '24px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            background: 'none',
-            border: 'none',
-            padding: '8px',
-            flexDirection: 'column',
-            gap: '5px',
-            cursor: 'inherit',
-          }}
+          className="hamburger-btn absolute right-6 top-1/2 -translate-y-1/2 bg-transparent border-none p-2 flex flex-col gap-[5px]"
         >
-          <span style={{ display: 'block', width: '28px', height: '3px', background: '#0c7528', borderRadius: '2px' }} />
-          <span style={{ display: 'block', width: '28px', height: '3px', background: '#0c7528', borderRadius: '2px' }} />
-          <span style={{ display: 'block', width: '28px', height: '3px', background: '#0c7528', borderRadius: '2px' }} />
+          <span className="block w-7 h-[3px] bg-[#0c7528] rounded-sm" />
+          <span className="block w-7 h-[3px] bg-[#0c7528] rounded-sm" />
+          <span className="block w-7 h-[3px] bg-[#0c7528] rounded-sm" />
         </button>
       </nav>
 
-      {/* FULL-SCREEN NAV OVERLAY */}
+      {/* FULL-SCREEN NAV OVERLAY — mobile menu */}
       {open && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'rgba(12,117,40,0.97)',
-            zIndex: 200,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-          }}
-        >
+        <div className="fixed inset-0 bg-[rgba(12,117,40,0.97)] z-[200] flex flex-col items-center justify-center overflow-hidden">
           {/* Close button */}
           <button
             onClick={() => setOpen(false)}
             aria-label="Cerrar menu"
-            style={{
-              position: 'absolute',
-              top: '24px',
-              right: '24px',
-              background: 'none',
-              border: 'none',
-              color: '#fff',
-              fontSize: '2rem',
-              cursor: 'inherit',
-              lineHeight: 1,
-            }}
+            className="absolute top-6 right-6 bg-transparent border-none text-white text-3xl leading-none"
           >
             &#x2715;
           </button>
 
           {/* Logo in overlay */}
-          <Link href="/" onClick={() => setOpen(false)} style={{ marginBottom: '32px' }}>
+          <Link href="/" onClick={() => setOpen(false)} className="mb-8">
             <Image
               src="/images/logo.png"
               alt="Tacos Atarantados"
@@ -117,45 +69,35 @@ export function Navbar() {
           </Link>
 
           {/* Nav Grid — image-based buttons */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '0px',
-              maxWidth: '868px',
-              width: '100%',
-              padding: '0 16px',
-            }}
-          >
+          <div className="flex flex-col items-center gap-0 max-w-[868px] w-full px-4">
             {/* Row 1 */}
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '0px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <Link href="/sucursales" target="_blank" rel="noopener" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-sucursales.png" alt="SUCURSALES" width={384} height={124} style={{ width: '320px', height: '103px', objectFit: 'cover', maxWidth: '100%' }} />
+            <div className="flex flex-row gap-0 items-center flex-wrap justify-center">
+              <Link href="/sucursales" onClick={() => setOpen(false)} className="nav-btn">
+                <Image src="/images/nav-sucursales.png" alt="SUCURSALES" width={384} height={124} className="w-[260px] sm:w-[320px] h-auto object-cover max-w-full" />
               </Link>
-              <Link href="/#quienesomos1-1" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-quienes-somos.png" alt="QUIENES SOMOS" width={419} height={149} style={{ width: '349px', height: '124px', objectFit: 'cover', maxWidth: '100%' }} />
+              <Link href="#quienes-somos" onClick={() => setOpen(false)} className="nav-btn">
+                <Image src="/images/nav-quienes-somos.png" alt="QUIENES SOMOS" width={419} height={149} className="w-[260px] sm:w-[349px] h-auto object-cover max-w-full" />
               </Link>
             </div>
 
             {/* Row 2 */}
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '0px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div className="flex flex-row gap-0 items-center flex-wrap justify-center">
               <Link href="/merch" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-merch.png" alt="MERCH" width={310} height={121} style={{ width: '260px', height: '101px', objectFit: 'cover', maxWidth: '100%' }} />
+                <Image src="/images/nav-merch.png" alt="MERCH" width={310} height={121} className="w-[200px] sm:w-[260px] h-auto object-cover max-w-full" />
               </Link>
-              <Image src="/images/nav-gif.gif" alt="" width={148} height={146} unoptimized style={{ width: '123px', height: '122px' }} />
+              <Image src="/images/nav-gif.gif" alt="" width={148} height={146} unoptimized className="w-[100px] sm:w-[123px] h-auto" />
               <Link href="/menu-mex" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-menu.png" alt="MENU" width={326} height={140} style={{ width: '272px', height: '117px', objectFit: 'cover', maxWidth: '100%' }} />
+                <Image src="/images/nav-menu.png" alt="MENU" width={326} height={140} className="w-[200px] sm:w-[272px] h-auto object-cover max-w-full" />
               </Link>
             </div>
 
             {/* Row 3 */}
-            <div style={{ display: 'flex', flexDirection: 'row', gap: '0px', alignItems: 'center', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <div className="flex flex-row gap-0 items-center flex-wrap justify-center">
               <Link href="/contacto" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-contacto.png" alt="CONTACTO" width={385} height={121} style={{ width: '321px', height: '101px', objectFit: 'cover', maxWidth: '100%' }} />
+                <Image src="/images/nav-contacto.png" alt="CONTACTO" width={385} height={121} className="w-[260px] sm:w-[321px] h-auto object-cover max-w-full" />
               </Link>
               <Link href="/facturacion" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-facturacion.png" alt="FACTURACION" width={396} height={127} style={{ width: '330px', height: '106px', objectFit: 'cover', maxWidth: '100%' }} />
+                <Image src="/images/nav-facturacion.png" alt="FACTURACION" width={396} height={127} className="w-[260px] sm:w-[330px] h-auto object-cover max-w-full" />
               </Link>
             </div>
           </div>

@@ -1,5 +1,19 @@
+interface DishEntry {
+  slug: string;
+  name: string;
+  description?: string;
+  image?: string | null;
+  category?: string;
+  featured?: boolean;
+  order?: number;
+}
+
+interface DishTickerProps {
+  dishes?: DishEntry[];
+}
+
 // Exact dish names from Framer extraction (with proper accents)
-const TICKER_ROWS: { items: string[]; speed: number }[] = [
+const DEFAULT_TICKER_ROWS: { items: string[]; speed: number }[] = [
   {
     items: ['Tostada de At\u00fan', 'Tacos de Hamachi', 'Tataki de Res', 'Kushiage de Queso', 'Tacos de Bacalao', 'Fujiyama'],
     speed: 28,
@@ -13,6 +27,19 @@ const TICKER_ROWS: { items: string[]; speed: number }[] = [
     speed: 32,
   },
 ];
+
+function buildTickerRows(dishes: DishEntry[]): { items: string[]; speed: number }[] {
+  const names = dishes.map((d) => d.name);
+  if (names.length === 0) return DEFAULT_TICKER_ROWS;
+
+  // Split dishes across 3 rows
+  const third = Math.ceil(names.length / 3);
+  return [
+    { items: names.slice(0, third), speed: 28 },
+    { items: names.slice(third, third * 2), speed: 45 },
+    { items: names.slice(third * 2), speed: 32 },
+  ].filter((row) => row.items.length > 0);
+}
 
 function Sep() {
   return (
@@ -112,7 +139,8 @@ function BlueVerticalLines({ side }: { side: 'left' | 'right' }) {
   );
 }
 
-export function DishTicker() {
+export function DishTicker({ dishes }: DishTickerProps) {
+  const TICKER_ROWS = dishes && dishes.length > 0 ? buildTickerRows(dishes) : DEFAULT_TICKER_ROWS;
   return (
     <section
       style={{

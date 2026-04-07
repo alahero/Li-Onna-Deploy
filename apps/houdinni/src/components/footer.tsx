@@ -19,7 +19,24 @@ import Link from 'next/link';
  *     - Mandala logo: 196x38
  *   - "Copyright": 12px, letter-spacing 0.24px, line-height 14.4px, text-align center
  */
-export function Footer() {
+
+interface FooterProps {
+  contact?: {
+    address?: string | null;
+    city?: string | null;
+    phoneVenue?: string | null;
+    phoneWhatsapp?: string | null;
+    email?: string | null;
+    mapsUrl?: string | null;
+  } | null;
+}
+
+export function Footer({ contact }: FooterProps = {}) {
+  const address = contact?.address ?? 'C. de Serrano 41. Salamanca 28001';
+  const city = contact?.city ?? 'Madrid, España';
+  const phoneWhatsapp = contact?.phoneWhatsapp ?? '+34 671 80 77 47';
+  const phoneWhatsappClean = phoneWhatsapp.replace(/\s/g, '');
+  const email = contact?.email ?? 'hola@houdinni.com';
   return (
     <footer
       id="contact"
@@ -70,7 +87,7 @@ export function Footer() {
           >
             {/* WhatsApp icon button — 32x32, bg white, padding 6px */}
             <a
-              href="https://api.whatsapp.com/send?phone=34671807747"
+              href={`https://api.whatsapp.com/send?phone=${phoneWhatsappClean.replace('+', '')}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -110,7 +127,7 @@ export function Footer() {
                 textAlign: 'right',
               }}
             >
-              C. de Serrano 41. Salamanca 28001
+              {address}
             </p>
             <p
               className="font-editorial"
@@ -123,7 +140,7 @@ export function Footer() {
                 textAlign: 'right',
               }}
             >
-              Madrid, España
+              {city}
             </p>
 
             {/* Phone */}
@@ -139,12 +156,12 @@ export function Footer() {
               }}
             >
               <a
-                href="tel:+34671807747"
+                href={`tel:${phoneWhatsappClean}`}
                 style={{ color: 'rgb(179, 179, 179)' }}
               >
                 Tel:
               </a>{' '}
-              +34 671 80 77 47
+              {phoneWhatsapp}
             </p>
 
             {/* Email */}
@@ -159,7 +176,7 @@ export function Footer() {
                 textAlign: 'right',
               }}
             >
-              <a href="mailto:hola@houdinni.com">hola@houdinni.com</a>
+              <a href={`mailto:${email}`}>{email}</a>
             </p>
           </div>
         </div>
@@ -281,7 +298,7 @@ export function Footer() {
               textAlign: 'center',
             }}
           >
-            Copyright ® 2025 Mandala Group.
+            Copyright &copy; 2025 Mandala Group.
           </p>
         </div>
       </div>

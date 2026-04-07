@@ -1,6 +1,11 @@
 'use client';
 
-export function ContactCta() {
+interface ContactCtaProps {
+  instagramUrl?: string;
+  email?: string;
+}
+
+export function ContactCta({ instagramUrl, email }: ContactCtaProps) {
   return (
     <section
       className="contact-cta-section"
@@ -61,7 +66,7 @@ export function ContactCta() {
             gap: 12,
             width: '100%',
           }}
-          action="mailto:hola@lionna.es"
+          action={`mailto:${email ?? 'hola@lionna.es'}`}
           method="post"
           encType="text/plain"
           className="contact-form-row"
@@ -126,7 +131,7 @@ export function ContactCta() {
 
           {/* Instagram icon circle */}
           <a
-            href="https://www.instagram.com/lionnaes"
+            href={instagramUrl ?? 'https://www.instagram.com/lionnaes'}
             target="_blank"
             rel="noopener noreferrer"
             style={{

@@ -35,31 +35,31 @@ const defaultPress = [
 
 async function getData() {
   try {
-    const reader = createReader(process.cwd(), keystaticConfig) as any;
+    const reader = createReader(process.cwd(), keystaticConfig);
 
     const [homepage, navbar, newsletter, footer] = await Promise.all([
-      reader.singletons.homepage?.read().catch(() => null) ?? null,
-      reader.singletons.navbar?.read().catch(() => null) ?? null,
-      reader.singletons.newsletter?.read().catch(() => null) ?? null,
-      reader.singletons.footer?.read().catch(() => null) ?? null,
+      reader.singletons.homepage.read().catch(() => null),
+      reader.singletons.navbar.read().catch(() => null),
+      reader.singletons.newsletter.read().catch(() => null),
+      reader.singletons.footer.read().catch(() => null),
     ]);
 
     const [divisionSlugs, venueSlugs, pressSlugs] = await Promise.all([
-      reader.collections.divisions?.list().catch(() => []) ?? [],
-      reader.collections.venues?.list().catch(() => []) ?? [],
-      reader.collections.press?.list().catch(() => []) ?? [],
+      reader.collections.divisions.list().catch(() => [] as string[]),
+      reader.collections.venues.list().catch(() => [] as string[]),
+      reader.collections.press.list().catch(() => [] as string[]),
     ]);
 
     const divisions = divisionSlugs.length > 0
-      ? (await Promise.all(divisionSlugs.map((s: string) => reader.collections.divisions.read(s).catch(() => null)))).filter(Boolean)
+      ? (await Promise.all(divisionSlugs.map((s) => reader.collections.divisions.read(s).catch(() => null)))).filter(Boolean)
       : null;
 
     const venues = venueSlugs.length > 0
-      ? (await Promise.all(venueSlugs.map((s: string) => reader.collections.venues.read(s).catch(() => null)))).filter(Boolean)
+      ? (await Promise.all(venueSlugs.map((s) => reader.collections.venues.read(s).catch(() => null)))).filter(Boolean)
       : null;
 
     const press = pressSlugs.length > 0
-      ? (await Promise.all(pressSlugs.map((s: string) => reader.collections.press.read(s).catch(() => null)))).filter(Boolean)
+      ? (await Promise.all(pressSlugs.map((s) => reader.collections.press.read(s).catch(() => null)))).filter(Boolean)
       : null;
 
     return { homepage, navbar, newsletter, footer, divisions, venues, press };
@@ -90,11 +90,11 @@ export default async function HomePage() {
   };
 
   const divisions = data.divisions && data.divisions.length > 0
-    ? (data.divisions as any[]).sort((a, b) => (a.order || 0) - (b.order || 0)).map(d => ({ title: d.title, description: d.description, video: d.video }))
+    ? data.divisions.sort((a, b) => ((a as any).order || 0) - ((b as any).order || 0)).map((d: any) => ({ title: d.title, description: d.description, video: d.video }))
     : defaultDivisions;
 
   const venues = data.venues && data.venues.length > 0
-    ? (data.venues as any[]).sort((a, b) => (a.order || 0) - (b.order || 0)).map(v => ({ name: v.name, image: v.image || '', category: v.category, url: v.url || '#' }))
+    ? data.venues.sort((a, b) => ((a as any).order || 0) - ((b as any).order || 0)).map((v: any) => ({ name: v.name, image: v.image || '', category: v.category, url: v.url || '#' }))
     : defaultVenues;
 
   const venueCategories = [...new Set(venues.map(v => v.category))];
@@ -106,7 +106,7 @@ export default async function HomePage() {
   };
 
   const press = data.press && data.press.length > 0
-    ? (data.press as any[]).sort((a, b) => (a.order || 0) - (b.order || 0)).map(p => ({ title: p.title, source: p.source || '', image: p.image || '', url: p.url || '#' }))
+    ? data.press.sort((a, b) => ((a as any).order || 0) - ((b as any).order || 0)).map((p: any) => ({ title: p.title, source: p.source || '', image: p.image || '', url: p.url || '#' }))
     : defaultPress;
 
   const footerLinks = data.footer

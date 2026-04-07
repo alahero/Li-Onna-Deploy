@@ -1,49 +1,45 @@
 'use client';
 
 /**
- * Navbar — exact Framer spec.
- * The live Houdinni site uses a 34px-tall marquee ticker as the nav bar.
- * Tag: NAV, height 34px, bg rgba(0,0,0,0.96), padding 0px 24px, overflow hidden.
- * Contains two identical "Variant 1" marquee strips (25763px wide each).
+ * Navbar -- 34px marquee ticker, fixed top, bg rgba(0,0,0,0.96).
+ * Contains two identical marquee strips for seamless infinite loop.
  */
 
-const MARQUEE_TEXT =
-  'HOUDINNI OR NOWHERE \u00A0\u00A0//\u00A0\u00A0 MUSIC IS THE ANSWER \u00A0\u00A0//\u00A0\u00A0 AUTHENTICITY, COMMUNITY, AND IRREVERENCE. CRAFTING A COMMUNITY OF LOUD MUSIC-LOVERS FREAKS. \u00A0\u00A0//\u00A0\u00A0 HOUDINNI OR NOWHERE \u00A0\u00A0//\u00A0\u00A0 HOUDINNI \u00A0\u00A0//\u00A0\u00A0 NOW YOU SEE ME, NOW YOU DON\'T. \u00A0\u00A0//\u00A0\u00A0 一 會兒你看見我 一 會兒你看不見我 \u00A0\u00A0//\u00A0\u00A0 LA MÚSICA VA PRIMERO \u00A0\u00A0//\u00A0\u00A0 HOUDINNI \u00A0\u00A0//\u00A0\u00A0';
+const DEFAULT_MARQUEE_TEXT =
+  'HOUDINNI OR NOWHERE \u00A0\u00A0//\u00A0\u00A0 MUSIC IS THE ANSWER \u00A0\u00A0//\u00A0\u00A0 AUTHENTICITY, COMMUNITY, AND IRREVERENCE. CRAFTING A COMMUNITY OF LOUD MUSIC-LOVERS FREAKS. \u00A0\u00A0//\u00A0\u00A0 HOUDINNI OR NOWHERE \u00A0\u00A0//\u00A0\u00A0 HOUDINNI \u00A0\u00A0//\u00A0\u00A0 NOW YOU SEE ME, NOW YOU DON\'T. \u00A0\u00A0//\u00A0\u00A0 \u4E00 \u6703\u5152\u4F60\u770B\u898B\u6211 \u4E00 \u6703\u5152\u4F60\u770B\u4E0D\u898B\u6211 \u00A0\u00A0//\u00A0\u00A0 LA M\u00DASICA VA PRIMERO \u00A0\u00A0//\u00A0\u00A0 HOUDINNI \u00A0\u00A0//\u00A0\u00A0';
 
-export function Navbar() {
-  const content = `${MARQUEE_TEXT} ${MARQUEE_TEXT}`;
+interface NavbarProps {
+  /** CMS marquee text -- falls back to hardcoded default */
+  marqueeText?: string | null;
+}
+
+export function Navbar({ marqueeText }: NavbarProps = {}) {
+  const text = marqueeText || DEFAULT_MARQUEE_TEXT;
 
   return (
     <nav
+      className="fixed top-0 left-0 right-0 z-50 overflow-hidden flex items-center"
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 50,
         height: '34px',
         backgroundColor: 'rgba(0, 0, 0, 0.96)',
-        padding: '0px 24px',
-        overflow: 'hidden',
-        display: 'flex',
-        alignItems: 'center',
       }}
     >
-      {/* Marquee track 1 */}
-      <div
-        className="marquee-track"
-        style={{ overflow: 'clip' }}
-      >
+      {/*
+        Two identical spans side-by-side. The animation translates the
+        container left by 50% (one full copy), then resets. Because
+        both copies are identical the loop is seamless.
+      */}
+      <div className="marquee-track">
         <span
           className="whitespace-nowrap font-druk"
           style={{
             fontSize: '10px',
             letterSpacing: '0.1em',
             color: '#ffffff',
-            paddingRight: '64px',
+            paddingRight: '48px',
           }}
         >
-          {content}
+          {text}
         </span>
         <span
           className="whitespace-nowrap font-druk"
@@ -51,10 +47,10 @@ export function Navbar() {
             fontSize: '10px',
             letterSpacing: '0.1em',
             color: '#ffffff',
-            paddingRight: '64px',
+            paddingRight: '48px',
           }}
         >
-          {content}
+          {text}
         </span>
       </div>
     </nav>

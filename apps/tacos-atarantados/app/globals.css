@@ -80,10 +80,11 @@ html {
    NAV BUTTON HOVER
    ============================================================ */
 .nav-btn {
-  transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.3s ease;
 }
 .nav-btn:hover {
-  opacity: 0.6;
+  opacity: 0.7;
+  transform: scale(1.03);
 }
 
 /* ============================================================
@@ -101,6 +102,8 @@ html {
 
 /* ============================================================
    RESPONSIVE NAV — desktop shows grid in hero, mobile uses hamburger
+   On desktop (>=810px): show hero grid, hide hamburger
+   On mobile (<810px): hide hero grid, show hamburger
    ============================================================ */
 .hero-nav-grid {
   display: none;

@@ -63,7 +63,12 @@ function BlueDecorativeCurves() {
   );
 }
 
-export function PhotoGallery() {
+interface PhotoGalleryProps {
+  heroTitle?: string;
+  heroSubtitle?: string;
+}
+
+export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
   return (
     <section
       style={{
@@ -191,7 +196,7 @@ export function PhotoGallery() {
             }}
             className="lionna-hero-heading"
           >
-            hola Madrid
+            {heroTitle ?? 'hola Madrid'}
           </h2>
           <p
             style={{
@@ -205,7 +210,7 @@ export function PhotoGallery() {
               margin: 0,
             }}
           >
-            Desde esta esquina en el coraz&oacute;n de la capital perseguimos la sinton&iacute;a perfecta entre la cocina japonesa y nuestras ra&iacute;ces latinas creando una atm&oacute;sfera atemporal y aut&eacute;ntica.
+            {heroSubtitle ?? 'Desde esta esquina en el coraz\u00f3n de la capital perseguimos la sinton\u00eda perfecta entre la cocina japonesa y nuestras ra\u00edces latinas creando una atm\u00f3sfera atemporal y aut\u00e9ntica.'}
           </p>
         </div>
 

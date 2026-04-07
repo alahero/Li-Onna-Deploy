@@ -52,7 +52,11 @@ const pillStyle: React.CSSProperties = {
   overflow: 'hidden',
 };
 
-export function Navbar() {
+interface NavbarProps {
+  reservationsUrl?: string;
+}
+
+export function Navbar({ reservationsUrl }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

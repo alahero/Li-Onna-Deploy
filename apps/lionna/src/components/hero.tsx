@@ -11,7 +11,11 @@
  *   8 progressive blur layers at y=960 (below hero)
  */
 
-export function Hero() {
+interface HeroProps {
+  heroImage?: string;
+}
+
+export function Hero({ heroImage }: HeroProps) {
   return (
     <>
       {/* ── Hero section — transparent bg, the fixed blue in layout.tsx shows through ── */}

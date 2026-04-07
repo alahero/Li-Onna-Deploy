@@ -2,43 +2,27 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 /**
- * Gallery sticky scroll section — pixel-perfect from Framer extraction.
+ * Gallery sticky scroll section.
  *
- * Framer spec:
- *   - "Example 1" container: y:561, w:1200, h:3000, overflow visible
- *   - "Sticky" div: y:561, w:1200, h:900, position sticky, padding 100px 0px, overflow hidden, z-index 1
- *   - Background image: gallery-bg.png (1200x900), objectFit cover
- *   - "Images Wrap": w:1200, h:700, overflow hidden
- *   - "Images": w:1100, h:700, padding 0px 20px, overflow visible
- *   - "Wrapper" (first): w:1779, h:700, overflow hidden
- *   - "Tren" (strip): w:1779, h:464, the panoramic gallery strip
- *   - "Wrapper" (second): w:821, h:700, overflow hidden — contains "THE STREETS ARE CALLIN'"
- *   - "THE STREETS ARE CALLIN'" text image: w:821, h:163
- *
- * Animation: horizontal pan on scroll, spring config { bounce: 0.2, damping: 60, mass: 1, stiffness: 500 }
+ * The user scrolls vertically through a 3000px-tall container, but the
+ * gallery strip scrolls horizontally within a 900px sticky viewport.
+ * This creates the "scroll-jacking" horizontal pan effect.
  */
 export function GallerySection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end start'],
+    offset: ['start start', 'end end'],
   });
 
-  /* Spring config from Framer extraction */
-  const springConfig = {
-    damping: 60,
-    stiffness: 500,
-    mass: 1,
-    bounce: 0.2,
-  };
-
-  /* Images container horizontal pan */
-  const rawX = useTransform(scrollYProgress, [0, 1], [0, -1635]);
-  const x = useSpring(rawX, springConfig);
+  /* Map vertical scroll progress to horizontal pan distance.
+     The strip is ~1779px wide inside a ~1100px viewport, so we
+     need to translate roughly -(1779 + 821 - 1100) = -1500px */
+  const x = useTransform(scrollYProgress, [0, 1], [0, -1500]);
 
   return (
     <div
@@ -50,11 +34,11 @@ export function GallerySection() {
         overflow: 'visible',
       }}
     >
-      {/* Sticky viewport — 900px tall, sticks at top:34px (below nav) */}
+      {/* Sticky viewport -- stays fixed while user scrolls through 3000px */}
       <div
         style={{
           position: 'sticky',
-          top: '34px',
+          top: '34px', /* below nav */
           width: '100%',
           height: '900px',
           overflow: 'hidden',
@@ -62,7 +46,7 @@ export function GallerySection() {
           padding: '100px 0px',
         }}
       >
-        {/* Background image — full 1200x900 */}
+        {/* Background image */}
         <div style={{ position: 'absolute', inset: 0 }}>
           <Image
             src="/gallery-bg.png"
@@ -73,7 +57,7 @@ export function GallerySection() {
           />
         </div>
 
-        {/* Images Wrap — 1200x700, overflow hidden */}
+        {/* Images Wrap -- overflow hidden container */}
         <div
           style={{
             position: 'relative',
@@ -82,7 +66,7 @@ export function GallerySection() {
             overflow: 'hidden',
           }}
         >
-          {/* Images — padding 0 20px, w:1100, h:700, overflow visible */}
+          {/* Inner container with padding */}
           <div
             style={{
               width: '100%',
@@ -93,7 +77,7 @@ export function GallerySection() {
               margin: '0 auto',
             }}
           >
-            {/* Animated container — horizontal pan */}
+            {/* Animated horizontal pan */}
             <motion.div
               style={{
                 x,
@@ -103,7 +87,7 @@ export function GallerySection() {
                 alignItems: 'center',
               }}
             >
-              {/* Wrapper 1 — gallery strip: 1779x700, overflow hidden */}
+              {/* Gallery strip: 1779x464 panoramic image */}
               <div
                 style={{
                   flexShrink: 0,
@@ -114,7 +98,6 @@ export function GallerySection() {
                   alignItems: 'center',
                 }}
               >
-                {/* Tren (strip): 1779x464 */}
                 <div
                   style={{
                     position: 'relative',
@@ -148,7 +131,7 @@ export function GallerySection() {
                 </div>
               </div>
 
-              {/* Wrapper 2 — "THE STREETS ARE CALLIN'" text: 821x700, overflow hidden */}
+              {/* "THE STREETS ARE CALLIN'" text block */}
               <div
                 style={{
                   flexShrink: 0,
@@ -160,7 +143,6 @@ export function GallerySection() {
                   justifyContent: 'center',
                 }}
               >
-                {/* Streets text image: 821x163 */}
                 <div
                   style={{
                     position: 'relative',

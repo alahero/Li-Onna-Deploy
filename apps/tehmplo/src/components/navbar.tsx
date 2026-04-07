@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 // Nav links ordered L→R: VIP TABLES → EVENTS → [LOGO] → ABOUT → LOCATION
 const navLinks = [
-  { label: 'VIP TABLES', href: '#viptables', image: '/images/nav-viptables.png' },
-  { label: 'EVENTS', href: '#events', image: '/images/nav-events.png' },
-  { label: 'ABOUT', href: '#about', image: '/images/nav-about.png' },
-  { label: 'LOCATION', href: '#location', image: '/images/nav-location.png' },
+  { label: 'VIP TABLES', href: '#viptables', image: '/images/nav-viptables.png', icon: '⌂' },
+  { label: 'EVENTS', href: '#events', image: '/images/nav-events.png', icon: '📅' },
+  { label: 'ABOUT', href: '#about', image: '/images/nav-about.png', icon: '★' },
+  { label: 'LOCATION', href: '#location', image: '/images/nav-location.png', icon: '📍' },
 ];
 
 const leftLinks = navLinks.slice(0, 2);
@@ -19,14 +19,15 @@ interface NavLinkItemProps {
   label: string;
   href: string;
   image: string;
+  icon: string;
   onClick: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
 }
 
-function NavLinkItem({ label, href, image, onClick }: NavLinkItemProps) {
+function NavLinkItem({ label, href, image, icon, onClick }: NavLinkItemProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div className="relative flex items-center justify-center" style={{ width: 106 }}>
+    <div className="relative flex items-center justify-center" style={{ width: 'auto' }}>
       <a
         href={href}
         onClick={(e) => onClick(e, href)}
@@ -41,8 +42,12 @@ function NavLinkItem({ label, href, image, onClick }: NavLinkItemProps) {
           textDecoration: 'none',
           transition: 'color 0.2s ease',
           whiteSpace: 'nowrap',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
         }}
       >
+        <span style={{ fontSize: 14 }}>{icon}</span>
         {label}
       </a>
 
@@ -130,6 +135,7 @@ export default function Navbar() {
               label={link.label}
               href={link.href}
               image={link.image}
+              icon={link.icon}
               onClick={handleNavClick}
             />
           ))}
@@ -157,6 +163,7 @@ export default function Navbar() {
               label={link.label}
               href={link.href}
               image={link.image}
+              icon={link.icon}
               onClick={handleNavClick}
             />
           ))}

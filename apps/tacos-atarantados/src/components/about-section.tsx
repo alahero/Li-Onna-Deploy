@@ -1,73 +1,53 @@
 import Image from 'next/image';
-import Link from 'next/link';
 
-export function AboutSection() {
+const DEFAULT_ABOUT_TEXT = `Nacimos en Monterrey y eso se nota.
+Somos tacos norteños, bien servidos y hechos con carácter.
+El trompo es nuestra bandera y la mesa es nuestro punto de encuentro.
+
+Pero no solo somos sabor.
+Somos atención cálida, trato cercano y mesas donde siempre hay espacio para uno más.
+
+Creemos en las salsas que transforman el taco. En la variedad que te invita a probar, combinar y regresar por otra ronda
+
+En Atarantados te atendemos como en casa, pero comiendo mejor.
+Aquí no hay complicaciones, solo buena comida, buena vibra y ganas de repetir.
+
+Porque cuando el taco está bien servido, la felicidad esta garantizada.`;
+
+interface AboutSectionProps {
+  aboutText?: string | null;
+}
+
+export function AboutSection({ aboutText }: AboutSectionProps) {
   return (
-    <Link
-      href="/#quienesomos1-1"
-      id="quienesomos1-1"
-      style={{
-        display: 'block',
-        width: '100%',
-        background: 'rgb(255, 255, 255)',
-        padding: '24px',
-        textDecoration: 'none',
-        overflow: 'hidden',
-      }}
+    <section
+      id="quienes-somos"
+      className="w-full bg-white"
     >
-      <div
-        className="about-inner"
-        style={{
-          position: 'relative',
-          width: '100%',
-          maxWidth: '1152px',
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'row',
-          gap: '0px',
-        }}
-      >
+      <div className="about-inner relative w-full max-w-[1152px] mx-auto flex flex-row gap-0">
         {/* Left: food photo with text overlay */}
         <div
-          className="about-photo-col"
-          style={{
-            position: 'relative',
-            width: '50%',
-            flexShrink: 0,
-            aspectRatio: '576 / 658',
-            overflow: 'hidden',
-          }}
+          className="about-photo-col relative w-1/2 shrink-0 overflow-hidden"
+          style={{ aspectRatio: '576 / 658' }}
         >
           <Image
             src="/images/quienes-somos-food.png"
             alt="Tacos Atarantados"
             fill
-            style={{ objectFit: 'cover' }}
+            className="object-cover"
             sizes="(max-width: 810px) 100vw, 50vw"
           />
 
           {/* Text overlay on the photo */}
-          <div
-            className="about-text-overlay"
-            style={{
-              position: 'absolute',
-              bottom: '40px',
-              left: '40px',
-              right: '40px',
-              zIndex: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px',
-            }}
-          >
+          <div className="about-text-overlay absolute bottom-10 left-10 right-10 z-[2] flex flex-col gap-2">
             <h2
+              className="m-0"
               style={{
                 fontFamily: '"Gothic Regular", sans-serif',
                 fontWeight: 400,
                 fontSize: '47px',
                 lineHeight: '56.4px',
-                color: 'rgb(255, 255, 255)',
-                margin: 0,
+                color: '#ffffff',
               }}
             >
               {'\u00BF'}Qui{'\u00E9'}nes
@@ -80,34 +60,21 @@ export function AboutSection() {
                 fontWeight: 400,
                 fontSize: '13px',
                 lineHeight: '15.6px',
-                color: 'rgb(255, 255, 255)',
+                color: '#ffffff',
                 textAlign: 'justify',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '0px',
               }}
+              className="flex flex-col gap-0"
             >
-              <p style={{ margin: '0 0 0.3em' }}>Nacimos en Monterrey y eso se nota.</p>
-              <p style={{ margin: '0 0 0.3em' }}>Somos tacos norte&ntilde;os, bien servidos y hechos con car&aacute;cter.</p>
-              <p style={{ margin: '0 0 0.3em' }}>El trompo es nuestra bandera y la mesa es nuestro punto de encuentro.</p>
-              <p style={{ margin: '0.8em 0 0.3em' }}>Pero no solo somos sabor.</p>
-              <p style={{ margin: '0 0 0.3em' }}>Somos atenci&oacute;n c&aacute;lida, trato cercano y mesas donde siempre hay espacio para uno m&aacute;s.</p>
-              <p style={{ margin: '0.8em 0 0.3em' }}>Creemos en las salsas que transforman el taco. En la variedad que te invita a probar, combinar y regresar por otra ronda</p>
-              <p style={{ margin: '0.8em 0 0.3em' }}>En Atarantados te atendemos como en casa, pero comiendo mejor.</p>
-              <p style={{ margin: '0 0 0.3em' }}>Aqu&iacute; no hay complicaciones, solo buena comida, buena vibra y ganas de repetir.</p>
-              <p style={{ margin: '0.8em 0 0.3em' }}>Porque cuando el taco est&aacute; bien servido, la felicidad esta garantizada.</p>
+              {(aboutText || DEFAULT_ABOUT_TEXT).split('\n').filter(Boolean).map((line, i) => (
+                <p key={i} style={{ margin: i === 0 ? '0 0 0.3em' : '0.4em 0 0.3em' }}>{line}</p>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Right: empty white space (matches Framer layout) */}
-        <div
-          className="about-right-col"
-          style={{
-            flex: 1,
-          }}
-        />
+        <div className="about-right-col flex-1" />
       </div>
-    </Link>
+    </section>
   );
 }

@@ -5,7 +5,27 @@
  * Email: hola@houdinni.com
  * Maps: https://maps.app.goo.gl/boeQqsrXHHfuHfTW9
  */
-export function ContactSection() {
+
+interface ContactSectionProps {
+  contact?: {
+    address?: string | null;
+    city?: string | null;
+    phoneVenue?: string | null;
+    phoneWhatsapp?: string | null;
+    email?: string | null;
+    mapsUrl?: string | null;
+  } | null;
+}
+
+export function ContactSection({ contact }: ContactSectionProps = {}) {
+  const address = contact?.address ?? 'C. de Serrano 41, Local A y B, Salamanca 28001';
+  const city = contact?.city ?? 'Madrid, España';
+  const phoneVenue = contact?.phoneVenue ?? '+34 910 46 39 11';
+  const phoneVenueClean = phoneVenue.replace(/\s/g, '');
+  const phoneWhatsapp = contact?.phoneWhatsapp ?? '+34 671 80 77 47';
+  const phoneWhatsappClean = phoneWhatsapp.replace(/\s/g, '');
+  const email = contact?.email ?? 'hola@houdinni.com';
+  const mapsUrl = contact?.mapsUrl ?? 'https://maps.app.goo.gl/boeQqsrXHHfuHfTW9';
   return (
     <section
       id="contact"
@@ -54,15 +74,14 @@ export function ContactSection() {
               DIRECCIÓN
             </span>
             <a
-              href="https://maps.app.goo.gl/boeQqsrXHHfuHfTW9"
+              href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="font-editorial text-white hover:text-houdinni-blue transition-colors"
               style={{ fontSize: '14px', letterSpacing: '0.1em', lineHeight: '1.6' }}
             >
-              C. de Serrano 41, Local A y B<br />
-              Salamanca 28001<br />
-              Madrid, España
+              {address}<br />
+              {city}
             </a>
           </div>
 
@@ -74,25 +93,25 @@ export function ContactSection() {
               TELÉFONO & EMAIL
             </span>
             <a
-              href="tel:+34910463911"
+              href={`tel:${phoneVenueClean}`}
               className="font-editorial text-white hover:text-houdinni-blue transition-colors"
               style={{ fontSize: '14px', letterSpacing: '0.1em' }}
             >
-              +34 910 46 39 11
+              {phoneVenue}
             </a>
             <a
-              href="tel:+34671807747"
+              href={`tel:${phoneWhatsappClean}`}
               className="font-editorial text-white hover:text-houdinni-blue transition-colors"
               style={{ fontSize: '14px', letterSpacing: '0.1em' }}
             >
-              +34 671 80 77 47
+              {phoneWhatsapp}
             </a>
             <a
-              href="mailto:hola@houdinni.com"
+              href={`mailto:${email}`}
               className="font-editorial text-houdinni-blue hover:text-houdinni-blue-light transition-colors"
               style={{ fontSize: '14px', letterSpacing: '0.1em' }}
             >
-              hola@houdinni.com
+              {email}
             </a>
           </div>
 
@@ -104,7 +123,7 @@ export function ContactSection() {
               ACCESO RÁPIDO
             </span>
             <a
-              href="https://api.whatsapp.com/send?phone=34671807747"
+              href={`https://api.whatsapp.com/send?phone=${phoneWhatsappClean.replace('+', '')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="font-editorial text-white hover:text-houdinni-blue transition-colors flex items-center gap-2"
@@ -118,7 +137,7 @@ export function ContactSection() {
               WhatsApp
             </a>
             <a
-              href="https://maps.app.goo.gl/boeQqsrXHHfuHfTW9"
+              href={mapsUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="font-editorial text-white hover:text-houdinni-blue transition-colors flex items-center gap-2"

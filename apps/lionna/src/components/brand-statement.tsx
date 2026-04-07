@@ -1,4 +1,20 @@
-export function BrandStatement() {
+interface ContactData {
+  address?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  whatsapp?: string | null;
+  mapUrl?: string | null;
+}
+
+interface BrandStatementProps {
+  contact?: ContactData | null;
+}
+
+export function BrandStatement({ contact }: BrandStatementProps) {
+  const address = contact?.address ?? 'C. de Recoletos, 1, Salamanca,\n28001 Madrid, España';
+  const phone = contact?.phone ?? '+34 910 463 911';
+  const emailAddr = contact?.email ?? 'hola@lionna.es';
+  const mapEmbedUrl = contact?.mapUrl ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.285086796682!2d-3.693635823492879!3d40.422375955294875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42289b5c5b6e91%3A0x74b5e4fbeff1ec02!2sLi-Onna!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses';
   return (
     <section
       className="brand-statement-section"
@@ -53,11 +69,10 @@ export function BrandStatement() {
                 lineHeight: '19.2px',
                 color: 'rgb(0, 0, 0)',
                 margin: 0,
+                whiteSpace: 'pre-line',
               }}
             >
-              C. de Recoletos, 1, Salamanca,
-              <br />
-              28001 Madrid, Espa&ntilde;a
+              {address}
             </p>
           </div>
 
@@ -77,7 +92,7 @@ export function BrandStatement() {
               Tel&eacute;fono:
             </p>
             <a
-              href="tel:+34910463911"
+              href={`tel:${phone.replace(/\s/g, '')}`}
               style={{
                 fontFamily: '"Editorial New Regular", EditorialNew, serif',
                 fontWeight: 400,
@@ -89,7 +104,7 @@ export function BrandStatement() {
                 margin: 0,
               }}
             >
-              +34 910 463 911
+              {phone}
             </a>
           </div>
 
@@ -109,7 +124,7 @@ export function BrandStatement() {
               Email:
             </p>
             <a
-              href="mailto:hola@lionna.es"
+              href={`mailto:${emailAddr}`}
               style={{
                 fontFamily: '"Editorial New Regular", EditorialNew, serif',
                 fontWeight: 400,
@@ -121,7 +136,7 @@ export function BrandStatement() {
                 margin: 0,
               }}
             >
-              hola@lionna.es
+              {emailAddr}
             </a>
           </div>
         </div>
@@ -129,7 +144,7 @@ export function BrandStatement() {
         {/* Google Map */}
         <div style={{ height: 300, position: 'relative' }}>
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.285086796682!2d-3.693635823492879!3d40.422375955294875!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42289b5c5b6e91%3A0x74b5e4fbeff1ec02!2sLi-Onna!5e0!3m2!1ses!2ses!4v1700000000000!5m2!1ses!2ses"
+            src={mapEmbedUrl}
             width="100%"
             height="100%"
             style={{ border: 0, position: 'absolute', inset: 0 }}

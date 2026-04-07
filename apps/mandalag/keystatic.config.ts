@@ -1,10 +1,25 @@
-import { collection, singleton, fields } from '@keystatic/core';
-import { createBrandConfig, seoFields, imageField } from '@mg/keystatic-config';
+import { config, collection, singleton, fields } from '@keystatic/core';
+import { seoFields, socialFields, imageField } from '@mg/keystatic-config';
 
-export default createBrandConfig({
-  brandName: 'Mandala Group',
-  brandSlug: 'mandalag',
+export default config({
+  storage: { kind: 'local' },
+  ui: { brand: { name: 'Mandala Group CMS' } },
+
   singletons: {
+    siteSettings: singleton({
+      label: 'Configuración del Sitio',
+      path: 'content/site-settings',
+      schema: {
+        siteName: fields.text({ label: 'Nombre del sitio', defaultValue: 'Mandala Group' }),
+        tagline: fields.text({ label: 'Tagline / Eslogan', defaultValue: 'World Class Experiences Crafters' }),
+        logo: fields.image({ label: 'Logo', directory: 'public/images', publicPath: '/images' }),
+        logoDark: fields.image({ label: 'Logo (versión oscura)', directory: 'public/images', publicPath: '/images' }),
+        favicon: fields.image({ label: 'Favicon', directory: 'public', publicPath: '/' }),
+        ...seoFields,
+        social: fields.object(socialFields, { label: 'Redes Sociales' }),
+      },
+    }),
+
     homepage: singleton({
       label: 'Hero',
       path: 'content/homepage',
@@ -19,6 +34,7 @@ export default createBrandConfig({
         cta2Link: fields.text({ label: 'Botón 2 - Link', defaultValue: '#reservations' }),
       },
     }),
+
     navbar: singleton({
       label: 'Navbar',
       path: 'content/navbar',
@@ -29,6 +45,7 @@ export default createBrandConfig({
         link3Text: fields.text({ label: 'Link 3 - Texto', defaultValue: 'Private Events' }),
       },
     }),
+
     newsletter: singleton({
       label: 'Newsletter',
       path: 'content/newsletter',
@@ -38,6 +55,7 @@ export default createBrandConfig({
         image: fields.text({ label: 'Imagen (ruta)', defaultValue: '/assets/images/wDCJ6PQEkdOh0itp6dwputtehl4_f0569aea.png' }),
       },
     }),
+
     footer: singleton({
       label: 'Footer',
       path: 'content/footer',
@@ -52,6 +70,7 @@ export default createBrandConfig({
       },
     }),
   },
+
   collections: {
     divisions: collection({
       label: 'Divisiones',
@@ -64,6 +83,7 @@ export default createBrandConfig({
         order: fields.integer({ label: 'Orden', defaultValue: 0 }),
       },
     }),
+
     venues: collection({
       label: 'Venues',
       slugField: 'name',
@@ -85,6 +105,7 @@ export default createBrandConfig({
         order: fields.integer({ label: 'Orden', defaultValue: 0 }),
       },
     }),
+
     press: collection({
       label: 'Press',
       slugField: 'title',

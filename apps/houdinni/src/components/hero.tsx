@@ -1,319 +1,556 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 /**
- * HeroSection — pixel-perfect from Framer extraction.
+ * HeroSection -- Subway/Metro Station aesthetic.
  *
- * The hero consists of two elements within the Main container:
- *   1. Background image (subway-desktop.png): absolute/static, 1200x561, at (0,0)
- *   2. XL section: position sticky, top 24px, x:86, w:1028, h:434, padding 24px, z-index 1
+ * Built with CSS patterns to match the Framer live site:
+ *   - White tile wall background with grout lines (CSS repeating pattern)
+ *   - Fluorescent light tubes at top
+ *   - Left: HOUDINNI poster (black bg, red H logo)
+ *   - Center: Red hanging sign with "HOUDINNI"
+ *   - Center-bottom: "RESERVATIONS" in graffiti/spray-paint style
+ *   - Right: Metro direction nav buttons (M=green, E=red, C=grey) with arrows
+ *   - Bottom: Dark platform/track area
  *
- * The XL section overlays the background image and sticks as user scrolls.
- * Inside XL (all positions relative to XL's 1028x434 padded area):
- *   - Left poster (menu): at (-11, 157), 230x289 — position relative to XL left edge
- *   - Center top image: at (298, 49), 428x272
- *   - Center bottom (reservations link): at (306, 314), 411x147
- *   - Right menu btn: at (right:0, 117), 193x68
- *   - Right events btn: at (right:0, 203), 193x68
- *   - Right contact btn: at (right:0, 288), 193x68
- *   - Calendar btn: at (right:7, 373), 180x64, objectFit contain
- *   - Calendar video: (right:6, 386), 178x38, z-index -1, absolute
+ * Keeps existing image assets as overlays where available.
  */
 export function HeroSection() {
   return (
     <>
-      {/* Background image — 1200×561 at position (0,0) within Main */}
-      <div
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '561px',
-        }}
-      >
-        {/* Desktop background */}
-        <div className="houdinni-hero-desktop" style={{ position: 'absolute', inset: 0 }}>
-          <Image
-            src="/subway-desktop.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
-            aria-hidden
-          />
+      <section className="hero-subway" aria-label="Houdinni - Subway Station Hero">
+        {/* ---- FLUORESCENT LIGHTS ---- */}
+        <div className="hero-lights">
+          <div className="hero-light-tube" />
+          <div className="hero-light-tube" />
+          <div className="hero-light-tube" />
         </div>
 
-        {/* Mobile background */}
-        <div className="houdinni-hero-mobile" style={{ position: 'absolute', inset: 0 }}>
-          <Image
-            src="/subway-mobile.png"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            style={{ objectFit: 'cover' }}
-            aria-hidden
-          />
-        </div>
-      </div>
-
-      {/* XL section — sticky, overlaps the background image above
-          Position in Framer: x:86, y:24 (from top of Main), w:1028, h:434
-          Since it's sticky with top:24px, it starts 24px from viewport top.
-          We use negative margin-top to pull it up over the background image.
-          In Framer, XL starts at y:24 while the bg ends at y:561, so it
-          sits 24px from the top and overlaps the bg completely.
-          margin-top: -(561 - 24) = -537px to position at y:24 relative to bg start */}
-      <section
-        className="houdinni-hero-overlay"
-        style={{
-          position: 'sticky',
-          top: '24px',
-          zIndex: 1,
-          width: '1028px',
-          maxWidth: '100%',
-          height: '434px',
-          margin: '0 auto',
-          marginTop: '-537px',
-          padding: '24px',
-        }}
-      >
-        {/* Left — Menu poster: 230x289 at Framer (75, 181)
-            Within XL (x:86): left = 75 - 86 = -11px
-            Within XL (y:24, pad:24): top = 181 - 24 = 157px */}
-        <div
-          className="houdinni-hero-left"
-          style={{
-            position: 'absolute',
-            left: '-11px',
-            top: '157px',
-            width: '230px',
-            height: '289px',
-          }}
-        >
-          <a
-            href="https://mandalagroup.menu/es/houdinni"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}
-          >
-            <Image
-              src="/hero-left-poster.png"
-              alt="Menu"
-              fill
-              style={{ objectFit: 'cover' }}
-            />
-          </a>
-        </div>
-
-        {/* Center top image: 428x272 at Framer (384, 73)
-            Within XL: left = 384 - 86 = 298px, top = 73 - 24 = 49px */}
-        <div
-          className="houdinni-hero-center-top"
-          style={{
-            position: 'absolute',
-            left: '298px',
-            top: '49px',
-            width: '428px',
-            height: '272px',
-          }}
-        >
-          <Image
-            src="/hero-center-top.png"
-            alt="Houdinni"
-            fill
-            style={{ objectFit: 'cover' }}
-            priority
-          />
-        </div>
-
-        {/* Center bottom — Reservations link: 411x147 at Framer (392, 338)
-            Within XL: left = 392 - 86 = 306px, top = 338 - 24 = 314px */}
-        <a
-          href="https://tickets.houdinni.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="houdinni-hero-center-bottom"
-          style={{
-            position: 'absolute',
-            left: '306px',
-            top: '314px',
-            width: '411px',
-            height: '147px',
-            display: 'block',
-          }}
-        >
-          <Image
-            src="/hero-center-bottom.png"
-            alt="Reservations"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </a>
-
-        {/* Right — Metro-style nav buttons */}
-        {/* Menu button: 193x68 at Framer (911, 141)
-            Within XL (right edge at 86+1028=1114): right = 1114 - (911+193) = 10px
-            top = 141 - 24 = 117px */}
-        <a
-          href="https://mandalagroup.menu/es/houdinni"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="houdinni-hero-btn-right"
-          style={{
-            position: 'absolute',
-            right: '10px',
-            top: '117px',
-            width: '193px',
-            height: '68px',
-            display: 'block',
-          }}
-        >
-          <Image
-            src="/btn-menu-poster.png"
-            alt="Menu"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </a>
-
-        {/* Events button: 193x68 at Framer (911, 227) → right:10, top:203 */}
-        <Link
-          href="/events"
-          className="houdinni-hero-btn-right"
-          style={{
-            position: 'absolute',
-            right: '10px',
-            top: '203px',
-            width: '193px',
-            height: '68px',
-            display: 'block',
-          }}
-        >
-          <Image
-            src="/btn-events.png"
-            alt="Events"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </Link>
-
-        {/* Contact button: 193x68 at Framer (911, 312) → right:10, top:288 */}
-        <a
-          href="/#contact"
-          className="houdinni-hero-btn-right"
-          style={{
-            position: 'absolute',
-            right: '10px',
-            top: '288px',
-            width: '193px',
-            height: '68px',
-            display: 'block',
-          }}
-        >
-          <Image
-            src="/btn-contact.png"
-            alt="Contact"
-            fill
-            style={{ objectFit: 'cover' }}
-          />
-        </a>
-
-        {/* Calendar button: 180x64 at Framer (918, 397)
-            Within XL: right = 1114 - (918+180) = 16px, top = 397 - 24 = 373px
-            objectFit: contain */}
-        <Link
-          href="/calendar"
-          className="houdinni-hero-btn-calendar"
-          style={{
-            position: 'absolute',
-            right: '16px',
-            top: '373px',
-            width: '180px',
-            height: '64px',
-            display: 'block',
-          }}
-        >
-          <Image
-            src="/btn-calendar.png"
-            alt="Calendar"
-            fill
-            style={{ objectFit: 'contain' }}
-          />
-          {/* Calendar screen video: 178x38 at Framer (919, 410), z-index -1, absolute
-              Within calendar btn: left = 919-918 = 1px, top = 410-397 = 13px */}
-          <div
-            style={{
-              position: 'absolute',
-              left: '1px',
-              top: '13px',
-              width: '178px',
-              height: '38px',
-              zIndex: -1,
-            }}
-          >
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        {/* ---- TILE WALL AREA ---- */}
+        <div className="hero-tile-wall">
+          {/* Left: HOUDINNI poster */}
+          <div className="hero-poster">
+            <a
+              href="https://mandalagroup.menu/es/houdinni"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-poster-link"
             >
-              <source src="/videos/calendar-screen.mp4" type="video/mp4" />
-            </video>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/hero-left-poster.png"
+                alt="Houdinni Menu"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </a>
           </div>
-        </Link>
+
+          {/* Center: Hanging metro sign */}
+          <div className="hero-center-area">
+            {/* Hanging cables */}
+            <div className="hero-sign-cables">
+              <div className="hero-cable" />
+              <div className="hero-cable" />
+            </div>
+
+            {/* Red metro sign */}
+            <div className="hero-metro-sign">
+              <span className="hero-metro-sign-text">HOUDINNI</span>
+            </div>
+
+            {/* Reservations graffiti */}
+            <a
+              href="https://tickets.houdinni.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-reservations"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/btn-reservations.png"
+                alt="Reservations"
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              />
+            </a>
+          </div>
+
+          {/* Right: Metro direction buttons */}
+          <div className="hero-nav-buttons">
+            {/* Menu button */}
+            <a
+              href="https://mandalagroup.menu/es/houdinni"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hero-metro-btn"
+            >
+              <span className="hero-metro-circle hero-metro-circle--green">M</span>
+              <span className="hero-metro-btn-label">Menu</span>
+              <span className="hero-metro-arrow">&rarr;</span>
+            </a>
+
+            {/* Events button */}
+            <Link href="/events" className="hero-metro-btn">
+              <span className="hero-metro-circle hero-metro-circle--red">E</span>
+              <span className="hero-metro-btn-label">Events</span>
+              <span className="hero-metro-arrow">&rarr;</span>
+            </Link>
+
+            {/* Contact button */}
+            <a href="/#contact" className="hero-metro-btn">
+              <span className="hero-metro-circle hero-metro-circle--grey">C</span>
+              <span className="hero-metro-btn-label">Contact</span>
+              <span className="hero-metro-arrow">&rarr;</span>
+            </a>
+
+            {/* Calendar button */}
+            <Link href="/calendar" className="hero-calendar-btn">
+              <span className="hero-calendar-btn-text">CALENDAR</span>
+              <div className="hero-calendar-screen">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                >
+                  <source src="/videos/calendar-screen.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* ---- PLATFORM / TRACK AREA ---- */}
+        <div className="hero-platform">
+          {/* Yellow safety line */}
+          <div className="hero-safety-line" />
+          {/* Dark track bed */}
+          <div className="hero-tracks">
+            <div className="hero-rail" />
+            <div className="hero-rail" />
+          </div>
+        </div>
       </section>
 
       <style>{`
-        .houdinni-hero-mobile { display: none; }
-        .houdinni-hero-desktop { display: block; }
+        /* ============================================================
+           HERO SUBWAY STATION
+           ============================================================ */
+        .hero-subway {
+          position: relative;
+          width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
+          margin-top: 34px; /* below nav */
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
 
+        /* ---- FLUORESCENT LIGHTS ---- */
+        .hero-lights {
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-end;
+          padding: 0 60px;
+          height: 28px;
+          background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+          border-bottom: 2px solid #333;
+          position: relative;
+          z-index: 2;
+        }
+
+        .hero-light-tube {
+          width: 200px;
+          height: 8px;
+          background: linear-gradient(180deg, #fff 0%, #e8e8e8 40%, #d0d0d0 100%);
+          border-radius: 4px;
+          box-shadow:
+            0 0 20px rgba(255, 255, 255, 0.6),
+            0 0 60px rgba(255, 255, 255, 0.3),
+            0 4px 30px rgba(255, 255, 255, 0.15);
+          position: relative;
+        }
+
+        .hero-light-tube::before {
+          content: '';
+          position: absolute;
+          left: -4px;
+          right: -4px;
+          top: -2px;
+          bottom: -2px;
+          background: rgba(255, 255, 255, 0.08);
+          border-radius: 6px;
+        }
+
+        /* ---- TILE WALL ---- */
+        .hero-tile-wall {
+          position: relative;
+          display: flex;
+          align-items: stretch;
+          justify-content: space-between;
+          min-height: 440px;
+          padding: 30px 40px 30px 30px;
+          gap: 20px;
+
+          /* White subway tile pattern — wide rectangular tiles like real metro */
+          background-color: #e8e5e0;
+          background-image:
+            /* Horizontal grout lines */
+            repeating-linear-gradient(
+              0deg,
+              transparent,
+              transparent 28px,
+              #c8c4be 28px,
+              #c8c4be 30px
+            ),
+            /* Vertical grout lines */
+            repeating-linear-gradient(
+              90deg,
+              transparent,
+              transparent 118px,
+              #c8c4be 118px,
+              #c8c4be 120px
+            );
+          background-size: 120px 30px;
+
+          /* Subtle lighting gradient from fluorescents */
+          box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.08);
+        }
+
+        .hero-tile-wall::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            transparent 30%,
+            transparent 80%,
+            rgba(0, 0, 0, 0.05) 100%
+          );
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        /* ---- LEFT POSTER ---- */
+        .hero-poster {
+          position: relative;
+          width: 220px;
+          min-height: 280px;
+          flex-shrink: 0;
+          z-index: 2;
+          /* Poster shadow on tile wall */
+          filter: drop-shadow(4px 4px 12px rgba(0, 0, 0, 0.4));
+        }
+
+        .hero-poster-link {
+          display: block;
+          width: 100%;
+          height: 100%;
+          position: relative;
+          border: 3px solid #222;
+          background: #0a0a0a;
+          transition: transform 0.2s ease;
+        }
+
+        .hero-poster-link:hover {
+          transform: scale(1.02);
+        }
+
+        /* ---- CENTER AREA ---- */
+        .hero-center-area {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 24px;
+          z-index: 2;
+          padding-top: 10px;
+        }
+
+        /* Hanging cables */
+        .hero-sign-cables {
+          display: flex;
+          gap: 160px;
+          height: 30px;
+        }
+
+        .hero-cable {
+          width: 3px;
+          height: 30px;
+          background: #555;
+          border-radius: 1px;
+          box-shadow: 1px 0 2px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Red metro sign */
+        .hero-metro-sign {
+          background: #cc0000;
+          color: #ffffff;
+          padding: 14px 48px;
+          border-radius: 6px;
+          position: relative;
+          box-shadow:
+            0 4px 16px rgba(0, 0, 0, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.15),
+            inset 0 -2px 0 rgba(0, 0, 0, 0.2);
+          border: 2px solid #990000;
+        }
+
+        .hero-metro-sign::before {
+          content: '';
+          position: absolute;
+          inset: 4px;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 3px;
+          pointer-events: none;
+        }
+
+        .hero-metro-sign-text {
+          font-family: "Druk Text Wide Trial Bold", "Impact", sans-serif;
+          font-weight: 700;
+          font-size: clamp(18px, 2.5vw, 28px);
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+        }
+
+        /* Reservations graffiti */
+        .hero-reservations {
+          position: relative;
+          display: block;
+          width: 340px;
+          max-width: 90%;
+          height: 110px;
+          margin-top: auto;
+          transition: transform 0.2s ease;
+        }
+
+        .hero-reservations:hover {
+          transform: scale(1.03);
+        }
+
+        /* ---- RIGHT NAV BUTTONS ---- */
+        .hero-nav-buttons {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          z-index: 2;
+          align-self: center;
+          flex-shrink: 0;
+        }
+
+        /* Metro direction button */
+        .hero-metro-btn {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          background: #ffffff;
+          border: 2px solid #e0e0e0;
+          border-radius: 4px;
+          padding: 10px 16px;
+          width: 200px;
+          text-decoration: none;
+          color: #1a1a1a;
+          transition: all 0.15s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-metro-btn:hover {
+          transform: translateX(4px);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+          border-color: #ccc;
+        }
+
+        .hero-metro-circle {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffffff;
+          font-family: "Druk Text Wide Trial Bold", "Impact", sans-serif;
+          font-weight: 700;
+          font-size: 13px;
+          letter-spacing: 0;
+          flex-shrink: 0;
+        }
+
+        .hero-metro-circle--green {
+          background: #009944;
+        }
+
+        .hero-metro-circle--red {
+          background: #cc0000;
+        }
+
+        .hero-metro-circle--grey {
+          background: #888888;
+        }
+
+        .hero-metro-btn-label {
+          font-family: "Druk Text Wide Trial Bold", "Impact", sans-serif;
+          font-weight: 700;
+          font-size: 14px;
+          letter-spacing: 0.04em;
+          flex: 1;
+        }
+
+        .hero-metro-arrow {
+          font-size: 18px;
+          color: #666;
+          flex-shrink: 0;
+        }
+
+        /* Calendar button */
+        .hero-calendar-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background: #1a1a1a;
+          border: 2px solid #333;
+          border-radius: 4px;
+          padding: 8px 12px 4px;
+          width: 200px;
+          text-decoration: none;
+          color: #ffffff;
+          transition: all 0.15s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          overflow: hidden;
+          position: relative;
+        }
+
+        .hero-calendar-btn:hover {
+          border-color: #0099ff;
+          box-shadow: 0 0 12px rgba(0, 153, 255, 0.3);
+        }
+
+        .hero-calendar-btn-text {
+          font-family: "Druk Text Wide Trial Bold", "Impact", sans-serif;
+          font-weight: 700;
+          font-size: 11px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          z-index: 1;
+        }
+
+        .hero-calendar-screen {
+          width: 176px;
+          height: 36px;
+          margin-top: 4px;
+          overflow: hidden;
+          border-radius: 2px;
+          opacity: 0.7;
+        }
+
+        /* ---- PLATFORM / TRACKS ---- */
+        .hero-platform {
+          position: relative;
+          width: 100%;
+        }
+
+        .hero-safety-line {
+          height: 6px;
+          background: repeating-linear-gradient(
+            90deg,
+            #f5c518 0px,
+            #f5c518 30px,
+            #1a1a1a 30px,
+            #1a1a1a 40px
+          );
+        }
+
+        .hero-tracks {
+          height: 60px;
+          background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 50%, #050505 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          padding: 12px 0;
+        }
+
+        .hero-rail {
+          height: 4px;
+          background: linear-gradient(
+            180deg,
+            #555 0%,
+            #888 50%,
+            #555 100%
+          );
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ============================================================
+           MOBILE RESPONSIVE
+           ============================================================ */
         @media (max-width: 809px) {
-          .houdinni-hero-desktop { display: none !important; }
-          .houdinni-hero-mobile { display: block !important; }
-
-          .houdinni-hero-overlay {
-            position: relative !important;
-            top: auto !important;
-            width: 100% !important;
-            height: auto !important;
-            margin-top: -200px !important;
-            padding: 16px !important;
-            display: flex;
+          .hero-tile-wall {
             flex-direction: column;
-            gap: 12px;
+            align-items: center;
+            padding: 20px 16px;
+            min-height: auto;
+            gap: 20px;
+          }
+
+          .hero-poster {
+            width: 160px;
+            min-height: 200px;
+            order: -1;
+          }
+
+          .hero-center-area {
+            padding-top: 0;
+            gap: 16px;
+          }
+
+          .hero-sign-cables {
+            gap: 100px;
+            height: 20px;
+          }
+
+          .hero-cable {
+            height: 20px;
+          }
+
+          .hero-metro-sign {
+            padding: 10px 32px;
+          }
+
+          .hero-reservations {
+            width: 280px;
+            height: 80px;
+          }
+
+          .hero-nav-buttons {
+            width: 100%;
             align-items: center;
           }
 
-          .houdinni-hero-left,
-          .houdinni-hero-center-top {
-            display: none !important;
+          .hero-metro-btn,
+          .hero-calendar-btn {
+            width: 100%;
+            max-width: 280px;
           }
 
-          .houdinni-hero-center-bottom,
-          .houdinni-hero-btn-right,
-          .houdinni-hero-btn-calendar {
-            position: relative !important;
-            left: auto !important;
-            right: auto !important;
-            top: auto !important;
-            width: 100% !important;
-            max-width: 300px;
+          .hero-lights {
+            padding: 0 20px;
           }
 
-          .houdinni-hero-center-bottom {
-            height: 80px !important;
+          .hero-light-tube {
+            width: 80px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .hero-poster {
+            display: none;
           }
 
-          .houdinni-hero-btn-right {
-            height: 48px !important;
-          }
-
-          .houdinni-hero-btn-calendar {
-            height: 48px !important;
+          .hero-light-tube {
+            width: 60px;
           }
         }
       `}</style>
