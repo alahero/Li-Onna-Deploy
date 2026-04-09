@@ -7,6 +7,7 @@ interface FooterProps {
   googleMapsUrl: string;
   mandalaGroupUrl: string;
   copyright: string;
+  mandalaGroupLogo?: string | null;
 }
 
 export function Footer({
@@ -16,7 +17,9 @@ export function Footer({
   googleMapsUrl,
   mandalaGroupUrl,
   copyright,
+  mandalaGroupLogo,
 }: FooterProps) {
+  const mandalaLogoSrc = mandalaGroupLogo || '/images/mandala-group-logo.png';
   return (
     <footer
       style={{
@@ -292,7 +295,7 @@ export function Footer({
           }}
         >
           <Image
-            src="/images/mandala-group-logo.png"
+            src={mandalaLogoSrc}
             alt="Mandala Group"
             width={442}
             height={84}

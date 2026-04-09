@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 /**
  * LI-ONNA Hero — matched to live site via Playwright extraction.
  *
@@ -38,21 +40,35 @@ export function Hero({ heroImage }: HeroProps) {
             maskImage: 'linear-gradient(black 63.5%, transparent 100%)',
           }}
         >
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="none"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: '50% 50%',
-            }}
-          >
-            <source src="/images/hero-video.mp4" type="video/mp4" />
-          </video>
+          {heroImage ? (
+            <Image
+              src={heroImage}
+              alt=""
+              fill
+              priority
+              sizes="100vw"
+              style={{
+                objectFit: 'cover',
+                objectPosition: '50% 50%',
+              }}
+            />
+          ) : (
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="none"
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: '50% 50%',
+              }}
+            >
+              <source src="/images/hero-video.mp4" type="video/mp4" />
+            </video>
+          )}
         </div>
 
         {/* Thicker_Desktop — curve ticker at 30% opacity on top of video */}

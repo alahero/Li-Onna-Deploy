@@ -23,7 +23,7 @@ export default async function HomePage() {
   return (
     <>
       <main>
-        <HeroSection />
+        <HeroSection heroImage={homepage?.heroImage} />
         <Ticker />
         <AboutSection aboutText={homepage?.aboutText} />
         <MovementSection />

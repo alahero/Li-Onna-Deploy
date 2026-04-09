@@ -12,17 +12,18 @@ export const revalidate = 3600;
 
 async function getPageData() {
   const reader = createReader(process.cwd(), keystaticConfig);
-  const [siteSettings, vipSection, about, location] = await Promise.all([
+  const [siteSettings, homepage, vipSection, about, location] = await Promise.all([
     reader.singletons.siteSettings.read().catch(() => null),
+    reader.singletons.homepage.read().catch(() => null),
     reader.singletons.vipSection.read().catch(() => null),
     reader.singletons.about.read().catch(() => null),
     reader.singletons.location.read().catch(() => null),
   ]);
-  return { siteSettings, vipSection, about, location };
+  return { siteSettings, homepage, vipSection, about, location };
 }
 
 export default async function HomePage() {
-  const { siteSettings, vipSection, about, location } = await getPageData();
+  const { siteSettings, homepage, vipSection, about, location } = await getPageData();
 
   return (
     <>
@@ -30,7 +31,11 @@ export default async function HomePage() {
 
       <main>
         {/* Hero — full viewport */}
-        <Hero />
+        <Hero
+          heroTitle={homepage?.heroTitle}
+          heroVideoUrl={homepage?.heroVideoUrl}
+          heroBackgroundImage={homepage?.heroBackgroundImage}
+        />
 
         {/* Event Banner Section */}
         <header

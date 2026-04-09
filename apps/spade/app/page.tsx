@@ -5,14 +5,17 @@ import { SpadeHero } from '@/components/spade-hero';
 // Revalidate every hour to pick up CMS changes
 export const revalidate = 3600;
 
-async function getSiteSettings() {
+async function getPageData() {
   const reader = createReader(process.cwd(), keystaticConfig);
-  const siteSettings = await reader.singletons.siteSettings.read().catch(() => null);
-  return siteSettings;
+  const [siteSettings, homepage] = await Promise.all([
+    reader.singletons.siteSettings.read().catch(() => null),
+    reader.singletons.homepage.read().catch(() => null),
+  ]);
+  return { siteSettings, homepage };
 }
 
 export default async function HomePage() {
-  const siteSettings = await getSiteSettings();
+  const { siteSettings, homepage } = await getPageData();
 
   // Extract social URLs from CMS
   const social = siteSettings?.social as Record<string, string> | undefined;
@@ -21,7 +24,13 @@ export default async function HomePage() {
 
   return (
     <main>
-      <SpadeHero instagramUrl={instagramUrl} tiktokUrl={tiktokUrl} />
+      <SpadeHero
+        instagramUrl={instagramUrl}
+        tiktokUrl={tiktokUrl}
+        heroImage={homepage?.heroImage}
+        heroTitle={homepage?.heroTitle}
+        heroSubtitle={homepage?.heroSubtitle}
+      />
     </main>
   );
 }

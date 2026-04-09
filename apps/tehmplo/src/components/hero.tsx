@@ -1,4 +1,18 @@
-export default function Hero() {
+interface HeroProps {
+  heroTitle?: string | null;
+  heroVideoUrl?: string | null;
+  heroBackgroundImage?: string | null;
+}
+
+export default function Hero({
+  heroTitle,
+  heroVideoUrl,
+  heroBackgroundImage,
+}: HeroProps = {}) {
+  const videoSrc =
+    heroVideoUrl ||
+    'https://player.vimeo.com/video/gV7TSdL5l?autoplay=1&loop=1&muted=1&background=1&autopause=0';
+
   return (
     <section
       id="hero"
@@ -8,6 +22,9 @@ export default function Hero() {
         height: '100vh',
         minHeight: 600,
         backgroundColor: '#0d0e11',
+        backgroundImage: heroBackgroundImage ? `url(${heroBackgroundImage})` : undefined,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
         overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
@@ -31,7 +48,7 @@ export default function Hero() {
         aria-hidden="true"
       >
         <iframe
-          src="https://player.vimeo.com/video/gV7TSdL5l?autoplay=1&loop=1&muted=1&background=1&autopause=0"
+          src={videoSrc}
           style={{
             position: 'absolute',
             inset: 0,
@@ -105,18 +122,26 @@ export default function Hero() {
             letterSpacing: '0.01em',
           }}
         >
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
-            ELEVATE
-          </span>{' '}
-          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-            YOUR
-          </span>{' '}
-          <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
-            TULUM
-          </span>{' '}
-          <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
-            EXPERIENCE
-          </span>
+          {heroTitle ? (
+            <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+              {heroTitle}
+            </span>
+          ) : (
+            <>
+              <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+                ELEVATE
+              </span>{' '}
+              <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+                YOUR
+              </span>{' '}
+              <span style={{ fontFamily: '"Austin Cyr Italic", serif', fontWeight: 400, fontStyle: 'italic' }}>
+                TULUM
+              </span>{' '}
+              <span style={{ fontFamily: '"Basteleur Moonlight", sans-serif', fontWeight: 300 }}>
+                EXPERIENCE
+              </span>
+            </>
+          )}
         </h1>
       </div>
     </section>

@@ -3,7 +3,21 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-export function HeroSection() {
+interface HeroSectionProps {
+  heroBackgroundImage?: string | null;
+  heroLogoImage?: string | null;
+  sunburstImage?: string | null;
+}
+
+export function HeroSection({
+  heroBackgroundImage,
+  heroLogoImage,
+  sunburstImage,
+}: HeroSectionProps = {}) {
+  const bgSrc = heroBackgroundImage || '/images/hero-bg-new.png';
+  const logoSrc = heroLogoImage || '/images/logo-stamp.png';
+  const sunburstSrc = sunburstImage || '/images/sunburst.png';
+
   return (
     <section
       style={{
@@ -16,7 +30,7 @@ export function HeroSection() {
     >
       {/* Hero background image */}
       <Image
-        src="/images/hero-bg-new.png"
+        src={bgSrc}
         alt=""
         fill
         priority
@@ -43,7 +57,7 @@ export function HeroSection() {
         }}
       >
         <Image
-          src="/images/sunburst.png"
+          src={sunburstSrc}
           alt=""
           width={1982}
           height={2019}
@@ -71,7 +85,7 @@ export function HeroSection() {
         }}
       >
         <Image
-          src="/images/sunburst.png"
+          src={sunburstSrc}
           alt=""
           width={1982}
           height={2019}
@@ -101,7 +115,7 @@ export function HeroSection() {
         }}
       >
         <Image
-          src="/images/logo-stamp.png"
+          src={logoSrc}
           alt="GUEPARDO"
           width={229}
           height={229}

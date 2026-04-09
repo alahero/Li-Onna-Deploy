@@ -4,13 +4,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Navbar } from './navbar';
 
-export function HeroSection() {
+interface HeroSectionProps {
+  heroImage?: string | null;
+}
+
+export function HeroSection({ heroImage }: HeroSectionProps = {}) {
+  const bgSrc = heroImage || '/images/hero-bg.png';
   return (
     <section
       id="hero"
       className="relative w-full min-h-screen flex flex-col items-center overflow-hidden"
       style={{
-        backgroundImage: 'url(/images/hero-bg.png)',
+        backgroundImage: `url(${bgSrc})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

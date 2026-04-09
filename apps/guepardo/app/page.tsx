@@ -45,10 +45,18 @@ export default async function HomePage() {
       }}
     >
       {/* Section 1: Hero — 85.5vh */}
-      <HeroSection />
+      <HeroSection
+        heroBackgroundImage={siteSettings?.heroBackgroundImage}
+        heroLogoImage={siteSettings?.heroLogoImage}
+        sunburstImage={siteSettings?.sunburstImage}
+      />
 
       {/* Section 2: Reservations — CoverManager embed */}
-      <ReservationsSection reservationUrl={reservationUrl} />
+      <ReservationsSection
+        reservationUrl={reservationUrl}
+        reservationsBgImage={siteSettings?.reservationsBgImage}
+        guepardoBannerImage={siteSettings?.guepardoBannerImage}
+      />
 
       {/* Footer — black background */}
       <Footer
@@ -58,6 +66,7 @@ export default async function HomePage() {
         googleMapsUrl={googleMapsUrl}
         mandalaGroupUrl={mandalaGroupUrl}
         copyright={copyright}
+        mandalaGroupLogo={siteSettings?.mandalaGroupLogo}
       />
     </main>
   );

@@ -11,6 +11,9 @@ const ENTRANCE_EASE = [0.44, 0, 0.56, 1] as const;
 interface SpadeHeroProps {
   instagramUrl?: string;
   tiktokUrl?: string;
+  heroImage?: string | null;
+  heroTitle?: string | null;
+  heroSubtitle?: string | null;
 }
 
 // ─── Hamburger icon ─────────────────────────────────────────────────────────
@@ -182,7 +185,11 @@ function SpadeNav({
 export function SpadeHero({
   instagramUrl = 'https://instagram.com/spade_gdl',
   tiktokUrl = 'https://tiktok.com/@spade.gdl',
+  heroImage,
+  heroTitle,
+  heroSubtitle,
 }: SpadeHeroProps) {
+  const bgSrc = heroImage || '/hero-bg.png';
   const navLeft = [
     { label: 'INSTAGRAM', href: instagramUrl, external: true },
     { label: 'TIKTOK', href: tiktokUrl, external: true },
@@ -220,7 +227,7 @@ export function SpadeHero({
             position: 'absolute',
             inset: 0,
             zIndex: 0,
-            backgroundImage: 'url(/hero-bg.png)',
+            backgroundImage: `url(${bgSrc})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
@@ -280,7 +287,7 @@ export function SpadeHero({
             pointerEvents: 'none',
           }}
         >
-          GUADALAJARA, MX
+          {heroTitle || 'GUADALAJARA, MX'}
         </motion.p>
 
         {/* Metallic spade icon (centered) */}
@@ -338,10 +345,10 @@ export function SpadeHero({
               color: '#ffffff',
               textTransform: 'uppercase',
               margin: 0,
+              whiteSpace: 'pre-line',
             }}
           >
-            AV. REAL DE ACUEDUCTO 300,<br />
-            PUERTA DE HIERRO 45116
+            {heroSubtitle || 'AV. REAL DE ACUEDUCTO 300,\nPUERTA DE HIERRO 45116'}
           </p>
         </motion.div>
 

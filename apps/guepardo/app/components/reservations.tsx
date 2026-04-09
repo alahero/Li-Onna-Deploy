@@ -4,9 +4,17 @@ import Image from 'next/image';
 
 interface ReservationsSectionProps {
   reservationUrl: string;
+  reservationsBgImage?: string | null;
+  guepardoBannerImage?: string | null;
 }
 
-export function ReservationsSection({ reservationUrl }: ReservationsSectionProps) {
+export function ReservationsSection({
+  reservationUrl,
+  reservationsBgImage,
+  guepardoBannerImage,
+}: ReservationsSectionProps) {
+  const bgSrc = reservationsBgImage || '/images/reservations-bg.png';
+  const bannerSrc = guepardoBannerImage || '/images/guepardo-banner.png';
   return (
     <section
       style={{
@@ -25,7 +33,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
     >
       {/* Background image — absolute fill */}
       <Image
-        src="/images/reservations-bg.png"
+        src={bgSrc}
         alt=""
         fill
         sizes="100vw"
@@ -50,7 +58,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
         }}
       >
         <Image
-          src="/images/guepardo-banner.png"
+          src={bannerSrc}
           alt="GUEPARDO"
           width={653}
           height={275}
@@ -73,7 +81,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
         }}
       >
         <Image
-          src="/images/guepardo-banner.png"
+          src={bannerSrc}
           alt="GUEPARDO"
           width={653}
           height={275}
@@ -121,7 +129,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
         }}
       >
         <Image
-          src="/images/guepardo-banner.png"
+          src={bannerSrc}
           alt=""
           width={653}
           height={275}
@@ -144,7 +152,7 @@ export function ReservationsSection({ reservationUrl }: ReservationsSectionProps
         }}
       >
         <Image
-          src="/images/guepardo-banner.png"
+          src={bannerSrc}
           alt=""
           width={653}
           height={275}
