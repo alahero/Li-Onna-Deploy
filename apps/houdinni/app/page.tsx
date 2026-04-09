@@ -12,58 +12,15 @@ export const revalidate = 3600;
 async function getPageData() {
   const reader = createReader(process.cwd(), keystaticConfig);
 
-  const [siteSettings, contact, marqueeText, eventSlugs, gallerySlugs] =
-    await Promise.all([
-      reader.singletons.siteSettings.read().catch(() => null),
-      reader.singletons.contact.read().catch(() => null),
-      reader.singletons.marqueeText.read().catch(() => null),
-      reader.collections.events.list().catch(() => [] as string[]),
-      reader.collections.gallery.list().catch(() => [] as string[]),
-    ]);
-
-  // Read all collection entries in parallel
-  const [events, gallery] = await Promise.all([
-    Promise.all(
-      eventSlugs.map(async (slug) => {
-        const entry = await reader.collections.events.read(slug).catch(() => null);
-        if (!entry) return null;
-        return {
-          slug,
-          name: entry.name ?? slug,
-          date: entry.date ?? '',
-          time: entry.time ?? '',
-          description: entry.description ?? '',
-          image: entry.image ?? null,
-          ticketUrl: entry.ticketUrl ?? '',
-          featured: entry.featured ?? false,
-          tag: entry.tag ?? 'PROXIMAMENTE',
-        };
-      })
-    ),
-    Promise.all(
-      gallerySlugs.map(async (slug) => {
-        const entry = await reader.collections.gallery.read(slug).catch(() => null);
-        if (!entry) return null;
-        return {
-          slug,
-          title: entry.title ?? slug,
-          image: entry.image ?? null,
-          category: entry.category ?? 'venue',
-          order: entry.order ?? 99,
-        };
-      })
-    ),
+  // Only fetch what the homepage components actually consume. The
+  // events + gallery collections are rendered on /events, /calendar,
+  // and the GallerySection (hardcoded); don't pull them here.
+  const [contact, marqueeText] = await Promise.all([
+    reader.singletons.contact.read().catch(() => null),
+    reader.singletons.marqueeText.read().catch(() => null),
   ]);
 
-  return {
-    siteSettings,
-    contact,
-    marqueeText,
-    events: events.filter(Boolean) as NonNullable<(typeof events)[number]>[],
-    gallery: (gallery.filter(Boolean) as NonNullable<(typeof gallery)[number]>[]).sort(
-      (a, b) => a.order - b.order
-    ),
-  };
+  return { contact, marqueeText };
 }
 
 /**
