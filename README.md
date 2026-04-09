@@ -1,4 +1,4 @@
-# MG Brands — Monorepo
+# MG Brands — Monorepo 
 
 Monorepo con [Turborepo](https://turbo.build/) que agrupa varios sitios de marca, cada uno con **Next.js** y **Keystatic** como CMS basado en archivos. El despliegue previsto es **Vercel**.
 
