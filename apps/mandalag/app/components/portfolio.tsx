@@ -13,12 +13,21 @@ interface Venue {
 interface PortfolioProps {
   venues: Venue[];
   categories: string[];
+  sectionTitle?: string;
+  allLabel?: string;
+  loadMoreLabel?: string;
 }
 
-export default function Portfolio({ venues, categories }: PortfolioProps) {
-  const [active, setActive] = useState('All');
+export default function Portfolio({
+  venues,
+  categories,
+  sectionTitle,
+  allLabel = 'All',
+  loadMoreLabel = 'Load More',
+}: PortfolioProps) {
+  const [active, setActive] = useState(allLabel);
 
-  const filtered = active === 'All' ? venues : venues.filter((v) => v.category === active);
+  const filtered = active === allLabel ? venues : venues.filter((v) => v.category === active);
 
   return (
     <section
@@ -50,9 +59,24 @@ export default function Portfolio({ venues, categories }: PortfolioProps) {
             height: '720px',
           }}
         >
+          {sectionTitle ? (
+            <h2
+              className="font-figtree"
+              style={{
+                fontSize: '36px',
+                fontWeight: 700,
+                letterSpacing: '-0.01em',
+                color: '#fff',
+                margin: 0,
+              }}
+            >
+              {sectionTitle}
+            </h2>
+          ) : null}
+
           {/* Filter tabs */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
-            {['All', ...categories].map((cat) => (
+            {[allLabel, ...categories].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat)}
@@ -74,7 +98,7 @@ export default function Portfolio({ venues, categories }: PortfolioProps) {
           </div>
 
           <span className="font-inter" style={{ fontSize: '14px', color: '#888', cursor: 'pointer' }}>
-            Load More
+            {loadMoreLabel}
           </span>
         </div>
 

@@ -5,9 +5,13 @@ import Link from 'next/link';
 
 interface NavbarProps {
   logoImage: string;
+  logoAlt: string;
   link1Text: string;
+  link1Url: string;
   link2Text: string;
+  link2Url: string;
   link3Text: string;
+  link3Url: string;
 }
 
 function ChevronDown() {
@@ -18,7 +22,29 @@ function ChevronDown() {
   );
 }
 
-export default function Navbar({ logoImage, link1Text, link2Text, link3Text }: NavbarProps) {
+const linkStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+  fontSize: '15px',
+  fontWeight: 500,
+  letterSpacing: '-0.01em',
+  lineHeight: '2em',
+  color: '#fff',
+  textDecoration: 'none',
+  cursor: 'pointer',
+} as const;
+
+export default function Navbar({
+  logoImage,
+  logoAlt,
+  link1Text,
+  link1Url,
+  link2Text,
+  link2Url,
+  link3Text,
+  link3Url,
+}: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -49,8 +75,14 @@ export default function Navbar({ logoImage, link1Text, link2Text, link3Text }: N
         }}
       >
         {/* Logo */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '20px', textDecoration: 'none', flexShrink: 0 }}>
+        <Link
+          href="/"
+          aria-label={logoAlt}
+          style={{ display: 'flex', alignItems: 'center', gap: '20px', textDecoration: 'none', flexShrink: 0 }}
+        >
           <div
+            role="img"
+            aria-label={logoAlt}
             style={{
               width: '250px',
               height: '44px',
@@ -73,37 +105,15 @@ export default function Navbar({ logoImage, link1Text, link2Text, link3Text }: N
             gap: '20px',
           }}
         >
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="font-inter"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              fontSize: '15px',
-              fontWeight: 500,
-              letterSpacing: '-0.01em',
-              lineHeight: '2em',
-              color: '#fff',
-            }}
-          >
+          <Link href={link1Url} onClick={() => setMenuOpen(!menuOpen)} className="font-inter" style={linkStyle}>
             {link1Text} <ChevronDown />
-          </button>
-          <span
-            className="font-inter"
-            style={{ fontSize: '15px', fontWeight: 500, letterSpacing: '-0.01em', lineHeight: '2em', color: '#fff', cursor: 'pointer' }}
-          >
+          </Link>
+          <Link href={link2Url} className="font-inter" style={linkStyle}>
             {link2Text}
-          </span>
-          <span
-            className="font-inter"
-            style={{ fontSize: '15px', fontWeight: 500, letterSpacing: '-0.01em', lineHeight: '2em', color: '#fff', cursor: 'pointer' }}
-          >
+          </Link>
+          <Link href={link3Url} className="font-inter" style={linkStyle}>
             {link3Text}
-          </span>
+          </Link>
         </div>
       </div>
     </nav>

@@ -2,7 +2,8 @@ heroLine1: WORLD CLASS
 heroLine2: EXPERIENCES
 heroLine3: CRAFTERS
 heroVideo: /assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4
+heroPoster: ""
 cta1Text: EXPLORE OUR VENUES
-cta1Link: '#venues'
+cta1Link: "#venues"
 cta2Text: RESERVATIONS
-cta2Link: '#reservations'
+cta2Link: "#reservations"

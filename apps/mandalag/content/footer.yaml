@@ -1,4 +1,9 @@
 logoImage: /assets/images/mandala-logo-white.svg
+copyright: "© 2026 Mandala Group. All rights reserved."
+address: ""
+phone: ""
+email: ""
+showSocials: true
 link1Text: PRIVACY
 link1Url: /privacy
 link2Text: TERMS & CONDITIONS

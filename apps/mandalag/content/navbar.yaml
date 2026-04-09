@@ -1,4 +1,8 @@
 logoImage: /assets/images/mandala-logo-nav.svg
+logoAlt: Mandala Group
 link1Text: Venues
+link1Url: "#venues"
 link2Text: Corporate Events
+link2Url: /corporate-events
 link3Text: Private Events
+link3Url: /private-events

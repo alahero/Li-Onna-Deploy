@@ -8,6 +8,8 @@ import Newsletter from './components/newsletter';
 import Press from './components/press';
 import Footer from './components/footer';
 
+export const revalidate = 3600;
+
 const defaultDivisions = [
   { title: 'Daylife', description: 'Transforming normal days into extraordinary experiences.', video: '/assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4' },
   { title: 'Nightlife', description: 'Immersive experiences crafted for every type of guest.', video: '/assets/videos/7tiqi431R1KYIVCJlrK16dnLdIU.mp4' },
@@ -37,10 +39,21 @@ async function getData() {
   try {
     const reader = createReader(process.cwd(), keystaticConfig);
 
-    const [homepage, navbar, newsletter, footer] = await Promise.all([
+    const [
+      siteSettings,
+      homepage,
+      navbar,
+      portfolio,
+      newsletter,
+      pressSection,
+      footer,
+    ] = await Promise.all([
+      reader.singletons.siteSettings.read().catch(() => null),
       reader.singletons.homepage.read().catch(() => null),
       reader.singletons.navbar.read().catch(() => null),
+      reader.singletons.portfolio.read().catch(() => null),
       reader.singletons.newsletter.read().catch(() => null),
+      reader.singletons.pressSection.read().catch(() => null),
       reader.singletons.footer.read().catch(() => null),
     ]);
 
@@ -62,9 +75,31 @@ async function getData() {
       ? (await Promise.all(pressSlugs.map((s) => reader.collections.press.read(s).catch(() => null)))).filter(Boolean)
       : null;
 
-    return { homepage, navbar, newsletter, footer, divisions, venues, press };
+    return {
+      siteSettings,
+      homepage,
+      navbar,
+      portfolio,
+      newsletter,
+      pressSection,
+      footer,
+      divisions,
+      venues,
+      press,
+    };
   } catch {
-    return { homepage: null, navbar: null, newsletter: null, footer: null, divisions: null, venues: null, press: null };
+    return {
+      siteSettings: null,
+      homepage: null,
+      navbar: null,
+      portfolio: null,
+      newsletter: null,
+      pressSection: null,
+      footer: null,
+      divisions: null,
+      venues: null,
+      press: null,
+    };
   }
 }
 
@@ -76,6 +111,7 @@ export default async function HomePage() {
     line2: data.homepage?.heroLine2 || 'EXPERIENCES',
     line3: data.homepage?.heroLine3 || 'CRAFTERS',
     videoSrc: data.homepage?.heroVideo || '/assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4',
+    posterSrc: data.homepage?.heroPoster || undefined,
     cta1Text: data.homepage?.cta1Text || 'EXPLORE OUR VENUES',
     cta1Link: data.homepage?.cta1Link || '#venues',
     cta2Text: data.homepage?.cta2Text || 'RESERVATIONS',
@@ -84,9 +120,13 @@ export default async function HomePage() {
 
   const nav = {
     logoImage: data.navbar?.logoImage || '/assets/images/mandala-logo-nav.svg',
+    logoAlt: data.navbar?.logoAlt || 'Mandala Group',
     link1Text: data.navbar?.link1Text || 'Venues',
+    link1Url: data.navbar?.link1Url || '#venues',
     link2Text: data.navbar?.link2Text || 'Corporate Events',
+    link2Url: data.navbar?.link2Url || '/corporate-events',
     link3Text: data.navbar?.link3Text || 'Private Events',
+    link3Url: data.navbar?.link3Url || '/private-events',
   };
 
   const divisions = data.divisions && data.divisions.length > 0
@@ -100,9 +140,14 @@ export default async function HomePage() {
   const venueCategories = [...new Set(venues.map(v => v.category))];
 
   const nl = {
+    heading: data.newsletter?.heading || 'Newsletter',
     description: data.newsletter?.description || "Subscribe to the ultimate insider's guide to unforgettable experiences.",
-    buttonText: data.newsletter?.buttonText || 'Submit',
     image: data.newsletter?.image || '/assets/images/wDCJ6PQEkdOh0itp6dwputtehl4_f0569aea.png',
+    emailPlaceholder: data.newsletter?.emailPlaceholder || 'your@email.com',
+    buttonText: data.newsletter?.buttonText || 'Submit',
+    submitUrl: data.newsletter?.submitUrl || undefined,
+    successMessage: data.newsletter?.successMessage || undefined,
+    errorMessage: data.newsletter?.errorMessage || undefined,
   };
 
   const press = data.press && data.press.length > 0
@@ -126,11 +171,26 @@ export default async function HomePage() {
       <Navbar {...nav} />
       <Hero {...hero} />
       <Divisions divisions={divisions} />
-      <Portfolio venues={venues} categories={venueCategories} />
+      <Portfolio
+        venues={venues}
+        categories={venueCategories}
+        sectionTitle={data.portfolio?.sectionTitle || undefined}
+        allLabel={data.portfolio?.allLabel || 'All'}
+        loadMoreLabel={data.portfolio?.loadMoreLabel || 'Load More'}
+      />
       <Newsletter {...nl} />
-      <Press articles={press} />
+      <Press
+        articles={press}
+        sectionTitle={data.pressSection?.sectionTitle || undefined}
+      />
       <Footer
         logoImage={data.footer?.logoImage || '/assets/images/mandala-logo-white.svg'}
+        copyright={data.footer?.copyright || undefined}
+        address={data.footer?.address || undefined}
+        phone={data.footer?.phone || undefined}
+        email={data.footer?.email || undefined}
+        showSocials={data.footer?.showSocials ?? true}
+        social={data.siteSettings?.social as any}
         links={footerLinks}
       />
     </main>

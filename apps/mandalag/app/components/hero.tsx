@@ -7,13 +7,24 @@ interface HeroProps {
   line2: string;
   line3: string;
   videoSrc: string;
+  posterSrc?: string;
   cta1Text: string;
   cta1Link: string;
   cta2Text: string;
   cta2Link: string;
 }
 
-export default function Hero({ line1, line2, line3, videoSrc, cta1Text, cta1Link, cta2Text, cta2Link }: HeroProps) {
+export default function Hero({
+  line1,
+  line2,
+  line3,
+  videoSrc,
+  posterSrc,
+  cta1Text,
+  cta1Link,
+  cta2Text,
+  cta2Link,
+}: HeroProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -42,6 +53,7 @@ export default function Hero({ line1, line2, line3, videoSrc, cta1Text, cta1Link
           ref={videoRef}
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 50%' }}
           src={videoSrc}
+          poster={posterSrc || undefined}
           autoPlay
           muted
           loop

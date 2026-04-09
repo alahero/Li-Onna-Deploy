@@ -9,29 +9,46 @@ interface Article {
 
 interface PressProps {
   articles: Article[];
+  sectionTitle?: string;
 }
 
-export default function Press({ articles }: PressProps) {
+export default function Press({ articles, sectionTitle }: PressProps) {
   return (
     <section
       style={{
         background: 'linear-gradient(#1b1c1d 0%, #373734 100%)',
         width: '100%',
-        height: '100vh',
+        minHeight: '100vh',
         padding: '40px',
         display: 'flex',
-        flexFlow: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        gap: '10px',
+        flexFlow: 'column',
+        alignItems: 'stretch',
+        gap: '24px',
         position: 'relative',
         overflow: 'hidden',
       }}
     >
+      {sectionTitle ? (
+        <h2
+          className="font-figtree"
+          style={{
+            maxWidth: '1500px',
+            width: '100%',
+            margin: '0 auto',
+            fontSize: '36px',
+            fontWeight: 700,
+            letterSpacing: '-0.01em',
+            color: '#fff',
+          }}
+        >
+          {sectionTitle}
+        </h2>
+      ) : null}
       <div
         style={{
           flex: '1 0 0',
           maxWidth: '1500px',
+          margin: '0 auto',
           height: '381px',
           display: 'grid',
           gridTemplateColumns: 'repeat(3, 1fr)',

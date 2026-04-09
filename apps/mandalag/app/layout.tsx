@@ -1,7 +1,14 @@
 import type { Metadata, Viewport } from 'next';
+import { createReader } from '@keystatic/core/reader';
 import { JsonLd } from '@mg/ui-primitives';
+import keystaticConfig from '../keystatic.config';
 import './fonts.css';
 import './globals.css';
+
+const SITE_URL = 'https://mandalagroup.mx';
+const DEFAULT_TITLE = 'Mandala Group — World Class Experiences Crafters';
+const DEFAULT_DESCRIPTION =
+  'World class experiences crafters. From nightlife and daylife to gastronomic and events, Mandala Group creates unforgettable experiences.';
 
 export const viewport: Viewport = {
   themeColor: '#0e0e0f',
@@ -9,35 +16,53 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Mandala Group — World Class Experiences Crafters',
-    template: '%s | Mandala Group',
-  },
-  description: 'World class experiences crafters. From nightlife and daylife to gastronomic and events, Mandala Group creates unforgettable experiences.',
-  metadataBase: new URL('https://mandalagroup.mx'),
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: 'Mandala Group — World Class Experiences Crafters',
-    description: 'World class experiences crafters. From nightlife to gastronomic, Mandala Group creates unforgettable experiences.',
-    url: 'https://mandalagroup.mx',
-    siteName: 'Mandala Group',
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Mandala Group — World Class Experiences Crafters',
-    description: 'World class experiences crafters.',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: { 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
-  },
-};
+/**
+ * Metadata is read from Keystatic so marketing can change the site title,
+ * description, favicon and OG image without touching code. Values fall
+ * back to the static defaults when the singleton isn't populated yet.
+ */
+export async function generateMetadata(): Promise<Metadata> {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const settings = await reader.singletons.siteSettings.read().catch(() => null);
+
+  const siteName = settings?.siteName || 'Mandala Group';
+  const tagline = settings?.tagline || 'World Class Experiences Crafters';
+  const metaTitle = settings?.metaTitle || DEFAULT_TITLE;
+  const metaDescription = settings?.metaDescription || DEFAULT_DESCRIPTION;
+  const ogImage = settings?.ogImage || undefined;
+  const favicon = settings?.favicon || undefined;
+
+  return {
+    title: {
+      default: metaTitle,
+      template: `%s | ${siteName}`,
+    },
+    description: metaDescription,
+    metadataBase: new URL(SITE_URL),
+    alternates: { canonical: '/' },
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      url: SITE_URL,
+      siteName,
+      locale: settings?.language === 'es' ? 'es_MX' : 'en_US',
+      type: 'website',
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metaTitle,
+      description: tagline || metaDescription,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: { 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
+    },
+    ...(favicon ? { icons: { icon: favicon, apple: favicon } } : {}),
+  };
+}
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -63,9 +88,13 @@ const jsonLd = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const settings = await reader.singletons.siteSettings.read().catch(() => null);
+  const lang = settings?.language || 'en';
+
   return (
-    <html lang="en">
+    <html lang={lang}>
       <body style={{ backgroundColor: '#0e0e0f', color: '#fff', margin: 0, padding: 0, fontFamily: 'Inter, sans-serif' }}>
         <JsonLd data={jsonLd} />
         {children}
