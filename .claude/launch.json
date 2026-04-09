@@ -1,0 +1,53 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "guepardo",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/guepardo"],
+      "port": 3001
+    },
+    {
+      "name": "tacos",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/tacos-atarantados"],
+      "port": 3002
+    },
+    {
+      "name": "futur",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/futur-festival"],
+      "port": 3003
+    },
+    {
+      "name": "tehmplo",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/tehmplo"],
+      "port": 3004
+    },
+    {
+      "name": "lionna",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/lionna"],
+      "port": 3005
+    },
+    {
+      "name": "spade",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/spade"],
+      "port": 3006
+    },
+    {
+      "name": "houdinni",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/houdinni"],
+      "port": 3007
+    },
+    {
+      "name": "mandalag",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["dev", "--filter=@mg/mandalag"],
+      "port": 3008
+    }
+  ]
+}

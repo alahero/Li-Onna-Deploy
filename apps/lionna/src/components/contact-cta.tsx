@@ -170,7 +170,7 @@ export function ContactCta({ instagramUrl, email }: ContactCtaProps) {
         </p>
       </div>
 
-      <style>{`
+      <style jsx global>{`
         @media (max-width: 1439px) {
           .contact-cta-section { padding: 60px 24px 24px !important; }
         }

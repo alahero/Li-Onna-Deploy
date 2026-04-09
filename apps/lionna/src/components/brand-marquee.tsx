@@ -63,7 +63,7 @@ export function BrandMarquee() {
         <MarqueeItem />
       </div>
 
-      <style>{`
+      <style jsx global>{`
         @keyframes brand-marquee-scroll {
           0% { transform: translateX(0); }
           100% { transform: translateX(-25%); }

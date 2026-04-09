@@ -188,7 +188,7 @@ export function Hero({ heroImage }: HeroProps) {
           </svg>
         </div>
 
-        <style>{`
+        <style jsx global>{`
           @keyframes lionna-spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }

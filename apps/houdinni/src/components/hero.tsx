@@ -133,7 +133,7 @@ export function HeroSection() {
         </div>
       </section>
 
-      <style>{`
+      <style jsx global>{`
         /* ============================================================
            HERO SUBWAY STATION
            ============================================================ */

@@ -194,7 +194,7 @@ export function SpadeHero({
 
   return (
     <>
-      <style>{`
+      <style jsx global>{`
         .spade-nav-desktop { display: flex; }
         .spade-nav-mobile  { display: none;  }
         @media (max-width: 639px) {

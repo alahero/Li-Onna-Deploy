@@ -17,7 +17,7 @@ export default function EventsSection({ events }: EventsSectionProps) {
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Section header */}
         <div className="text-center mb-16">
-          <p className="section-label">What's On</p>
+          <p className="section-label">What&apos;s On</p>
           <h2 className="section-title">UPCOMING EVENTS</h2>
           <div className="gold-divider" />
           <p className="font-body text-sm text-brand-cream-muted/70 tracking-wider max-w-xl mx-auto">
