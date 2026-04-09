@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'framerusercontent.com' },
     ],
-    domains: [],
+    formats: ['image/avif', 'image/webp'],
   },
 };
 module.exports = nextConfig;

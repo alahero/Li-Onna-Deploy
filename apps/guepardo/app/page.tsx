@@ -9,11 +9,7 @@ export const revalidate = 3600;
 
 async function getPageData() {
   const reader = createReader(process.cwd(), keystaticConfig);
-
-  const [siteSettings] = await Promise.all([
-    reader.singletons.siteSettings.read(),
-  ]);
-
+  const siteSettings = await reader.singletons.siteSettings.read().catch(() => null);
   return { siteSettings };
 }
 
