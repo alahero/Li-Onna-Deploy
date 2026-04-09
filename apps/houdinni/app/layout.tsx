@@ -6,24 +6,28 @@ export const metadata: Metadata = {
     default: 'Houdinni',
     template: '%s | Houdinni',
   },
-  description: 'Houdinni Madrid',
+  description: 'Houdinni Madrid — speakeasy, cócteles y entretenimiento en vivo.',
   metadataBase: new URL('https://houdinni.com'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    type:      'website',
-    locale:    'es_ES',
-    url:       'https://houdinni.com',
-    siteName:  'Houdinni',
-    title:     'Houdinni',
-    description: 'Houdinni Madrid',
+    type: 'website',
+    locale: 'es_ES',
+    url: 'https://houdinni.com',
+    siteName: 'Houdinni',
+    title: 'Houdinni',
+    description: 'Houdinni Madrid — speakeasy, cócteles y entretenimiento en vivo.',
   },
   twitter: {
-    card:  'summary_large_image',
+    card: 'summary_large_image',
     title: 'Houdinni',
-    description: 'Houdinni Madrid',
+    description: 'Houdinni Madrid — speakeasy, cócteles y entretenimiento en vivo.',
   },
   robots: {
-    index:  true,
+    index: true,
     follow: true,
+    googleBot: { 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
   },
 };
 

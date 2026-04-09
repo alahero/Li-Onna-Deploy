@@ -27,3 +27,6 @@ Thumbs.db
 *.swp
 *.swo
 *.tsbuildinfo
+
+# Visual pixel-check artifacts
+.visual-check/

@@ -11,22 +11,30 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: 'Tehmplo – Elevate Your Tulum Experience',
+  title: {
+    default: 'Tehmplo – Elevate Your Tulum Experience',
+    template: '%s | Tehmplo',
+  },
   description:
     'Hidden in the jungle, this is where music, people, and emotions come together to make Tulum truly one of a kind. World-class DJs and an atmosphere that awakens your senses.',
+  metadataBase: new URL('https://www.tehmplo.com'),
   keywords: ['Tehmplo', 'Tulum nightclub', 'jungle club Tulum', 'VIP tables Tulum', 'open air club Mexico', 'Tulum events'],
-  robots: { index: true, follow: true, googleBot: { 'max-image-preview': 'large' } },
+  robots: { index: true, follow: true, googleBot: { 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 } },
   openGraph: {
     title: 'Tehmplo – Elevate Your Tulum Experience',
     description: 'Hidden in the jungle, this is where music, people, and emotions come together to make Tulum truly one of a kind.',
     url: 'https://www.tehmplo.com',
     siteName: 'Tehmplo',
-    locale: 'en',
+    locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tehmplo – Elevate Your Tulum Experience',
+    description: 'Hidden in the jungle. Tulum nightclub experience.',
   },
   alternates: {
     canonical: 'https://www.tehmplo.com',
-    languages: { 'en': '/', 'es-MX': '/es/' },
   },
   icons: {
     icon: '/images/favicon-light.png',

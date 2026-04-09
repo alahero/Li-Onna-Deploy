@@ -9,9 +9,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'SPADE',
+  title: {
+    default: 'SPADE',
+    template: '%s | SPADE',
+  },
   description: 'SPADE — Guadalajara, MX. AV. Real de Acueducto 300, Puerta de Hierro 45116.',
   metadataBase: new URL('https://spade.mx'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     locale: 'es_MX',
@@ -20,9 +26,15 @@ export const metadata: Metadata = {
     title: 'SPADE',
     description: 'SPADE — Guadalajara, MX.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SPADE',
+    description: 'SPADE — Guadalajara, MX.',
+  },
   robots: {
     index: true,
     follow: true,
+    googleBot: { 'max-image-preview': 'large', 'max-video-preview': -1, 'max-snippet': -1 },
   },
 };
 
