@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { JsonLd } from '@mg/ui-primitives';
 import './globals.css';
 
 const inter = Inter({
@@ -46,6 +47,45 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MusicEvent',
+    '@id': 'https://futurfestival.mx/#festival',
+    name: 'FUTUR Festival',
+    description: 'FUTUR Festival — El futuro del sonido. México.',
+    url: 'https://futurfestival.mx',
+    startDate: '2025-11-14T20:00:00-06:00',
+    endDate: '2025-11-16T23:59:00-06:00',
+    eventStatus: 'https://schema.org/EventScheduled',
+    eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: {
+      '@type': 'Place',
+      name: 'Foro Sol',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Av. Viaducto Río de la Piedad s/n',
+        addressLocality: 'Ciudad de México',
+        addressRegion: 'CDMX',
+        addressCountry: 'MX',
+      },
+    },
+    organizer: {
+      '@type': 'Organization',
+      name: 'FUTUR Festival',
+      url: 'https://futurfestival.mx',
+    },
+    image: 'https://futurfestival.mx/favicon-square.png',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    url: 'https://futurfestival.mx',
+    name: 'FUTUR Festival',
+    inLanguage: 'es-MX',
+  },
+];
+
 export default function RootLayout({
   children,
 }: {
@@ -54,6 +94,7 @@ export default function RootLayout({
   return (
     <html lang="es-MX" className={inter.variable}>
       <body style={{ backgroundColor: '#224366', color: '#ffffff' }}>
+        <JsonLd data={jsonLd} />
         {children}
       </body>
     </html>

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@mg/ui-primitives';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -31,6 +32,24 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NightClub',
+  '@id': 'https://houdinni.com/#venue',
+  name: 'Houdinni',
+  url: 'https://houdinni.com',
+  description:
+    'Houdinni — Un speakeasy donde la magia y la mixología se encuentran. Shows de ilusionismo, cócteles de autor y una experiencia que desafía los sentidos.',
+  image: 'https://houdinni.com/apple-touch-icon.png',
+  priceRange: '$$$',
+  servesCuisine: 'Cocktails',
+  sameAs: [
+    'https://instagram.com/houdinni',
+    'https://facebook.com/houdinni',
+    'https://tiktok.com/@houdinni',
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es" className="scroll-smooth">
@@ -41,6 +60,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script src="https://events.framer.com/script?v=2" async />
       </head>
       <body className="bg-houdinni-black text-houdinni-white min-h-screen overflow-x-hidden">
+        <JsonLd data={jsonLd} />
         {children}
       </body>
     </html>

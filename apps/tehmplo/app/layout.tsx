@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Source_Sans_3 } from 'next/font/google';
+import { JsonLd } from '@mg/ui-primitives';
 import './globals.css';
 import LenisScroll from '@/components/lenis-scroll';
 
@@ -42,6 +43,30 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'NightClub',
+  '@id': 'https://www.tehmplo.com/#nightclub',
+  name: 'Tehmplo',
+  url: 'https://www.tehmplo.com',
+  image: 'https://www.tehmplo.com/images/favicon-light.png',
+  description:
+    'Hidden in the jungle, this is where music, people, and emotions come together to make Tulum truly one of a kind.',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Tulum',
+    addressRegion: 'Quintana Roo',
+    addressCountry: 'MX',
+  },
+  priceRange: '$$$',
+  sameAs: ['https://instagram.com/tehmplo'],
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Mandala Group',
+    url: 'https://mandalagroup.mx/',
+  },
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={sourceSans.variable}>
@@ -65,6 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         }} />
       </head>
       <body className="bg-tehmplo-bg text-white antialiased">
+        <JsonLd data={jsonLd} />
         <LenisScroll />
         {children}
       </body>

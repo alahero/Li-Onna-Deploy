@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@mg/ui-primitives';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -33,10 +34,31 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': 'https://lionna.es/#restaurant',
+  name: 'LI-ONNA リオンナ',
+  alternateName: 'LI-ONNA Madrid',
+  url: 'https://lionna.es',
+  image: 'https://lionna.es/images/og-image.png',
+  description: 'Cocina japonesa con alma latina en Madrid.',
+  servesCuisine: ['Japanese', 'Latin American', 'Fusion', 'Nikkei'],
+  priceRange: '$$$',
+  acceptsReservations: true,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Madrid',
+    addressCountry: 'ES',
+  },
+  sameAs: ['https://instagram.com/lionna.madrid'],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
       <body>
+        <JsonLd data={jsonLd} />
         {/* Fixed blue background — visible when hero scrolls away */}
         <div
           aria-hidden

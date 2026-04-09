@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { JsonLd } from '@mg/ui-primitives';
 import './globals.css';
 
 const inter = Inter({
@@ -38,6 +39,32 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BarOrPub',
+  '@id': 'https://spade.mx/#bar',
+  name: 'SPADE',
+  url: 'https://spade.mx',
+  description:
+    'Cocktail bar de autor en Guadalajara. Ambiente sofisticado, cócteles de temporada y eventos exclusivos.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. Real de Acueducto 300, Puerta de Hierro',
+    postalCode: '45116',
+    addressLocality: 'Zapopan',
+    addressRegion: 'Jalisco',
+    addressCountry: 'MX',
+  },
+  priceRange: '$$$',
+  servesCuisine: 'Cocktails',
+  sameAs: ['https://instagram.com/spade.mx'],
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'Mandala Group',
+    url: 'https://mandalagroup.mx/',
+  },
+};
+
 interface RootLayoutProps {
   children: React.ReactNode;
 }
@@ -45,7 +72,10 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="es" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        <JsonLd data={jsonLd} />
+        {children}
+      </body>
     </html>
   );
 }
