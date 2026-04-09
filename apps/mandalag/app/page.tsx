@@ -10,7 +10,11 @@ import Footer from './components/footer';
 
 export const revalidate = 3600;
 
-const defaultDivisions = [
+/* Fallbacks used when the CMS singletons / collections are empty. They
+   mirror what the original Framer homepage shipped with, so marketing
+   can start populating the CMS without the front going blank. */
+
+const defaultDivisionsSection = [
   { title: 'Daylife', description: 'Transforming normal days into extraordinary experiences.', video: '/assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4' },
   { title: 'Nightlife', description: 'Immersive experiences crafted for every type of guest.', video: '/assets/videos/7tiqi431R1KYIVCJlrK16dnLdIU.mp4' },
   { title: 'Gastronomic', description: 'Innovative cuisine, captivating atmospheres, and extraordinary flavors.', video: '/assets/videos/eq7W1DDNviB31t2pfiwkBmYaviM.mp4' },
@@ -42,6 +46,7 @@ async function getData() {
     const [
       siteSettings,
       homepage,
+      divisionsSection,
       navbar,
       portfolio,
       newsletter,
@@ -50,6 +55,7 @@ async function getData() {
     ] = await Promise.all([
       reader.singletons.siteSettings.read().catch(() => null),
       reader.singletons.homepage.read().catch(() => null),
+      reader.singletons.divisionsSection.read().catch(() => null),
       reader.singletons.navbar.read().catch(() => null),
       reader.singletons.portfolio.read().catch(() => null),
       reader.singletons.newsletter.read().catch(() => null),
@@ -57,48 +63,76 @@ async function getData() {
       reader.singletons.footer.read().catch(() => null),
     ]);
 
-    const [divisionSlugs, venueSlugs, pressSlugs] = await Promise.all([
-      reader.collections.divisions.list().catch(() => [] as string[]),
+    const [brandSlugs, venueSlugs, pressSlugs, divisionSlugs] = await Promise.all([
+      reader.collections.brands.list().catch(() => [] as string[]),
       reader.collections.venues.list().catch(() => [] as string[]),
       reader.collections.press.list().catch(() => [] as string[]),
+      reader.collections.divisions.list().catch(() => [] as string[]),
     ]);
 
-    const divisions = divisionSlugs.length > 0
-      ? (await Promise.all(divisionSlugs.map((s) => reader.collections.divisions.read(s).catch(() => null)))).filter(Boolean)
-      : null;
-
-    const venues = venueSlugs.length > 0
-      ? (await Promise.all(venueSlugs.map((s) => reader.collections.venues.read(s).catch(() => null)))).filter(Boolean)
-      : null;
-
-    const press = pressSlugs.length > 0
-      ? (await Promise.all(pressSlugs.map((s) => reader.collections.press.read(s).catch(() => null)))).filter(Boolean)
-      : null;
+    const [brands, venues, press, divisions] = await Promise.all([
+      brandSlugs.length > 0
+        ? Promise.all(
+            brandSlugs.map(async (s) => {
+              const entry = await reader.collections.brands.read(s).catch(() => null);
+              return entry ? { ...entry, slug: s } : null;
+            })
+          ).then((xs) => xs.filter(Boolean))
+        : null,
+      venueSlugs.length > 0
+        ? Promise.all(
+            venueSlugs.map(async (s) => {
+              const entry = await reader.collections.venues.read(s).catch(() => null);
+              return entry ? { ...entry, slug: s } : null;
+            })
+          ).then((xs) => xs.filter(Boolean))
+        : null,
+      pressSlugs.length > 0
+        ? Promise.all(
+            pressSlugs.map(async (s) => {
+              const entry = await reader.collections.press.read(s).catch(() => null);
+              return entry ? { ...entry, slug: s } : null;
+            })
+          ).then((xs) => xs.filter(Boolean))
+        : null,
+      divisionSlugs.length > 0
+        ? Promise.all(
+            divisionSlugs.map(async (s) => {
+              const entry = await reader.collections.divisions.read(s).catch(() => null);
+              return entry ? { ...entry, slug: s } : null;
+            })
+          ).then((xs) => xs.filter(Boolean))
+        : null,
+    ]);
 
     return {
       siteSettings,
       homepage,
+      divisionsSection,
       navbar,
       portfolio,
       newsletter,
       pressSection,
       footer,
-      divisions,
+      brands,
       venues,
       press,
+      divisions,
     };
   } catch {
     return {
       siteSettings: null,
       homepage: null,
+      divisionsSection: null,
       navbar: null,
       portfolio: null,
       newsletter: null,
       pressSection: null,
       footer: null,
-      divisions: null,
+      brands: null,
       venues: null,
       press: null,
+      divisions: null,
     };
   }
 }
@@ -129,19 +163,66 @@ export default async function HomePage() {
     link3Url: data.navbar?.link3Url || '/private-events',
   };
 
-  const divisions = data.divisions && data.divisions.length > 0
-    ? data.divisions.sort((a, b) => ((a as any).order || 0) - ((b as any).order || 0)).map((d: any) => ({ title: d.title, description: d.description, video: d.video }))
-    : defaultDivisions;
+  // Divisions section (homepage cards): read from the singleton if present
+  // otherwise fall back to the original 4 cards.
+  const divisionsSectionItems =
+    data.divisionsSection?.items && data.divisionsSection.items.length > 0
+      ? data.divisionsSection.items.map((d: any) => ({
+          title: d.title,
+          description: d.description,
+          video: d.video,
+        }))
+      : defaultDivisionsSection;
 
-  const venues = data.venues && data.venues.length > 0
-    ? data.venues.sort((a, b) => ((a as any).order || 0) - ((b as any).order || 0)).map((v: any) => ({ name: v.name, image: v.image || '', category: v.category, url: v.url || '#' }))
-    : defaultVenues;
+  /* Portfolio section reads the Framer-style Venues collection (brand+location
+     rows). Each row joins to its brand to show the brand name, and to its
+     division so the filter tabs stay consistent with the 4 divisions. */
 
-  const venueCategories = [...new Set(venues.map(v => v.category))];
+  type BrandEntry = { slug: string; name: string; image?: string | null; link?: string };
+  type VenueEntry = {
+    slug: string;
+    brand?: string | null;
+    location?: string;
+    thumbnail?: string | null;
+    link?: string | null;
+    division?: string | null;
+  };
+
+  const brandsBySlug = new Map<string, BrandEntry>();
+  if (data.brands) {
+    for (const b of data.brands as any[]) {
+      brandsBySlug.set(b.slug, { slug: b.slug, name: b.name, image: b.image, link: b.link });
+    }
+  }
+
+  const divisionTitleBySlug = new Map<string, string>();
+  if (data.divisions) {
+    for (const d of data.divisions as any[]) {
+      divisionTitleBySlug.set(d.slug, d.title || d.slug);
+    }
+  }
+
+  const venues =
+    data.venues && (data.venues as any[]).length > 0
+      ? (data.venues as VenueEntry[]).map((v) => {
+          const brand = v.brand ? brandsBySlug.get(v.brand) : undefined;
+          const category = v.division ? divisionTitleBySlug.get(v.division) || 'Other' : 'Other';
+          return {
+            name: brand?.name || v.slug,
+            image: v.thumbnail || brand?.image || '',
+            category,
+            url: v.link || brand?.link || '#',
+          };
+        })
+      : defaultVenues;
+
+  const venueCategories = [...new Set(venues.map((v) => v.category))];
 
   const nl = {
     heading: data.newsletter?.heading || 'Newsletter',
-    description: data.newsletter?.description || "Subscribe to the ultimate insider's guide to unforgettable experiences.",
+    description:
+      data.newsletter?.description ||
+      "Subscribe to the ultimate insider's guide to unforgettable experiences.",
     image: data.newsletter?.image || '/assets/images/wDCJ6PQEkdOh0itp6dwputtehl4_f0569aea.png',
     emailPlaceholder: data.newsletter?.emailPlaceholder || 'your@email.com',
     buttonText: data.newsletter?.buttonText || 'Submit',
@@ -150,9 +231,17 @@ export default async function HomePage() {
     errorMessage: data.newsletter?.errorMessage || undefined,
   };
 
-  const press = data.press && data.press.length > 0
-    ? data.press.sort((a, b) => ((a as any).order || 0) - ((b as any).order || 0)).map((p: any) => ({ title: p.title, source: p.source || '', image: p.image || '', url: p.url || '#' }))
-    : defaultPress;
+  const press =
+    data.press && (data.press as any[]).length > 0
+      ? (data.press as any[])
+          .sort((a, b) => (a.orderId || 0) - (b.orderId || 0))
+          .map((p) => ({
+            title: p.title,
+            source: p.autor || '',
+            image: p.cover || '',
+            url: p.link || '#',
+          }))
+      : defaultPress;
 
   const footerLinks = data.footer
     ? [
@@ -170,7 +259,7 @@ export default async function HomePage() {
     <main>
       <Navbar {...nav} />
       <Hero {...hero} />
-      <Divisions divisions={divisions} />
+      <Divisions divisions={divisionsSectionItems} />
       <Portfolio
         venues={venues}
         categories={venueCategories}

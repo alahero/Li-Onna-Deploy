@@ -1,6 +1,24 @@
 import { config, collection, singleton, fields } from '@keystatic/core';
 import { seoFields, socialFields, imageField } from '@mg/keystatic-config';
 
+/**
+ * Mandala Group CMS — schema mirrors the original Framer CMS collections
+ * (Brands, Venues, Division, Subdivision, City, Press) so the editorial
+ * experience matches what marketing already knew in Framer.
+ *
+ * Framer structure (reference):
+ *   - Division (4): title + slug                 → Gastronomic, Events, Daylife, Nightlife
+ *   - Subdivision (7): title + slug              → Fine Dining, Casual Dining, High End Nightlife, …
+ *   - City (33): title + slug                    → Guadalajara, CDMX, Tulum, Madrid, Marbella, …
+ *   - Brands (54): name, id, divisions[],        → Spade, Li-onna, Señor Frogs, Cokin, …
+ *                  subdivisions[], link, image
+ *   - Venues (132): brand, location, city,       → Spade Guadalajara, Señor Frogs Cabo, …
+ *                   thumbnail, description (RT),
+ *                   link, gallery, division, subdivision
+ *   - Press: title, id, cover, autor, link,      → Graziano's article, Press intro
+ *            brand, venue, division, slug
+ */
+
 export default config({
   storage: { kind: 'local' },
   ui: { brand: { name: 'Mandala Group CMS' } },
@@ -43,7 +61,7 @@ export default config({
         heroLine3: fields.text({ label: 'Línea 3 (ej: CRAFTERS)', defaultValue: 'CRAFTERS' }),
         heroVideo: fields.text({
           label: 'Video de fondo (ruta)',
-          description: 'Ruta al archivo .mp4 dentro de /public (ej: /assets/videos/hero.mp4)',
+          description: 'Ruta al archivo .mp4 dentro de /public',
           defaultValue: '/assets/videos/OCFeezDYPIb3z0si1RnNiifcK3o.mp4',
         }),
         heroPoster: fields.image({
@@ -56,6 +74,35 @@ export default config({
         cta1Link: fields.text({ label: 'Botón 1 - Link', defaultValue: '#venues' }),
         cta2Text: fields.text({ label: 'Botón 2 - Texto', defaultValue: 'RESERVATIONS' }),
         cta2Link: fields.text({ label: 'Botón 2 - Link', defaultValue: '#reservations' }),
+      },
+    }),
+
+    /* ────────────────────────────────
+       DIVISIONS SECTION (homepage cards)
+       ────────────────────────────────
+       The home page renders 4 big cards (Daylife, Nightlife, Gastronomic,
+       Events) with a description + a background video. In Framer this
+       is hardcoded in the page design; we expose it as a CMS-editable
+       list so marketing can swap videos and copy without touching code.
+    */
+    divisionsSection: singleton({
+      label: 'Secciones de Divisiones (Home)',
+      path: 'content/divisions-section',
+      schema: {
+        items: fields.array(
+          fields.object({
+            title: fields.text({ label: 'Título' }),
+            description: fields.text({ label: 'Descripción', multiline: true }),
+            video: fields.text({
+              label: 'Video (ruta)',
+              description: 'Ruta al .mp4 dentro de /public',
+            }),
+          }),
+          {
+            label: 'Tarjetas de División',
+            itemLabel: (props) => props.fields.title.value || 'Sin título',
+          }
+        ),
       },
     }),
 
@@ -87,7 +134,6 @@ export default config({
         sectionTitle: fields.text({
           label: 'Título de la sección',
           defaultValue: 'Our Venues',
-          description: 'Opcional. Se muestra arriba del grid de venues.',
         }),
         allLabel: fields.text({ label: 'Etiqueta del filtro "All"', defaultValue: 'All' }),
         loadMoreLabel: fields.text({ label: 'Texto del botón "Load More"', defaultValue: 'Load More' }),
@@ -109,14 +155,13 @@ export default config({
         }),
         image: fields.text({
           label: 'Imagen (ruta)',
-          description: 'Ruta dentro de /public (ej: /assets/images/newsletter.png)',
           defaultValue: '/assets/images/wDCJ6PQEkdOh0itp6dwputtehl4_f0569aea.png',
         }),
         emailPlaceholder: fields.text({ label: 'Placeholder del email', defaultValue: 'your@email.com' }),
         buttonText: fields.text({ label: 'Texto del botón', defaultValue: 'Submit' }),
         submitUrl: fields.url({
           label: 'URL de envío (form action)',
-          description: 'URL del endpoint o formulario de Mailchimp / Brevo / Resend. Si se deja vacío, el formulario no envía.',
+          description: 'Endpoint de Mailchimp / Brevo / Resend. Vacío = modo dry-run.',
         }),
         successMessage: fields.text({
           label: 'Mensaje de éxito',
@@ -139,7 +184,6 @@ export default config({
         sectionTitle: fields.text({
           label: 'Título de la sección',
           defaultValue: 'Press',
-          description: 'Opcional. Se muestra arriba del grid de artículos.',
         }),
       },
     }),
@@ -156,10 +200,7 @@ export default config({
           label: 'Texto de copyright',
           defaultValue: '© 2026 Mandala Group. All rights reserved.',
         }),
-        address: fields.text({
-          label: 'Dirección',
-          multiline: true,
-        }),
+        address: fields.text({ label: 'Dirección', multiline: true }),
         phone: fields.text({ label: 'Teléfono' }),
         email: fields.text({ label: 'Email de contacto' }),
         showSocials: fields.checkbox({
@@ -177,7 +218,7 @@ export default config({
     }),
 
     /* ────────────────────────────────
-       STATIC PAGES (rich text)
+       STATIC PAGES (text body)
        ──────────────────────────────── */
     corporateEventsPage: singleton({
       label: 'Página: Corporate Events',
@@ -267,77 +308,173 @@ export default config({
 
   collections: {
     /* ────────────────────────────────
-       DIVISIONS (Daylife, Nightlife, etc.)
+       DIVISION  (Framer: "Division" — 4 items)
+       Gastronomic, Events, Daylife, Nightlife
        ──────────────────────────────── */
     divisions: collection({
       label: 'Divisiones',
       slugField: 'title',
       path: 'content/divisions/*',
       schema: {
-        title: fields.slug({ name: { label: 'Título' } }),
-        description: fields.text({ label: 'Descripción' }),
-        video: fields.text({
-          label: 'Video (ruta)',
-          description: 'Ruta al .mp4 dentro de /public',
+        title: fields.slug({
+          name: { label: 'Título', description: 'Ej: Gastronomic, Events, Daylife, Nightlife' },
         }),
-        order: fields.integer({ label: 'Orden', defaultValue: 0 }),
       },
     }),
 
     /* ────────────────────────────────
-       VENUES
+       SUBDIVISION  (Framer: "Subdivision" — 7 items)
+       Fine Dining, Casual Dining, High End Nightlife,
+       Casual Nightlife, Beachclub, Festival, Concert
+       ──────────────────────────────── */
+    subdivisions: collection({
+      label: 'Subdivisiones',
+      slugField: 'title',
+      path: 'content/subdivisions/*',
+      schema: {
+        title: fields.slug({
+          name: { label: 'Título', description: 'Ej: Fine Dining, Casual Dining, Beachclub, Festival' },
+        }),
+      },
+    }),
+
+    /* ────────────────────────────────
+       CITIES  (Framer: "City" — 33 items)
+       Guadalajara, Monterrey, CDMX, Tulum, Cancún,
+       Miami, Madrid, Marbella, …
+       ──────────────────────────────── */
+    cities: collection({
+      label: 'Ciudades',
+      slugField: 'title',
+      path: 'content/cities/*',
+      schema: {
+        title: fields.slug({
+          name: { label: 'Nombre', description: 'Ej: Guadalajara, Madrid, Tulum' },
+        }),
+      },
+    }),
+
+    /* ────────────────────────────────
+       BRANDS  (Framer: "Brands" — 54 items)
+       The parent brand itself (Spade, Li-onna, Tehmplo, …).
+       Each brand can have MANY venues (locations).
+       ──────────────────────────────── */
+    brands: collection({
+      label: 'Marcas (Brands)',
+      slugField: 'name',
+      path: 'content/brands/*',
+      schema: {
+        name: fields.slug({ name: { label: 'Nombre de la marca' } }),
+        orderId: fields.integer({
+          label: 'ID (para ordenar)',
+          description: 'Número manual de ordenamiento. Puede ser negativo.',
+          defaultValue: 0,
+        }),
+        link: fields.url({ label: 'Link principal', description: 'Sitio web oficial o Instagram' }),
+        image: imageField('Imagen', 'brands'),
+        divisions: fields.array(
+          fields.relationship({
+            label: 'División',
+            collection: 'divisions',
+          }),
+          {
+            label: 'Divisiones',
+            description: 'Una o más divisiones a las que pertenece la marca',
+            itemLabel: (props) => props.value || 'Seleccionar…',
+          }
+        ),
+        subdivisions: fields.array(
+          fields.relationship({
+            label: 'Subdivisión',
+            collection: 'subdivisions',
+          }),
+          {
+            label: 'Subdivisiones',
+            itemLabel: (props) => props.value || 'Seleccionar…',
+          }
+        ),
+      },
+    }),
+
+    /* ────────────────────────────────
+       VENUES  (Framer: "Venues" — 132 items)
+       A specific location of a brand (Spade Guadalajara,
+       Señor Frogs Cabo, El Cokin Universidad, …).
        ──────────────────────────────── */
     venues: collection({
-      label: 'Venues',
-      slugField: 'name',
+      label: 'Venues (ubicaciones)',
+      slugField: 'slug',
       path: 'content/venues/*',
       schema: {
-        name: fields.slug({ name: { label: 'Nombre' } }),
-        subtitle: fields.text({
-          label: 'Subtítulo / Ubicación',
-          description: 'Opcional. Ej: "Guadalajara, México"',
+        slug: fields.slug({
+          name: { label: 'Slug (Brand+Location)', description: 'Ej: spade-guadalajara' },
         }),
-        shortDescription: fields.text({
-          label: 'Descripción corta',
+        brand: fields.relationship({
+          label: 'Marca',
+          collection: 'brands',
+          description: 'La marca padre a la que pertenece este venue',
+        }),
+        location: fields.text({
+          label: 'Ubicación / Sucursal',
+          description: 'Ej: Real Center, Cabos, Puerta de Hierro, Chapalita',
+        }),
+        city: fields.relationship({
+          label: 'Ciudad',
+          collection: 'cities',
+        }),
+        thumbnail: imageField('Thumbnail', 'venues'),
+        description: fields.text({
+          label: 'Descripción',
           multiline: true,
-          description: 'Opcional. Se usa para tooltips/cards.',
+          description: 'Párrafo descriptivo del venue. Usa líneas en blanco para separar párrafos.',
         }),
-        category: fields.select({
-          label: 'Categoría',
-          options: [
-            { label: 'Nightlife', value: 'Nightlife' },
-            { label: 'Gastronomic', value: 'Gastronomic' },
-            { label: 'Daylife', value: 'Daylife' },
-            { label: 'Events', value: 'Events' },
-          ],
-          defaultValue: 'Nightlife',
+        link: fields.url({ label: 'Link del venue' }),
+        gallery: fields.array(
+          imageField('Imagen', 'venues/gallery'),
+          {
+            label: 'Galería',
+            description: 'Imágenes adicionales del venue',
+          }
+        ),
+        division: fields.relationship({
+          label: 'División',
+          collection: 'divisions',
         }),
-        image: imageField('Imagen principal', 'venues'),
-        logoImage: imageField('Logo del venue (opcional)', 'venues/logos'),
-        url: fields.text({ label: 'URL del sitio' }),
-        order: fields.integer({ label: 'Orden', defaultValue: 0 }),
+        subdivision: fields.relationship({
+          label: 'Subdivisión',
+          collection: 'subdivisions',
+        }),
       },
     }),
 
     /* ────────────────────────────────
-       PRESS
+       PRESS  (Framer: "Press")
        ──────────────────────────────── */
     press: collection({
       label: 'Press',
       slugField: 'title',
       path: 'content/press/*',
       schema: {
-        title: fields.slug({ name: { label: 'Título' } }),
-        source: fields.text({ label: 'Fuente (ej: El Heraldo)' }),
-        date: fields.date({ label: 'Fecha de publicación' }),
-        excerpt: fields.text({
-          label: 'Resumen corto',
-          multiline: true,
-          description: 'Opcional. Párrafo corto para previews.',
+        title: fields.slug({ name: { label: 'Título del artículo' } }),
+        orderId: fields.integer({
+          label: 'ID (para ordenar)',
+          defaultValue: 0,
         }),
-        url: fields.url({ label: 'URL del artículo' }),
-        image: imageField('Imagen', 'press'),
-        order: fields.integer({ label: 'Orden', defaultValue: 0 }),
+        cover: imageField('Cover / imagen principal', 'press'),
+        autor: fields.text({ label: 'Autor / Fuente', description: 'Ej: El Heraldo' }),
+        link: fields.url({ label: 'Link del artículo' }),
+        brand: fields.relationship({
+          label: 'Marca relacionada (opcional)',
+          collection: 'brands',
+        }),
+        venue: fields.relationship({
+          label: 'Venue relacionado (opcional)',
+          collection: 'venues',
+        }),
+        division: fields.relationship({
+          label: 'División (opcional)',
+          collection: 'divisions',
+        }),
       },
     }),
   },
