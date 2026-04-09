@@ -1,14 +1,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 import { Footer } from '@/components/footer';
 import type { Metadata } from 'next';
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Menú',
   description: 'Descubre nuestro menú de tacos norteños.',
 };
 
-export default function MenuMexPage() {
+async function getMenuData() {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  return reader.singletons.siteSettings.read().catch(() => null);
+}
+
+export default async function MenuMexPage() {
+  const siteSettings = await getMenuData();
   return (
     <>
       <div style={{ position: 'relative', minHeight: '100vh', background: '#ffffff' }}>
@@ -60,7 +70,12 @@ export default function MenuMexPage() {
           </main>
         </div>
       </div>
-      <Footer />
+      <Footer
+        facebookUrl={siteSettings?.facebookUrl}
+        instagramUrl={siteSettings?.instagramUrl}
+        tiktokUrl={siteSettings?.tiktokUrl}
+        twitterUrl={siteSettings?.twitterUrl}
+      />
     </>
   );
 }

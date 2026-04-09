@@ -1,14 +1,29 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 import { Footer } from '@/components/footer';
 import type { Metadata } from 'next';
+
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: 'Merch',
   description: 'Merch de Tacos Atarantados — muy pronto.',
 };
 
-export default function MerchPage() {
+async function getMerchData() {
+  const reader = createReader(process.cwd(), keystaticConfig);
+  const [merch, siteSettings] = await Promise.all([
+    reader.singletons.merch.read().catch(() => null),
+    reader.singletons.siteSettings.read().catch(() => null),
+  ]);
+  return { merch, siteSettings };
+}
+
+export default async function MerchPage() {
+  const { merch, siteSettings } = await getMerchData();
+  const comingSoonText = merch?.comingSoonText ?? 'muy pronto';
   return (
     <>
       <div style={{ position: 'relative', minHeight: '100vh', background: '#0c7528' }}>
@@ -65,7 +80,7 @@ export default function MerchPage() {
                 letterSpacing: '-0.01em',
               }}
             >
-              muy pronto
+              {comingSoonText}
             </p>
             <Image
               src="/images/nav-gif.gif"
@@ -78,7 +93,12 @@ export default function MerchPage() {
           </main>
         </div>
       </div>
-      <Footer />
+      <Footer
+        facebookUrl={siteSettings?.facebookUrl}
+        instagramUrl={siteSettings?.instagramUrl}
+        tiktokUrl={siteSettings?.tiktokUrl}
+        twitterUrl={siteSettings?.twitterUrl}
+      />
     </>
   );
 }

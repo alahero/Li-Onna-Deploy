@@ -1,16 +1,8 @@
 siteName: Tacos Atarantados
-tagline: Los Mejores Tacos de la Ciudad
-logo: ~
-logoDark: ~
+tagline: Tacos norteños, bien servidos.
 favicon: ~
-metaTitle: Tacos Atarantados – Auténticos Tacos Mexicanos
-metaDescription: >-
-  Tacos Atarantados: sabor auténtico, ingredientes frescos y calidad
-  insuperable. Visítanos en nuestras sucursales o pide a domicilio.
 ogImage: ~
-social:
-  instagram: https://instagram.com/tacosatarantados
-  facebook: https://facebook.com/tacosatarantados
-  tiktok: https://tiktok.com/@tacosatarantados
-  twitter: ~
-  whatsapp: "521234567890"
+facebookUrl: https://www.facebook.com/TacosAtarantados/?locale=es_LA
+instagramUrl: https://www.instagram.com/tacosatarantados/?hl=es
+tiktokUrl: https://www.tiktok.com/@tacosatarantados?lang=es
+twitterUrl: https://x.com/atarantados
