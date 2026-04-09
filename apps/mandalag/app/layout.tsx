@@ -1,7 +1,13 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { JsonLd } from '@mg/ui-primitives';
 import './fonts.css';
 import './globals.css';
+
+export const viewport: Viewport = {
+  themeColor: '#0e0e0f',
+  width: 'device-width',
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {

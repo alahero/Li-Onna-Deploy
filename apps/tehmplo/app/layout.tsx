@@ -1,8 +1,14 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Source_Sans_3 } from 'next/font/google';
 import { JsonLd } from '@mg/ui-primitives';
 import './globals.css';
 import LenisScroll from '@/components/lenis-scroll';
+
+export const viewport: Viewport = {
+  themeColor: '#0f0e0c',
+  width: 'device-width',
+  initialScale: 1,
+};
 
 const sourceSans = Source_Sans_3({
   subsets: ['latin'],

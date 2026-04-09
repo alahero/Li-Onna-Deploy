@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { SocialIcons } from '@mg/ui-primitives';
 
 interface SponsorTier {
@@ -66,8 +67,14 @@ export function Footer({ siteName, tagline, social, sponsors, ticketUrl }: Foote
                           key={j}
                           className="h-8 w-24 relative grayscale opacity-40 hover:grayscale-0 hover:opacity-80 transition-all duration-300"
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={logo} alt={`Sponsor ${j + 1}`} className="h-full w-full object-contain" />
+                          <Image
+                            src={logo}
+                            alt={`${tier.tierName} sponsor ${j + 1}`}
+                            fill
+                            sizes="96px"
+                            className="object-contain"
+                            unoptimized
+                          />
                         </div>
                       ) : null
                     )}
