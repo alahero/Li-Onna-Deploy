@@ -38,60 +38,78 @@ export function HeroSection({
         style={{ objectFit: 'cover', objectPosition: 'center' }}
       />
 
+      {/* Contenedor fijo: centra el sol en X e Y como el logo (el motion interno solo rota) */}
       {/* Sunburst / Sol decoration — Desktop */}
-      <motion.div
+      <div
         className="hidden-mobile"
-        initial={{ rotate: 180 }}
-        animate={{ rotate: 0 }}
-        transition={{ type: 'spring', bounce: 0.2, duration: 10 }}
         style={{
           position: 'absolute',
+          left: '50%',
+          top: '50%',
           width: '1219px',
           height: '1241px',
-          left: '-9px',
-          top: '-279px',
+          transform: 'translate(-50%, -50%)',
           overflow: 'visible',
-          willChange: 'transform',
           pointerEvents: 'none',
-          mixBlendMode: 'multiply',
         }}
       >
-        <Image
-          src={sunburstSrc}
-          alt=""
-          width={1982}
-          height={2019}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      </motion.div>
+        <motion.div
+          initial={{ rotate: 180 }}
+          animate={{ rotate: 0 }}
+          transition={{ type: 'spring', bounce: 0.2, duration: 10 }}
+          style={{
+            width: '100%',
+            height: '100%',
+            overflow: 'visible',
+            willChange: 'transform',
+            mixBlendMode: 'multiply',
+          }}
+        >
+          <Image
+            src={sunburstSrc}
+            alt=""
+            width={1982}
+            height={2019}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </motion.div>
+      </div>
 
       {/* Sunburst / Sol decoration — Mobile */}
-      <motion.div
+      <div
         className="hidden-desktop"
-        initial={{ rotate: 180 }}
-        animate={{ rotate: 0 }}
-        transition={{ type: 'spring', bounce: 0.2, duration: 10 }}
         style={{
           position: 'absolute',
-          aspectRatio: '0.9817 / 1',
+          left: '50%',
+          top: '50%',
           height: '721px',
-          left: '-147px',
-          right: '-146px',
-          top: '-22px',
+          width: 'calc(721px * 0.9817)',
+          transform: 'translate(-50%, -50%)',
           overflow: 'hidden',
-          willChange: 'transform',
           pointerEvents: 'none',
-          mixBlendMode: 'multiply',
         }}
       >
-        <Image
-          src={sunburstSrc}
-          alt=""
-          width={1982}
-          height={2019}
-          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-        />
-      </motion.div>
+        <motion.div
+          initial={{ rotate: 180 }}
+          animate={{ rotate: 0 }}
+          transition={{ type: 'spring', bounce: 0.2, duration: 10 }}
+          style={{
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden',
+            willChange: 'transform',
+            mixBlendMode: 'multiply',
+          }}
+        >
+          <Image
+            src={sunburstSrc}
+            alt=""
+            width={1982}
+            height={2019}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+        </motion.div>
+      </div>
 
       {/* GUEPARDO Logo — centered both axes */}
       <motion.div
