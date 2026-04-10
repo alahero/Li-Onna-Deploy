@@ -55,6 +55,11 @@
    Mobile:  max-width 1199px
 */
 
+/* Widget CoverManager: mitad de ancho en desktop; 100% en móvil (menos reenvío de líneas) */
+.reservations-widget-wrap {
+  width: 50%;
+}
+
 /* Hide on desktop (1200px+) */
 @media (min-width: 1200px) {
   .hidden-desktop {
@@ -112,5 +117,11 @@
   /* Copyright row (third child) */
   footer > div:nth-child(3) > p {
     font-size: 6px !important;
+  }
+
+  .reservations-widget-wrap {
+    box-sizing: border-box;
+    padding: 0 16px;
+    width: 100%;
   }
 }

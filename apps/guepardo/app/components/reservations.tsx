@@ -89,15 +89,15 @@ export function ReservationsSection({
         />
       </div>
 
-      {/* CoverManager Reservation Widget */}
+      {/* CoverManager: altura con vh para evitar scroll anidado dentro del iframe */}
       <div
+        className="reservations-widget-wrap"
         style={{
           flex: 'none',
           height: 'auto',
           minWidth: '300px',
           mixBlendMode: 'multiply',
           position: 'relative',
-          width: '50%',
           zIndex: 1,
         }}
       >
@@ -107,9 +107,14 @@ export function ReservationsSection({
           src={reservationUrl}
           allow="payment"
           frameBorder={0}
-          height={745}
-          width="100%"
-          style={{ display: 'block', border: 'none' }}
+          scrolling="no"
+          style={{
+            border: 'none',
+            display: 'block',
+            height: '1100px',
+            width: '100%',
+            overflow: 'hidden',
+          }}
         />
       </div>
 

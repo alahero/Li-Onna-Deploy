@@ -78,7 +78,8 @@ export default config({
         }),
         copyright: fields.text({
           label: 'Texto de Copyright',
-          description: 'Texto de copyright en el footer',
+          description:
+            'Texto del footer. El primer año en formato 20xx se sustituye automáticamente por el año en curso en el sitio.',
         }),
       },
     }),

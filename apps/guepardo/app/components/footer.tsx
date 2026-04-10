@@ -20,6 +20,11 @@ export function Footer({
   mandalaGroupLogo,
 }: FooterProps) {
   const mandalaLogoSrc = mandalaGroupLogo || '/images/mandala-group-logo.png';
+  // Reemplaza el primer año 20xx del texto (p. ej. del CMS) por el año en curso
+  const copyrightText = copyright.replace(
+    /\b20\d{2}\b/,
+    String(new Date().getFullYear())
+  );
   return (
     <footer
       style={{
@@ -338,7 +343,7 @@ export function Footer({
             padding: '0',
           }}
         >
-          {copyright}
+          {copyrightText}
         </p>
       </div>
     </footer>

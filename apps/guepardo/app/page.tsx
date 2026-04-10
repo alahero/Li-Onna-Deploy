@@ -28,7 +28,8 @@ export default async function HomePage() {
   const mandalaGroupUrl =
     siteSettings?.mandalaGroupUrl ?? 'https://mandalagroup.mx/';
   const copyright =
-    siteSettings?.copyright ?? 'Copyright \u00ae 2024 Mandala Group.';
+    siteSettings?.copyright ??
+    `Copyright \u00ae ${new Date().getFullYear()} Mandala Group.`;
   const reservationUrl =
     siteSettings?.reservationUrl ??
     'https://www.covermanager.com/reserve/module_restaurant/restaurante-guepardo/spanish';
