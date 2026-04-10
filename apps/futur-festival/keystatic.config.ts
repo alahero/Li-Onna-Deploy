@@ -4,8 +4,7 @@ import { seoFields, socialFields, imageField, richTextField } from '@mg/keystati
 export default config({
   storage: process.env.NODE_ENV === 'development'
     ? { kind: 'local' }
-    : { kind: 'cloud' },
-  cloud: { project: 'mandala-group/new-mg-mkt-cms' },
+    : { kind: 'github', repo: 'MandalaGroup/new-mg-mkt-cms' },
   ui: { brand: { name: 'FUTUR Festival CMS' } },
 
   singletons: {
