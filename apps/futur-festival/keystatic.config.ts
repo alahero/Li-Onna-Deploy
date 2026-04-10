@@ -2,7 +2,10 @@ import { config, collection, singleton, fields } from '@keystatic/core';
 import { seoFields, socialFields, imageField, richTextField } from '@mg/keystatic-config';
 
 export default config({
-  storage: { kind: 'local' },
+  storage: process.env.NODE_ENV === 'development'
+    ? { kind: 'local' }
+    : { kind: 'cloud' },
+  cloud: { project: 'mandala-group/new-mg-mkt-cms' },
   ui: { brand: { name: 'FUTUR Festival CMS' } },
 
   singletons: {

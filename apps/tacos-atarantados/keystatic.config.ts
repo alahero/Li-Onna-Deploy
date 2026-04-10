@@ -1,7 +1,10 @@
 import { config, collection, singleton, fields } from '@keystatic/core';
 
 export default config({
-  storage: { kind: 'local' },
+  storage: process.env.NODE_ENV === 'development'
+    ? { kind: 'local' }
+    : { kind: 'cloud' },
+  cloud: { project: 'mandala-group/new-mg-mkt-cms' },
   ui: { brand: { name: 'Tacos Atarantados CMS' } },
 
   singletons: {

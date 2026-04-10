@@ -20,7 +20,10 @@ import { seoFields, socialFields, imageField } from '@mg/keystatic-config';
  */
 
 export default config({
-  storage: { kind: 'local' },
+  storage: process.env.NODE_ENV === 'development'
+    ? { kind: 'local' }
+    : { kind: 'cloud' },
+  cloud: { project: 'mandala-group/new-mg-mkt-cms' },
   ui: { brand: { name: 'Mandala Group CMS' } },
 
   singletons: {
