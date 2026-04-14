@@ -1,11 +1,31 @@
 'use client';
 
 import Image from 'next/image';
+import Script from 'next/script';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface ReservationsSectionProps {
   reservationUrl: string;
   reservationsBgImage?: string | null;
   guepardoBannerImage?: string | null;
+}
+
+type IframeResizerOptions = {
+  autoResize?: boolean;
+  checkOrigin?: string[];
+  heightCalculationMethod?: string;
+  log?: boolean;
+  scrolling?: boolean;
+  warningTimeout?: number;
+};
+
+declare global {
+  interface Window {
+    iFrameResize?: (
+      options: IframeResizerOptions,
+      target: string | HTMLIFrameElement
+    ) => void;
+  }
 }
 
 export function ReservationsSection({
@@ -15,6 +35,46 @@ export function ReservationsSection({
 }: ReservationsSectionProps) {
   const bgSrc = reservationsBgImage || '/images/reservations-bg.png';
   const bannerSrc = guepardoBannerImage || '/images/guepardo-banner.png';
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [resizerReady, setResizerReady] = useState(false);
+  const allowedOrigins = useMemo(() => {
+    const origins = new Set<string>(['https://www.covermanager.com']);
+    try {
+      origins.add(new URL(reservationUrl).origin);
+    } catch {}
+    return Array.from(origins);
+  }, [reservationUrl]);
+
+  useEffect(() => {
+    const iframeEl = iframeRef.current as
+      | (HTMLIFrameElement & {
+          iFrameResizer?: { removeListeners?: () => void };
+        })
+      | null;
+
+    if (!resizerReady || !iframeEl || typeof window.iFrameResize !== 'function') {
+      return;
+    }
+
+    iframeEl.iFrameResizer?.removeListeners?.();
+
+    window.iFrameResize(
+      {
+        autoResize: true,
+        checkOrigin: allowedOrigins,
+        heightCalculationMethod: 'max',
+        log: false,
+        scrolling: false,
+        warningTimeout: 10000,
+      },
+      iframeEl
+    );
+
+    return () => {
+      iframeEl.iFrameResizer?.removeListeners?.();
+    };
+  }, [allowedOrigins, resizerReady]);
+
   return (
     <section
       style={{
@@ -102,7 +162,9 @@ export function ReservationsSection({
         }}
       >
         <iframe
+          ref={iframeRef}
           id="restaurante-guepardo"
+          className="reservations-iframe"
           title="Reservas"
           src={reservationUrl}
           allow="payment"
@@ -111,12 +173,18 @@ export function ReservationsSection({
           style={{
             border: 'none',
             display: 'block',
-            height: '1100px',
+            minHeight: '720px',
             width: '100%',
             overflow: 'hidden',
           }}
         />
       </div>
+      {/* Mismo host que el iframe: pareado con el widget CoverManager (ver diseño Framer / CM) */}
+      <Script
+        src="https://www.covermanager.com/js/iframeResizer/iframeResizer.min.js"
+        strategy="afterInteractive"
+        onLoad={() => setResizerReady(true)}
+      />
 
       {/* Mobile: right half banner (rotated 180deg) */}
       <div

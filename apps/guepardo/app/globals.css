@@ -57,13 +57,36 @@
 
 /* Widget CoverManager: mitad de ancho en desktop; 100% en móvil (menos reenvío de líneas) */
 .reservations-widget-wrap {
+  /* Sin overflow:hidden: evita recortes raros; el iframe controla su propio contenido */
+  overflow: visible;
+  position: relative;
   width: 50%;
+}
+
+/*
+ * El módulo CoverManager usa .size_page { max-width: 740px } y Bootstrap 3 (hidden-xs / visible-xs).
+ * Si el iframe supera ~740px, el motor puede mostrar el datepicker mensual en lugar de la franja de días.
+ * El tope 740px coincide con su propio CSS (newmodule.css).
+ */
+
+.reservations-iframe {
+  border: 0;
+  display: block;
+  min-height: 720px;
+  overflow: hidden;
+  width: 100%;
 }
 
 /* Hide on desktop (1200px+) */
 @media (min-width: 1200px) {
   .hidden-desktop {
     display: none !important;
+  }
+
+  .reservations-widget-wrap {
+    box-sizing: border-box;
+    max-width: 740px !important;
+    width: clamp(300px, 50vw, 740px) !important;
   }
 }
 
@@ -123,5 +146,9 @@
     box-sizing: border-box;
     padding: 0 16px;
     width: 100%;
+  }
+
+  .reservations-iframe {
+    min-height: 640px;
   }
 }

@@ -142,8 +142,10 @@ export function HeroSection({
         />
       </motion.div>
 
-      {/* Rotating "RESERVACIONES" circular text ring */}
-      <div
+      {/* Rotating "RESERVACIONES" circular text ring — hover reduce escala ligeramente */}
+      <motion.div
+        whileHover={{ scale: 0.92 }}
+        transition={{ type: 'spring', stiffness: 420, damping: 24 }}
         style={{
           position: 'absolute',
           bottom: '-45px',
@@ -152,6 +154,7 @@ export function HeroSection({
           width: '140px',
           willChange: 'transform',
           zIndex: 1,
+          transformOrigin: 'center center',
         }}
       >
         <motion.svg
@@ -160,7 +163,7 @@ export function HeroSection({
           height="140"
           animate={{ rotate: 360 }}
           transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-          style={{ overflow: 'visible' }}
+          style={{ overflow: 'visible', display: 'block' }}
         >
           <defs>
             <path
@@ -187,7 +190,7 @@ export function HeroSection({
             </textPath>
           </text>
         </motion.svg>
-      </div>
+      </motion.div>
 
       {/* Bouncing scroll arrow */}
       <motion.div
