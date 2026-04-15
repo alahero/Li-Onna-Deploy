@@ -19,61 +19,38 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ aboutText }: AboutSectionProps) {
+  const body = (aboutText || DEFAULT_ABOUT_TEXT).split('\n').filter(Boolean);
+
   return (
     <section
       id="quienes-somos"
-      className="w-full bg-white"
+      className="w-full bg-[#e6e6e6] px-4 py-8 sm:px-6 sm:py-10 min-[810px]:px-10 min-[810px]:py-12 lg:px-14 lg:py-14"
     >
-      <div className="about-inner relative w-full max-w-[1152px] mx-auto flex flex-row gap-0">
-        {/* Left: food photo with text overlay */}
-        <div
-          className="about-photo-col relative w-1/2 shrink-0 overflow-hidden"
-          style={{ aspectRatio: '576 / 658' }}
-        >
+      <div className="about-inner mx-auto grid w-full max-w-[1152px] grid-cols-1 min-[810px]:grid-cols-2 min-[810px]:items-stretch">
+        {/* Columna imagen: móvil con ratio; escritorio estira a la altura del panel verde (sin aspect fijo) */}
+        <div className="about-photo-col relative aspect-[4/5] w-full min-h-0 overflow-hidden min-[810px]:aspect-auto min-[810px]:h-full min-[810px]:self-stretch">
           <Image
             src="/images/quienes-somos-food.png"
             alt="Tacos Atarantados"
             fill
             className="object-cover"
-            sizes="(max-width: 810px) 100vw, 50vw"
+            sizes="(max-width: 809px) calc(100vw - 2rem), 50vw"
           />
-
-          {/* Text overlay on the photo */}
-          <div className="about-text-overlay absolute bottom-10 left-10 right-10 z-[2] flex flex-col gap-2">
-            <h2
-              className="m-0"
-              style={{
-                fontFamily: '"Gothic Regular", sans-serif',
-                fontWeight: 400,
-                fontSize: '47px',
-                lineHeight: '56.4px',
-                color: '#ffffff',
-              }}
-            >
-              {'\u00BF'}Qui{'\u00E9'}nes
-              <br />
-              somos?
-            </h2>
-            <div
-              style={{
-                fontFamily: 'Oswald, sans-serif',
-                fontWeight: 400,
-                fontSize: '13px',
-                lineHeight: '15.6px',
-                color: '#ffffff',
-                textAlign: 'justify',
-              }}
-              className="flex flex-col gap-0"
-            >
-              {(aboutText || DEFAULT_ABOUT_TEXT).split('\n').filter(Boolean).map((line, i) => (
-                <p key={i} style={{ margin: i === 0 ? '0 0 0.3em' : '0.4em 0 0.3em' }}>{line}</p>
-              ))}
-            </div>
-          </div>
         </div>
 
-        {/* Right: empty white space (matches Framer layout) */}
-        <div className="about-right-col flex-1" />
+        {/* Columna texto: min-w-0 evita desbordes raros en columnas grid angostas */}
+        <div className="about-right-col flex min-h-0 w-full min-w-0 flex-col justify-center bg-[var(--verde)] px-6 py-9 text-white min-[810px]:px-6 min-[810px]:py-9 min-[1031px]:px-9 min-[1031px]:py-10 lg:px-12 lg:py-11">
+          <h2 className="about-heading m-0 mb-4 w-full min-w-0 break-words uppercase min-[810px]:mb-5">
+            {'\u00BF'}QUI{'\u00C9'}NES SOMOS?
+          </h2>
+          <div className="about-body flex min-w-0 flex-col gap-0">
+            {body.map((line, i) => (
+              <p key={i} style={{ margin: i === 0 ? '0 0 0.3em' : '0.4em 0 0.3em' }}>
+                {line}
+              </p>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

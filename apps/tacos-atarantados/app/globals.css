@@ -59,7 +59,7 @@
    CUSTOM TACO CURSOR
    ============================================================ */
 body {
-  cursor: url('/images/taco-cursor.png') 26 17, auto;
+  cursor: url('/images/taco-cursor-custom-v6.png') 9 6, auto;
   background-color: #ffffff;
   color: #000000;
   font-family: 'Gothic Regular', sans-serif;
@@ -69,7 +69,7 @@ body {
 }
 
 a, button, [role="button"] {
-  cursor: url('/images/taco-cursor.png') 26 17, pointer;
+  cursor: url('/images/taco-cursor-custom-v6.png') 9 6, pointer;
 }
 
 html {
@@ -88,57 +88,189 @@ html {
 }
 
 /* ============================================================
-   STICKY MOVEMENT BANNER — Framer: 1602x769 image, slides horizontally
+   HERO RESPONSIVE
    ============================================================ */
-.movement-image {
-  will-change: transform;
-  animation: slideX 8s ease-in-out infinite alternate;
+.hero-section {
+  min-height: auto;
+  height: auto;
+  padding-bottom: 28px;
 }
 
-@keyframes slideX {
-  0%   { transform: translateX(300px); }
-  100% { transform: translateX(-200px); }
+@media (min-width: 651px) {
+  .hero-section {
+    padding-bottom: 40px;
+  }
 }
 
-/* ============================================================
-   RESPONSIVE NAV — desktop shows grid in hero, mobile uses hamburger
-   On desktop (>=810px): show hero grid, hide hamburger
-   On mobile (<810px): hide hero grid, show hamburger
-   ============================================================ */
 .hero-nav-grid {
   display: none;
+  transform-origin: top center;
 }
+
+.hero-nav-vertical {
+  display: flex;
+}
+
 .hamburger-btn {
   display: flex;
 }
 
-@media (min-width: 810px) {
+@media (min-width: 651px) {
   .hero-nav-grid {
     display: flex;
+    max-width: 868px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+    padding-top: 128px !important;
+    padding-bottom: 52px !important;
+    margin: 0 auto;
+    transform: scale(1);
   }
+  .hero-nav-vertical {
+    display: none;
+  }
+}
+
+@media (min-width: 1201px) {
+  .hero-nav-grid {
+    padding-top: 136px !important;
+    padding-bottom: 56px !important;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 1200px) {
+  .hero-nav-grid {
+    transform: scale(0.9);
+    margin-bottom: -44px;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 960px) {
+  .hero-nav-grid {
+    transform: scale(0.82);
+    margin-bottom: -74px;
+  }
+}
+
+@media (min-width: 651px) and (max-width: 809px) {
+  .hero-section .hamburger-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .hero-section {
+    min-height: auto;
+    height: auto;
+    padding-bottom: 28px;
+  }
+  .hero-nav-grid {
+    display: none !important;
+  }
+  .hero-nav-vertical {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: min(92vw, 420px);
+    padding-top: 124px !important;
+    padding-bottom: 40px !important;
+  }
+  /* Composición visual por botón para igualar referencia móvil */
+  .hero-nav-vertical .hero-v-item {
+    display: flex;
+    justify-content: center;
+    line-height: 0;
+  }
+  .hero-nav-vertical .hero-v-quienes {
+    /* Un poco más abajo respecto al borde del bloque vertical */
+    margin-top: 10px;
+  }
+  .hero-nav-vertical .hero-v-menu {
+    margin-top: -8px;
+  }
+  .hero-nav-vertical .hero-v-merch {
+    /* Compacta un poco el espacio con MENU */
+    margin-top: -8px;
+  }
+  .hero-nav-vertical .hero-v-contacto {
+    /* Sube un poquito respecto al valor intermedio */
+    margin-top: -6px;
+  }
+  .hero-nav-vertical .hero-v-sucursales {
+    /* Más abajo para separar de CONTACTO */
+    margin-top: 18px;
+  }
+  .hero-nav-vertical .hero-v-facturacion {
+    /* Un poco más arriba respecto a SUCURSALES */
+    margin-top: -11px;
+  }
+}
+
+@media (min-width: 810px) {
   .hamburger-btn {
     display: none !important;
   }
 }
 
 /* ============================================================
-   RESPONSIVE ABOUT SECTION
+   SECCIÓN QUIÉNES SOMOS — dos columnas misma altura (≥810px)
    ============================================================ */
+@media (min-width: 810px) {
+  #quienes-somos .about-inner {
+    align-items: stretch;
+  }
+  #quienes-somos .about-photo-col {
+    aspect-ratio: auto;
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+  }
+  #quienes-somos .about-right-col {
+    min-width: 0;
+  }
+}
+
+#quienes-somos .about-heading {
+  font-family: 'Gothic Regular', sans-serif;
+  font-weight: 400;
+  color: var(--blanco);
+}
+
 @media (max-width: 809px) {
-  .about-inner {
-    flex-direction: column !important;
+  #quienes-somos .about-heading {
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    line-height: 1.15;
   }
-  .about-photo-col {
-    width: 100% !important;
-    aspect-ratio: 4 / 5 !important;
+}
+
+@media (min-width: 810px) and (max-width: 1030px) {
+  #quienes-somos .about-heading {
+    font-size: clamp(1.35rem, 0.75rem + 1.85vw, 1.9rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
   }
-  .about-right-col {
-    display: none;
+}
+
+@media (min-width: 1031px) {
+  #quienes-somos .about-heading {
+    font-size: clamp(1.85rem, 1.2rem + 1.35vw, 2.9375rem);
+    line-height: 1.15;
   }
-  .about-text-overlay {
-    left: 20px !important;
-    right: 20px !important;
-    bottom: 20px !important;
+}
+
+#quienes-somos .about-body {
+  font-family: Oswald, sans-serif;
+  font-weight: 400;
+  color: var(--blanco);
+  text-align: justify;
+  font-size: clamp(13px, 1.6vw, 15px);
+  line-height: 1.35;
+}
+
+@media (min-width: 810px) and (max-width: 1030px) {
+  #quienes-somos .about-body {
+    font-size: clamp(12px, 0.55rem + 1.1vw, 14px);
+    line-height: 1.42;
   }
 }
 
