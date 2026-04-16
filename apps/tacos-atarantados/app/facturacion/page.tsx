@@ -54,7 +54,7 @@ export default function FacturacionPage() {
                   alt="FACTURACIÓN"
                   width={330}
                   height={106}
-                  style={{ maxWidth: '100%', height: 'auto' }}
+                  style={{ maxWidth: '100%', height: 'auto', alignSelf: 'center', display: 'block' }}
                 />
 
                 {[
@@ -125,7 +125,7 @@ export default function FacturacionPage() {
                     fontWeight: 700,
                     fontSize: '14px',
                     color: '#ffffff',
-                    alignSelf: 'flex-start',
+                    alignSelf: 'center',
                     cursor: 'inherit',
                   }}
                 >

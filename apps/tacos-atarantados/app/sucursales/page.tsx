@@ -1,8 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Navbar } from '@/components/navbar';
+import type { CSSProperties } from 'react';
 import { Footer } from '@/components/footer';
 import type { Metadata } from 'next';
+
+/** Mismo estilo tipográfico que el título de sección USA. */
+const SECTION_TITLE_STYLE: CSSProperties = {
+  fontFamily: '"Gothic Regular", sans-serif',
+  fontWeight: 400,
+  fontSize: '36px',
+  color: '#0c7528',
+  marginBottom: '24px',
+  textAlign: 'center',
+};
+
+/** Imagen del CTA en tarjetas; el tamaño visible se limita solo con CSS. */
+const DELIVERY_CTA_IMAGE = '/images/sucursales-header.png';
 
 export const metadata: Metadata = {
   title: 'Sucursales',
@@ -59,13 +72,13 @@ const CDMX_LOCATIONS = [
     name: 'LAS PALMAS',
     address: 'Sierra Mojada 215, Lomas - Virreyes, Lomas de Chapultepec, Miguel Hidalgo, 11000 Ciudad de México, CDMX',
     phone: 'TEL. 55 2120 7201',
-    uberEats: null,
+    uberEats: 'https://www.ubereats.com/mx',
   },
   {
     name: 'ROMA',
     address: 'Córdoba 113, Roma Nte., Cuauhtémoc, 06700 Ciudad de México, CDMX',
     phone: 'TEL. 55 5584 0947',
-    uberEats: null,
+    uberEats: 'https://www.ubereats.com/mx',
   },
 ];
 
@@ -73,8 +86,8 @@ const USA_LOCATIONS = [
   {
     name: 'WYNWOOD',
     address: '218 NW 25th St, Miami, FL 33127, Estados Unidos',
-    phone: 'TEL. 000000000',
-    uberEats: null,
+    phone: '',
+    uberEats: 'https://www.ubereats.com/store/tacos-atarantados-wynwood/yRL2zIg8SU2KytvVjDZqKw',
   },
 ];
 
@@ -88,98 +101,133 @@ function LocationCard({
   name: string;
   sub?: string;
   address: string;
-  phone: string;
+  phone?: string;
   uberEats: string | null;
 }) {
   return (
     <div
       style={{
         background: '#ffffff',
-        border: '2px solid #0c7528',
-        borderRadius: '8px',
+        border: '7px solid #0c7528',
+        borderRadius: 0,
         padding: '20px',
         display: 'flex',
         flexDirection: 'column',
         gap: '10px',
+        height: '100%',
+        minHeight: 0,
       }}
     >
-      <div>
-        <h3
-          style={{
-            fontFamily: '"Gothic Regular", sans-serif',
-            fontWeight: 400,
-            fontSize: '22px',
-            color: '#0c7528',
-            margin: 0,
-            lineHeight: 1.1,
-          }}
-        >
-          {name}
-        </h3>
-        {sub && (
-          <p
+      {/* Bloque superior: nombre, zona y dirección pegados arriba */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          flexShrink: 0,
+        }}
+      >
+        <div>
+          <h3
             style={{
-              fontFamily: 'Oswald, sans-serif',
+              fontFamily: '"Gothic Regular", sans-serif',
               fontWeight: 400,
-              fontSize: '11px',
+              fontSize: '22px',
               color: '#0c7528',
               margin: 0,
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
+              lineHeight: 1.1,
             }}
           >
-            {sub}
-          </p>
-        )}
-      </div>
-      <p
-        style={{
-          fontFamily: 'Inter, sans-serif',
-          fontWeight: 400,
-          fontSize: '12px',
-          color: '#000000',
-          margin: 0,
-          lineHeight: 1.5,
-        }}
-      >
-        {address}
-      </p>
-      <span
-        style={{
-          fontFamily: 'Inter, sans-serif',
-          fontWeight: 800,
-          fontSize: '21px',
-          color: 'rgb(13, 116, 39)',
-        }}
-      >
-        {phone}
-      </span>
-      {uberEats && (
-        <Link
-          href={uberEats}
-          target="_blank"
-          rel="noopener noreferrer"
+            {name}
+          </h3>
+          {sub ? (
+            <p
+              style={{
+                fontFamily: '"Gothic Regular", sans-serif',
+                fontWeight: 400,
+                fontSize: '13px',
+                color: '#0c7528',
+                margin: '4px 0 0 0',
+                lineHeight: 1.1,
+              }}
+            >
+              ({sub})
+            </p>
+          ) : null}
+        </div>
+        <p
           style={{
-            display: 'inline-block',
-            background: '#0c7528',
-            color: '#ffffff',
             fontFamily: 'Inter, sans-serif',
-            fontWeight: 700,
-            fontSize: '13px',
-            padding: '8px 16px',
-            borderRadius: '4px',
-            textDecoration: 'none',
-            alignSelf: 'flex-start',
+            fontWeight: 400,
+            fontSize: '12px',
+            color: '#000000',
+            margin: 0,
+            lineHeight: 1.5,
           }}
         >
-          Pedir en UberEats →
-        </Link>
-      )}
+          {address}
+        </p>
+      </div>
+
+      {/* Ocupa el espacio sobrante para empujar teléfono y CTA al fondo */}
+      <div style={{ flex: '1 1 0', minHeight: 0 }} aria-hidden />
+
+      {/* Bloque inferior: teléfono y botón Uber Eats pegados abajo */}
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '10px',
+          alignItems: 'flex-start',
+          flexShrink: 0,
+        }}
+      >
+        {phone ? (
+          <span
+            style={{
+              fontFamily: 'Inter, sans-serif',
+              fontWeight: 800,
+              fontSize: '21px',
+              color: 'rgb(13, 116, 39)',
+            }}
+          >
+            {phone}
+          </span>
+        ) : null}
+        {uberEats ? (
+          <Link
+            href={uberEats}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Pedir en Uber Eats — ${name}`}
+            style={{
+              display: 'inline-block',
+              alignSelf: 'flex-start',
+              textDecoration: 'none',
+              lineHeight: 0,
+            }}
+          >
+            <Image
+              src={DELIVERY_CTA_IMAGE}
+              alt="Pedir en Uber Eats"
+              width={939}
+              height={260}
+              style={{
+                width: 'auto',
+                height: 'auto',
+                maxWidth: 'min(200px, 52%)',
+              }}
+            />
+          </Link>
+        ) : null}
+      </div>
     </div>
   );
 }
 
 export default function SucursalesPage() {
+  const mexicoLocations = [...MONTERREY_LOCATIONS, ...CDMX_LOCATIONS];
+
   return (
     <>
       <div style={{ position: 'relative', minHeight: '100vh', background: '#ffffff' }}>
@@ -212,57 +260,43 @@ export default function SucursalesPage() {
           </header>
 
           <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 24px 80px' }}>
-            {/* Page header image */}
-            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '40px' }}>
-              <Image
-                src="/images/sucursales-header.png"
-                alt="Sucursales"
-                width={939}
-                height={260}
-                style={{ maxWidth: '100%', height: 'auto' }}
-              />
-            </div>
-
-            {/* Mexico section */}
-            <div style={{ marginBottom: '32px' }}>
+            {/* Clasificación: sucursales en México (centrado y más compacto que el ancho nativo) */}
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '24px',
+                width: '100%',
+              }}
+            >
               <Image
                 src="/images/mexico-title.png"
                 alt="México"
-                width={400}
-                height={111}
-                style={{ maxWidth: '100%', height: 'auto', marginBottom: '24px' }}
+                width={800}
+                height={222}
+                style={{
+                  display: 'block',
+                  width: 'min(500px, 88%)',
+                  maxWidth: '100%',
+                  height: 'auto',
+                }}
               />
+            </div>
+
+            <h2 style={SECTION_TITLE_STYLE}>México</h2>
+
+            {/* Mexico section */}
+            <div style={{ marginBottom: '32px' }}>
               <div
                 style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
                   gap: '10px',
                   width: '100%',
+                  alignItems: 'stretch',
                 }}
               >
-                {MONTERREY_LOCATIONS.map((loc) => (
-                  <LocationCard key={loc.name} {...loc} />
-                ))}
-              </div>
-            </div>
-
-            {/* CDMX section */}
-            <div style={{ marginBottom: '32px' }}>
-              <Image
-                src="/images/cdmx-title.png"
-                alt="Ciudad de México"
-                width={400}
-                height={63}
-                style={{ maxWidth: '100%', height: 'auto', marginBottom: '24px' }}
-              />
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
-                  gap: '10px',
-                }}
-              >
-                {CDMX_LOCATIONS.map((loc) => (
+                {mexicoLocations.map((loc) => (
                   <LocationCard key={loc.name} {...loc} />
                 ))}
               </div>
@@ -270,22 +304,13 @@ export default function SucursalesPage() {
 
             {/* USA section */}
             <div>
-              <h2
-                style={{
-                  fontFamily: '"Gothic Regular", sans-serif',
-                  fontWeight: 400,
-                  fontSize: '36px',
-                  color: '#0c7528',
-                  marginBottom: '24px',
-                }}
-              >
-                USA
-              </h2>
+              <h2 style={SECTION_TITLE_STYLE}>USA</h2>
               <div
                 style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))',
                   gap: '10px',
+                  alignItems: 'stretch',
                 }}
               >
                 {USA_LOCATIONS.map((loc) => (

@@ -56,10 +56,11 @@
 }
 
 /* ============================================================
-   CUSTOM TACO CURSOR
+   CURSOR PERSONALIZADO (taco)
+   v7 ≈ 55% del PNG v6; los navegadores no escalan bien cursor:url().
    ============================================================ */
 body {
-  cursor: url('/images/taco-cursor-custom-v6.png') 9 6, auto;
+  cursor: url('/images/taco-cursor-custom-v7.png') 5 3, auto;
   background-color: #ffffff;
   color: #000000;
   font-family: 'Gothic Regular', sans-serif;
@@ -69,7 +70,7 @@ body {
 }
 
 a, button, [role="button"] {
-  cursor: url('/images/taco-cursor-custom-v6.png') 9 6, pointer;
+  cursor: url('/images/taco-cursor-custom-v7.png') 5 3, pointer;
 }
 
 html {
