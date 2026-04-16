@@ -1,10 +1,28 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
+
+  // Evita scroll del documento cuando el menú está abierto
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  // Cierra con Escape (accesibilidad)
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
     <>
@@ -22,21 +40,29 @@ export function Navbar() {
           />
         </Link>
 
-        {/* Taco cursor icon — desktop only */}
-        <div className="absolute top-[31px] right-[82px] hidden md:block">
+        {/* Ícono taco: escritorio y tablet; abre/cierra el mismo menú deslizante */}
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
+          aria-expanded={open}
+          className="taco-nav-btn absolute top-[31px] right-[82px] hidden md:flex items-center justify-center bg-transparent border-none p-0 cursor-pointer"
+        >
           <Image
             src="/images/taco-cursor-nav.png"
             alt=""
             width={51}
             height={29}
-            className="w-[51px] h-[29px] object-cover"
+            className="w-[51px] h-[29px] object-cover pointer-events-none"
           />
-        </div>
+        </button>
 
-        {/* Hamburger button — mobile only */}
+        {/* Hamburguesa — móvil */}
         <button
+          type="button"
           onClick={() => setOpen(true)}
-          aria-label="Abrir menu"
+          aria-label="Abrir menú"
+          aria-expanded={open}
           className="hamburger-btn absolute right-6 top-1/2 -translate-y-1/2 bg-transparent border-none p-2 flex flex-col gap-[5px]"
         >
           <span className="block w-7 h-[3px] bg-[#0c7528] rounded-sm" />
@@ -45,64 +71,57 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* FULL-SCREEN NAV OVERLAY — mobile menu */}
-      {open && (
-        <div className="fixed inset-0 bg-[rgba(12,117,40,0.97)] z-[200] flex flex-col items-center justify-center overflow-hidden">
-          {/* Close button */}
+      {/* Fondo semitransparente */}
+      <div
+        className={`fixed inset-0 z-[199] bg-black/50 transition-opacity duration-300 ease-out ${
+          open ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Franja derecha: un poco más pegada al borde que antes; en md sigue cerca del taco */}
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menú de navegación"
+        aria-hidden={!open}
+        className={`fixed top-0 right-2 z-[200] w-[min(42vw,220px)] md:right-[58px] md:w-[240px] max-h-[min(88vh,640px)] overflow-y-auto rounded-bl-xl bg-[rgba(12,117,40,0.96)] shadow-xl backdrop-blur-[2px] transition-transform duration-300 ease-out ${
+          open ? 'translate-y-0' : '-translate-y-full pointer-events-none'
+        }`}
+      >
+        <div className="relative flex flex-col items-stretch pl-4 pr-5 pt-12 pb-8 md:pt-14 md:pb-10 md:pr-6">
           <button
+            type="button"
             onClick={() => setOpen(false)}
-            aria-label="Cerrar menu"
-            className="absolute top-6 right-6 bg-transparent border-none text-white text-3xl leading-none"
+            aria-label="Cerrar menú"
+            className="absolute top-3 right-4 z-[1] min-h-10 min-w-10 flex items-center justify-center rounded-md bg-transparent border-none text-white text-2xl leading-none cursor-pointer opacity-90 hover:opacity-100 md:top-4 md:right-6"
           >
             &#x2715;
           </button>
 
-          {/* Logo in overlay */}
-          <Link href="/" onClick={() => setOpen(false)} className="mb-8">
-            <Image
-              src="/images/logo.png"
-              alt="Tacos Atarantados"
-              width={200}
-              height={54}
-              style={{ filter: 'brightness(0) invert(1)', opacity: 0.9 }}
-            />
-          </Link>
-
-          {/* Nav Grid — image-based buttons */}
-          <div className="flex flex-col items-center gap-0 max-w-[868px] w-full px-4">
-            {/* Row 1 */}
-            <div className="flex flex-row gap-0 items-center flex-wrap justify-center">
-              <Link href="/sucursales" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-sucursales.png" alt="SUCURSALES" width={384} height={124} className="w-[260px] sm:w-[320px] h-auto object-cover max-w-full" />
-              </Link>
-              <Link href="#quienes-somos" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-quienes-somos.png" alt="QUIENES SOMOS" width={419} height={149} className="w-[260px] sm:w-[349px] h-auto object-cover max-w-full" />
-              </Link>
-            </div>
-
-            {/* Row 2 */}
-            <div className="flex flex-row gap-0 items-center flex-wrap justify-center">
-              <Link href="/merch" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-merch.png" alt="MERCH" width={310} height={121} className="w-[200px] sm:w-[260px] h-auto object-cover max-w-full" />
-              </Link>
-              <Image src="/images/nav-gif.gif" alt="" width={148} height={146} unoptimized className="w-[100px] sm:w-[123px] h-auto" />
-              <Link href="/menu-mex" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-menu.png" alt="MENU" width={326} height={140} className="w-[200px] sm:w-[272px] h-auto object-cover max-w-full" />
-              </Link>
-            </div>
-
-            {/* Row 3 */}
-            <div className="flex flex-row gap-0 items-center flex-wrap justify-center">
-              <Link href="/contacto" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-contacto.png" alt="CONTACTO" width={385} height={121} className="w-[260px] sm:w-[321px] h-auto object-cover max-w-full" />
-              </Link>
-              <Link href="/facturacion" onClick={() => setOpen(false)} className="nav-btn">
-                <Image src="/images/nav-facturacion.png" alt="FACTURACION" width={396} height={127} className="w-[260px] sm:w-[330px] h-auto object-cover max-w-full" />
-              </Link>
-            </div>
-          </div>
+          <nav className="mt-2 flex flex-col gap-3 pr-11 text-right font-inter text-[13px] sm:text-sm font-medium uppercase tracking-[0.06em] text-white md:pr-12">
+            <Link href="#quienes-somos" onClick={() => setOpen(false)} className="py-0.5 hover:opacity-80 transition-opacity">
+              ¿Quiénes somos?
+            </Link>
+            <Link href="/menu-mex" onClick={() => setOpen(false)} className="py-0.5 hover:opacity-80 transition-opacity">
+              Menú
+            </Link>
+            <Link href="/sucursales" onClick={() => setOpen(false)} className="py-0.5 hover:opacity-80 transition-opacity">
+              Sucursales
+            </Link>
+            <Link href="/contacto" onClick={() => setOpen(false)} className="py-0.5 hover:opacity-80 transition-opacity">
+              Contacto
+            </Link>
+            <Link href="/facturacion" onClick={() => setOpen(false)} className="py-0.5 hover:opacity-80 transition-opacity">
+              Facturación
+            </Link>
+            <Link href="/merch" onClick={() => setOpen(false)} className="py-0.5 hover:opacity-80 transition-opacity">
+              Merch
+            </Link>
+          </nav>
         </div>
-      )}
+      </div>
     </>
   );
 }

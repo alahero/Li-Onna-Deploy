@@ -5,9 +5,9 @@ export function Ticker() {
     <section
       className="relative w-full overflow-hidden"
       style={{
-        /* Altura mínima: en viewport angosto el ratio 1200/623 queda demasiado bajo y cover recorta el arte */
-        aspectRatio: '1200 / 623',
-        minHeight: 'clamp(260px, 52vw + 72px, 640px)',
+        /* Marco más bajo que antes; en viewport angosto el clamp evita que quede demasiado chato */
+        aspectRatio: '1200 / 480',
+        minHeight: 'clamp(200px, 34vw + 44px, 480px)',
       }}
     >
       {/* Imagen de fondo a ancho completo */}
@@ -16,11 +16,12 @@ export function Ticker() {
         alt="Tacos Atarantados banner"
         fill
         sizes="100vw"
-        className="object-cover object-center"
+        /* Encuadre: anclado abajo para priorizar la parte inferior del arte con object-cover */
+        className="object-cover object-bottom"
       />
 
-      {/* Trompo centrado; en móvil más chico para no desbordar el alto útil */}
-      <div className="absolute left-1/2 top-1/2 z-[2] flex aspect-square w-[min(272px,calc(100%-1.5rem))] -translate-x-1/2 -translate-y-1/2 items-center justify-center md:w-[304px]">
+      {/* Trompo centrado; tamaño acotado al marco más bajo */}
+      <div className="absolute left-1/2 top-1/2 z-[2] flex aspect-square w-[min(220px,calc(100%-1.5rem))] -translate-x-1/2 -translate-y-1/2 items-center justify-center md:w-[256px]">
         <Image
           src="/images/trompo-logo.png"
           alt="Trompo logo"
