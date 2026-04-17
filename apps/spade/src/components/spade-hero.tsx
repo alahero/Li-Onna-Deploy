@@ -147,16 +147,22 @@ function SpadeNav({
         padding: '20px',
       }}
     >
-      {/* Left links (INSTAGRAM, TIKTOK) */}
+      {/* Izquierda: Instagram */}
       <div className="spade-nav-desktop" style={{ display: 'flex', gap: 28, alignItems: 'center' }}>
         {navLeft.map((link) => (
-          <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" style={navLinkStyle}>
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+            style={navLinkStyle}
+          >
             {link.label}
           </a>
         ))}
       </div>
 
-      {/* Right links (ABOUT, CONTACT) */}
+      {/* Derecha: TikTok */}
       <div className="spade-nav-desktop" style={{ display: 'flex', gap: 50, alignItems: 'center' }}>
         {navRight.map((link) => (
           <a
@@ -190,14 +196,8 @@ export function SpadeHero({
   heroSubtitle,
 }: SpadeHeroProps) {
   const bgSrc = heroImage || '/hero-bg.png';
-  const navLeft = [
-    { label: 'INSTAGRAM', href: instagramUrl, external: true },
-    { label: 'TIKTOK', href: tiktokUrl, external: true },
-  ];
-  const navRight = [
-    { label: 'ABOUT', href: '#about', external: false },
-    { label: 'CONTACT', href: '#contact', external: false },
-  ];
+  const navLeft = [{ label: 'INSTAGRAM', href: instagramUrl, external: true }];
+  const navRight = [{ label: 'TIKTOK', href: tiktokUrl, external: true }];
 
   return (
     <>
@@ -237,16 +237,15 @@ export function SpadeHero({
         {/* Navigation */}
         <SpadeNav navLeft={navLeft} navRight={navRight} />
 
-        {/* Top wordmark (centered) */}
+        {/* Wordmark superior: un poco más abajo, hacia el centro vertical */}
         <motion.div
-          initial={{ opacity: 0.001, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0.001, scale: 0.9, x: '-50%' }}
+          animate={{ opacity: 1, scale: 1, x: '-50%' }}
           transition={{ duration: 3, ease: ENTRANCE_EASE }}
           style={{
             position: 'absolute',
-            top: '5.44%',
+            top: '9%',
             left: '50%',
-            transform: 'translateX(-50%)',
             zIndex: 10,
             pointerEvents: 'none',
           }}
@@ -266,21 +265,23 @@ export function SpadeHero({
           />
         </motion.div>
 
-        {/* GUADALAJARA, MX (left-aligned at padding edge) */}
+        {/* Título del hero: un poco más abajo, hacia el centro vertical */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 1.5 }}
           style={{
             position: 'absolute',
-            top: '21.56%',
-            left: 50,
+            top: '24%',
+            left: 0,
+            right: 0,
             zIndex: 10,
-            fontFamily: 'Arial-Black, "Arial Black", sans-serif',
+            textAlign: 'center',
+            fontFamily: 'inherit',
             fontSize: 14,
-            fontWeight: 400,
+            fontWeight: 300,
             letterSpacing: '0.21px',
-            lineHeight: '16.8px',
+            lineHeight: '9px',
             color: '#ffffff',
             textTransform: 'uppercase',
             margin: 0,
@@ -290,16 +291,15 @@ export function SpadeHero({
           {heroTitle || 'GUADALAJARA, MX'}
         </motion.p>
 
-        {/* Metallic spade icon (centered) */}
+        {/* Metallic spade icon (centered) — x en motion evita que scale pise translateX */}
         <motion.div
-          initial={{ opacity: 0.001, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0.001, scale: 0.9, x: '-50%' }}
+          animate={{ opacity: 1, scale: 1, x: '-50%' }}
           transition={{ duration: 3, ease: ENTRANCE_EASE }}
           style={{
             position: 'absolute',
-            top: '34.33%',
+            top: '341px',
             left: '50%',
-            transform: 'translateX(-50%)',
             zIndex: 10,
             pointerEvents: 'none',
           }}
@@ -307,27 +307,27 @@ export function SpadeHero({
           <Image
             src="/metallic-spade.png"
             alt="SPADE"
-            width={344}
-            height={212}
+            width={400}
+            height={247}
             priority
             style={{
-              width: 'clamp(200px, 28.7vw, 344px)',
+              width: 'clamp(235px, 34vw, 400px)',
               height: 'auto',
               objectFit: 'contain',
               display: 'block',
             }}
-            sizes="(max-width: 390px) 200px, (max-width: 810px) 280px, 344px"
+            sizes="(max-width: 390px) 235px, (max-width: 810px) 330px, 400px"
           />
         </motion.div>
 
-        {/* Address (centered) */}
+        {/* Dirección: un poco más arriba, hacia el centro vertical */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1.5 }}
           style={{
             position: 'absolute',
-            top: '71.67%',
+            top: '69%',
             left: 0,
             right: 0,
             zIndex: 10,
@@ -337,31 +337,32 @@ export function SpadeHero({
         >
           <p
             style={{
-              fontFamily: 'Arial-Black, "Arial Black", sans-serif',
+              // Inter sí respeta pesos; Arial Black es una sola variante “black” y casi ignora font-weight
+              fontFamily: 'inherit',
               fontSize: 14,
-              fontWeight: 400,
+              fontWeight: 300,
               letterSpacing: '0.21px',
-              lineHeight: '16.8px',
+              lineHeight: '9px',
               color: '#ffffff',
               textTransform: 'uppercase',
               margin: 0,
               whiteSpace: 'pre-line',
             }}
           >
-            {heroSubtitle || 'AV. REAL DE ACUEDUCTO 300,\nPUERTA DE HIERRO 45116'}
+            {heroSubtitle ||
+              'AV. REAL DE ACUEDUCTO 300,\n\nPUERTA DE HIERRO 45116'}
           </p>
         </motion.div>
 
-        {/* Bottom inverted wordmark (centered, rotated 180deg) */}
+        {/* Wordmark inferior invertido: un poco más arriba, hacia el centro vertical */}
         <motion.div
-          initial={{ opacity: 0.001, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0.001, scale: 0.9, x: '-50%', rotate: 180 }}
+          animate={{ opacity: 1, scale: 1, x: '-50%', rotate: 180 }}
           transition={{ duration: 3, ease: ENTRANCE_EASE }}
           style={{
             position: 'absolute',
-            top: '89.67%',
+            top: '85.5%',
             left: '50%',
-            transform: 'translateX(-50%) rotate(180deg)',
             zIndex: 30,
             pointerEvents: 'none',
           }}

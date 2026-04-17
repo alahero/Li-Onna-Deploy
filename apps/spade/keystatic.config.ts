@@ -28,14 +28,15 @@ export default config({
       schema: {
         heroTitle: fields.text({
           label: 'Título del Hero',
-          description: 'Título principal — ej. "DONDE LA NOCHE TOMA FORMA"',
-          defaultValue: 'DONDE LA NOCHE TOMA FORMA',
+          description: 'Título principal — ej. "GUADALAJARA, MX"',
+          defaultValue: 'GUADALAJARA, MX',
         }),
         heroSubtitle: fields.text({
           label: 'Subtítulo del Hero',
-          description: 'Texto secundario bajo el título',
+          description: 'Dirección u otro texto bajo el ícono (admite saltos de línea)',
           multiline: true,
-          defaultValue: 'Cocktails de autor, ambiente sofisticado y una noche que no olvidarás.',
+          defaultValue:
+            'AV. REAL DE ACUEDUCTO 300,\n\nPUERTA DE HIERRO 45116',
         }),
         heroImage: imageField('Imagen de Fondo del Hero', 'hero'),
         ctaText: fields.text({

@@ -11,7 +11,7 @@ export const viewport: Viewport = {
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500'],
+  weight: ['100', '200', '300', '400', '500'],
   display: 'swap',
 });
 
