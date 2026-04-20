@@ -1,6 +1,10 @@
 'use client';
 
 import Image from 'next/image';
+import { useCallback, useEffect, useState } from 'react';
+
+/** Fracción de altura de viewport: scroll acumulado para que el logo desaparezca por completo (menor = más rápido) */
+const ALTURA_VIEWPORT_TRANSITION_LOGO = 0.45;
 
 /**
  * LI-ONNA Hero — matched to live site via Playwright extraction.
@@ -18,6 +22,50 @@ interface HeroProps {
 }
 
 export function Hero({ heroImage }: HeroProps) {
+  // Progreso 0–1 según scroll; el logo escala y pierde opacidad hasta desvanecerse
+  const [progresoScroll, setProgresoScroll] = useState(0);
+  const [movimientoReducido, setMovimientoReducido] = useState(false);
+
+  const actualizarProgreso = useCallback(() => {
+    const altura = window.innerHeight || 1;
+    const distanciaTotal = ALTURA_VIEWPORT_TRANSITION_LOGO * altura;
+    const p = Math.min(1, Math.max(0, window.scrollY / distanciaTotal));
+    setProgresoScroll(p);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncReduce = () => setMovimientoReducido(mq.matches);
+    syncReduce();
+    mq.addEventListener('change', syncReduce);
+
+    let raf = 0;
+    const programar = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        actualizarProgreso();
+      });
+    };
+
+    window.addEventListener('scroll', programar, { passive: true });
+    window.addEventListener('resize', programar, { passive: true });
+    actualizarProgreso();
+
+    return () => {
+      mq.removeEventListener('change', syncReduce);
+      window.removeEventListener('scroll', programar);
+      window.removeEventListener('resize', programar);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [actualizarProgreso]);
+
+  const escala = 1 - progresoScroll;
+  const opacidad = 1 - progresoScroll;
+  const transicionSuave = movimientoReducido
+    ? 'none'
+    : 'transform 90ms cubic-bezier(0.22, 1, 0.36, 1), opacity 90ms cubic-bezier(0.22, 1, 0.36, 1)';
+
   return (
     <>
       {/* ── Hero section — transparent bg, the fixed blue in layout.tsx shows through ── */}
@@ -80,14 +128,13 @@ export function Hero({ heroImage }: HeroProps) {
             opacity: 0.3,
             overflow: 'hidden',
             pointerEvents: 'none',
+            display: 'flex',
+            alignItems: 'center',
           }}
         >
           <div
             style={{
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
+              width: '100%',
               height: 262,
               display: 'flex',
               overflow: 'hidden',
@@ -97,7 +144,7 @@ export function Hero({ heroImage }: HeroProps) {
               style={{
                 display: 'flex',
                 width: 'max-content',
-                animation: 'lionna-curve-scroll 20s linear infinite',
+                animation: 'lionna-curve-scroll 45s linear infinite',
                 willChange: 'transform',
               }}
             >
@@ -119,25 +166,26 @@ export function Hero({ heroImage }: HeroProps) {
           </div>
         </div>
 
-        {/* Header — logo centered, sticky within hero */}
+        {/* Header — logo centrado vertical y horizontalmente en el hero */}
         <div
           style={{
-            position: 'relative',
+            position: 'absolute',
+            inset: 0,
             zIndex: 2,
-            width: '100%',
-            height: '100%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             padding: '0 80px',
+            pointerEvents: 'none',
           }}
         >
-          {/* Logo Resized — sticky at center */}
           <div
             style={{
-              position: 'sticky',
-              top: '46%',
-              zIndex: 1,
+              transform: `scale(${escala})`,
+              opacity: opacidad,
+              transformOrigin: 'center center',
+              transition: transicionSuave,
+              willChange: 'transform, opacity',
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -146,12 +194,14 @@ export function Hero({ heroImage }: HeroProps) {
               alt="LI-ONNA"
               style={{
                 width: '36%',
-                minWidth: 300,
-                maxWidth: 520,
+                minWidth: 530,
+                maxWidth: 628,
                 height: 'auto',
                 userSelect: 'none',
                 pointerEvents: 'none',
+                display: 'block',
               }}
+              aria-hidden={progresoScroll >= 0.995}
             />
           </div>
         </div>
