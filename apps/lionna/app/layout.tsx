@@ -75,7 +75,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             zIndex: 0,
           }}
         />
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        <div
+          style={{
+            position: 'relative',
+            zIndex: 1,
+            width: '100%',
+            minWidth: 0,
+            overflowX: 'clip',
+            backgroundColor: '#F6F6F2',
+          }}
+        >
           {children}
         </div>
       </body>

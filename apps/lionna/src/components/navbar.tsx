@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
+
+/** Alto del wordmark en la barra (60px); mismo SVG que el hero (`logo-large.svg`). */
+const ALTURA_LOGO_NAV_PX = 26;
 
 const navLinks = [
   { href: '/eventos', label: 'Eventos' },
@@ -88,25 +90,28 @@ export function Navbar({ reservationsUrl, overlapReservationPx = 0 }: NavbarProp
         ))}
       </div>
 
-      {/* Centro: logo LI-ONNA */}
+      {/* Centro: mismo logo que el hero, escala acotada a la altura del nav */}
       <Link
         href="/"
         style={{
           flexShrink: 0,
           display: 'flex',
           alignItems: 'center',
-          overflow: 'hidden',
-          width: 108,
-          height: 28,
+          lineHeight: 0,
         }}
       >
-        <Image
-          src="/images/logo-navbar.png"
+        {/* eslint-disable-next-line @next/next/no-img-element -- SVG local, mismo asset que Hero */}
+        <img
+          src="/images/logo-large.svg"
           alt="LI-ONNA"
-          width={607}
-          height={89}
-          style={{ width: '100%', height: 'auto' }}
-          priority
+          width={7966}
+          height={2181}
+          style={{
+            height: ALTURA_LOGO_NAV_PX,
+            width: 'auto',
+            display: 'block',
+            userSelect: 'none',
+          }}
         />
       </Link>
 
