@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
 
 const navLinks = [
   { href: '/eventos', label: 'Eventos' },
@@ -15,11 +14,12 @@ const navStyle: React.CSSProperties = {
   backgroundColor: 'rgb(0, 91, 255)',
   position: 'sticky',
   top: 0,
-  zIndex: 4,
+  /* Por encima del distintivo del hero (z=2) y del main (z=2) al hacer scroll */
+  zIndex: 10,
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between',
   padding: '0 64px',
+  gap: 16,
 };
 
 const linkStyle: React.CSSProperties = {
@@ -54,114 +54,80 @@ const pillStyle: React.CSSProperties = {
 
 interface NavbarProps {
   reservationsUrl?: string;
+  /** Separación bajo el hero (p. ej. distintivo circular) para que no choque con el nav */
+  overlapReservationPx?: number;
 }
 
-export function Navbar({ reservationsUrl }: NavbarProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
+export function Navbar({ reservationsUrl, overlapReservationPx = 0 }: NavbarProps) {
+  const enlaceReservas =
+    reservationsUrl && reservationsUrl.trim().length > 0 ? reservationsUrl.trim() : '#reservas';
+  const reservasExterno = enlaceReservas !== '#reservas';
 
   return (
-    <>
-      {/* Sticky nav bar -- 60px, blue rgb(0,91,255) */}
-      <nav style={navStyle} className="lionna-nav">
-        {/* Left: Nav links (desktop) */}
-        <div className="hidden md:flex items-center" style={{ gap: 24 }}>
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} style={linkStyle}>
-              {link.label}
-            </Link>
-          ))}
-        </div>
-
-        {/* Center: Logo */}
-        <Link
-          href="/"
-          style={{
-            position: 'absolute',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            display: 'flex',
-            alignItems: 'center',
-            overflow: 'hidden',
-            width: 108,
-            height: 28,
-          }}
-        >
-          <Image
-            src="/images/logo-navbar.png"
-            alt="LI-ONNA"
-            width={607}
-            height={89}
-            style={{ width: '100%', height: 'auto' }}
-            priority
-          />
-        </Link>
-
-        {/* Right: RESERVAS pill button */}
-        <div className="hidden md:flex items-center" style={{ gap: 8 }}>
-          <a
-            href="#reservas"
-            style={pillStyle}
-          >
-            RESERVAS
-          </a>
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="md:hidden"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, display: 'flex', flexDirection: 'column', gap: 5 }}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? 'Cerrar menu' : 'Abrir menu'}
-        >
-          <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', transform: menuOpen ? 'rotate(45deg) translate(4px,4px)' : 'none' }} />
-          <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', opacity: menuOpen ? 0 : 1 }} />
-          <span style={{ display: 'block', width: 22, height: 1.5, background: '#fff', transition: 'all 0.25s', transform: menuOpen ? 'rotate(-45deg) translate(4px,-4px)' : 'none' }} />
-        </button>
-      </nav>
-
-      {/* Mobile overlay */}
-      {menuOpen && (
-        <div
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.302)', zIndex: 49 }}
-          onClick={() => setMenuOpen(false)}
-        />
-      )}
-
-      {/* Mobile drawer */}
+    <nav
+      style={{
+        ...navStyle,
+        ...(overlapReservationPx > 0 ? { marginTop: overlapReservationPx } : {}),
+      }}
+      className="lionna-nav"
+    >
+      {/* Izquierda: Eventos, Tarjetas Regalo, Contacto */}
       <div
-        className="mobile-drawer md:hidden"
         style={{
-          transform: menuOpen ? 'translateX(0)' : 'translateX(calc(100% + 20px))',
-          transition: 'transform 0.3s cubic-bezier(0.4,0,0.2,1)',
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 24,
+          minWidth: 0,
         }}
       >
-        <div style={{ padding: '32px 24px', display: 'flex', flexDirection: 'column', gap: 24 }}>
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                fontFamily: '"Editorial New Medium", EditorialNew, serif',
-                fontWeight: 400,
-                fontSize: 20,
-                color: '#000',
-                textDecoration: 'none',
-              }}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <div style={{ marginTop: 16 }}>
-            <a
-              href="#reservas"
-              style={{ ...pillStyle, background: 'rgba(0,91,255,0.1)', color: '#005BFF' }}
-            >
-              RESERVAS
-            </a>
-          </div>
-        </div>
+        {navLinks.map((link) => (
+          <Link key={link.href} href={link.href} style={linkStyle}>
+            {link.label}
+          </Link>
+        ))}
       </div>
-    </>
+
+      {/* Centro: logo LI-ONNA */}
+      <Link
+        href="/"
+        style={{
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          overflow: 'hidden',
+          width: 108,
+          height: 28,
+        }}
+      >
+        <Image
+          src="/images/logo-navbar.png"
+          alt="LI-ONNA"
+          width={607}
+          height={89}
+          style={{ width: '100%', height: 'auto' }}
+          priority
+        />
+      </Link>
+
+      {/* Derecha: botón RESERVAS */}
+      <div
+        style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          minWidth: 0,
+        }}
+      >
+        <a
+          href={enlaceReservas}
+          style={pillStyle}
+          {...(reservasExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+        >
+          RESERVAS
+        </a>
+      </div>
+    </nav>
   );
 }

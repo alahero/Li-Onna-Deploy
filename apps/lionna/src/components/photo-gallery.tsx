@@ -12,56 +12,7 @@ const FLOAT_CARDS = [
   { src: '/images/photo-interior-2.png',   w: 228, h: 267, top: '58.7%', left: '26.7%', zIndex: 5, alt: 'Interior' },
   { src: '/images/photo-interior-wide.jpg',w: 359, h: 231, top: '70.9%', left: '45.1%', zIndex: 6, alt: 'Restaurante' },
   { src: '/images/photo-dish-6.jpg',       w: 222, h: 298, top: '33.4%', left: '79%',   zIndex: 5, alt: 'Plato' },
-  { src: '/images/photo-interior-1.png',   w: 288, h: 339, top: '4.8%',  left: '3%',    zIndex: 4, alt: 'Interior' },
 ];
-
-/**
- * Blue decorative curved lines on the left side of the gallery.
- * These are vertical wavy/curved lines visible in the live site.
- */
-function BlueDecorativeCurves() {
-  return (
-    <div
-      aria-hidden
-      className="gallery-blue-curves"
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: 140,
-        height: '100%',
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-      }}
-    >
-      <svg
-        viewBox="0 0 140 800"
-        fill="none"
-        preserveAspectRatio="none"
-        style={{
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-        }}
-      >
-        {/* Multiple parallel curved vertical lines */}
-        {[0, 18, 36, 54, 72, 90, 108, 126].map((x) => (
-          <path
-            key={x}
-            d={`M${x},0 C${x + 30},200 ${x - 30},400 ${x + 20},600 C${x - 10},700 ${x + 30},750 ${x},800`}
-            stroke="rgb(0, 91, 255)"
-            strokeWidth="2.5"
-            fill="none"
-            opacity="0.15"
-          />
-        ))}
-      </svg>
-    </div>
-  );
-}
 
 interface PhotoGalleryProps {
   heroTitle?: string;
@@ -77,9 +28,6 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
         overflow: 'hidden',
       }}
     >
-      {/* Blue decorative curved lines on left side */}
-      <BlueDecorativeCurves />
-
       {/* Vector curve watermark behind photos */}
       <div
         aria-hidden
@@ -132,6 +80,29 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
               minHeight: 500,
             }}
           >
+            {/* Gráfico de ondas azules a ancho completo (antes mal usado como tarjeta flotante) */}
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute',
+                inset: 0,
+                zIndex: 0,
+                pointerEvents: 'none',
+                overflow: 'hidden',
+                borderRadius: 2,
+              }}
+            >
+              <Image
+                src="/images/photo-interior-1.png"
+                alt=""
+                fill
+                sizes="(max-width: 1200px) 100vw, 1152px"
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: '42% 45%',
+                }}
+              />
+            </div>
             {FLOAT_CARDS.map((card, i) => {
               const cardStyle: React.CSSProperties = {
                 position: 'absolute',
@@ -146,7 +117,7 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
                 left: card.left,
               };
               return (
-                <div key={i} style={cardStyle}>
+                <div key={card.src} style={cardStyle}>
                   <Image
                     src={card.src}
                     alt={card.alt}
@@ -319,7 +290,6 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
           .gallery-section-wrap { padding: 80px 16px 60px !important; }
           .lionna-hero-heading { font-size: 36px !important; line-height: 43.2px !important; letter-spacing: 0.72px !important; }
           .lionna-katakana-text { font-size: 28px !important; line-height: 33.6px !important; }
-          .gallery-blue-curves { display: none; }
         }
       `}</style>
     </section>
