@@ -10,6 +10,18 @@ interface BrandStatementProps {
   contact?: ContactData | null;
 }
 
+/** Fondo de las franjas superior e inferior (datos + pie Contacto). */
+const FONDO_BLOQUE_CONTACTO = 'rgb(216, 206, 198)';
+
+/** Radio de esquinas del mapa (las cuatro). */
+const RADIO_MAPA = 34;
+
+/** Ancho del mapa: ~85% del viewport, sin rebasar el ancho útil del contenedor. */
+const ANCHO_MAPA = 'min(85vw, 100%)';
+
+/** Misma anchura que la fila de datos (cabecera + pie alineados). */
+const ANCHO_MAX_CABECERA_PIE = 800;
+
 export function BrandStatement({ contact }: BrandStatementProps) {
   const address = contact?.address ?? 'C. de Recoletos, 1, Salamanca,\n28001 Madrid, España';
   const phone = contact?.phone ?? '+34 910 463 911';
@@ -20,21 +32,21 @@ export function BrandStatement({ contact }: BrandStatementProps) {
       className="brand-statement-section"
       style={{
         backgroundColor: '#F6F6F2',
-        padding: '40px 80px 0',
+        padding: '40px 80px 56px',
       }}
     >
-      {/* Contact info + map card — tan background */}
+      {/* Tres bloques: cabecera y pie misma anchura (800px); mapa más ancho entre ambos */}
       <div
+        className="brand-statement-stack"
         style={{
-          maxWidth: 800,
-          margin: '0 auto',
-          background: 'rgb(216, 206, 198)',
-          borderRadius: 12,
-          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          gap: 0,
         }}
-        className="brand-statement-card"
       >
-        {/* Info row */}
+        {/* 1 — Dirección / Teléfono / Email: solo esquinas superiores redondeadas */}
         <div
           style={{
             display: 'flex',
@@ -42,10 +54,14 @@ export function BrandStatement({ contact }: BrandStatementProps) {
             padding: '32px 40px',
             gap: 24,
             flexWrap: 'wrap',
+            background: FONDO_BLOQUE_CONTACTO,
+            borderRadius: '12px 12px 0 0',
+            maxWidth: ANCHO_MAX_CABECERA_PIE,
+            width: '100%',
+            boxSizing: 'border-box',
           }}
           className="brand-info-row"
         >
-          {/* Address */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <p
               style={{
@@ -76,7 +92,6 @@ export function BrandStatement({ contact }: BrandStatementProps) {
             </p>
           </div>
 
-          {/* Phone */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <p
               style={{
@@ -108,7 +123,6 @@ export function BrandStatement({ contact }: BrandStatementProps) {
             </a>
           </div>
 
-          {/* Email */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <p
               style={{
@@ -141,58 +155,80 @@ export function BrandStatement({ contact }: BrandStatementProps) {
           </div>
         </div>
 
-        {/* Google Map */}
-        <div style={{ height: 300, position: 'relative' }}>
+        {/* 2 — Mapa: más ancho que la cabecera; las cuatro esquinas redondeadas */}
+        <div
+          className="brand-map-block"
+          style={{
+            width: ANCHO_MAPA,
+            height: 452,
+            borderRadius: RADIO_MAPA,
+            overflow: 'hidden',
+            boxSizing: 'border-box',
+          }}
+        >
           <iframe
             src={mapEmbedUrl}
             width="100%"
             height="100%"
-            style={{ border: 0, position: 'absolute', inset: 0 }}
+            style={{ border: 0, display: 'block', width: '100%' }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             title="Ubicaci&oacute;n de LI-ONNA en Google Maps"
           />
         </div>
-      </div>
 
-      {/* "Contacto" label with decorative arrow */}
-      <div
-        style={{
-          textAlign: 'center',
-          padding: '40px 0 24px',
-        }}
-      >
-        <p
+        {/* 3 — Pie Contacto: solo esquinas inferiores redondeadas */}
+        <div
+          className="brand-contacto-footer"
           style={{
-            fontFamily: '"Editorial New Regular", EditorialNew, serif',
-            fontWeight: 400,
-            fontSize: 24,
-            letterSpacing: '0.48px',
-            lineHeight: '28.8px',
-            color: 'rgb(0, 0, 0)',
-            margin: 0,
-            textDecoration: 'underline',
-            textUnderlineOffset: '6px',
+            textAlign: 'center',
+            padding: '32px 24px 28px',
+            background: FONDO_BLOQUE_CONTACTO,
+            borderRadius: '0 0 12px 12px',
+            maxWidth: ANCHO_MAX_CABECERA_PIE,
+            width: '100%',
+            boxSizing: 'border-box',
           }}
         >
-          Contacto
-        </p>
-        {/* Decorative arrow */}
-        <div style={{ marginTop: 8 }}>
-          <svg width="24" height="14" viewBox="0 0 24 14" fill="none">
-            <path d="M2 2C6 6 10 10 12 12C14 10 18 6 22 2" stroke="rgb(0,0,0)" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
+          <p
+            style={{
+              fontFamily: '"Editorial New Regular", EditorialNew, serif',
+              fontWeight: 400,
+              fontSize: 24,
+              letterSpacing: '0.48px',
+              lineHeight: '28.8px',
+              color: 'rgb(0, 0, 0)',
+              margin: 0,
+              textDecoration: 'underline',
+              textUnderlineOffset: '6px',
+            }}
+          >
+            Contacto
+          </p>
+          <div style={{ marginTop: 8 }}>
+            <svg width="24" height="14" viewBox="0 0 24 14" fill="none" aria-hidden>
+              <path d="M2 2C6 6 10 10 12 12C14 10 18 6 22 2" stroke="rgb(0,0,0)" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </div>
         </div>
       </div>
 
       <style>{`
         @media (max-width: 1439px) {
-          .brand-statement-section { padding: 40px 24px 0 !important; }
+          .brand-statement-section { padding: 40px 24px 48px !important; }
         }
         @media (max-width: 809px) {
-          .brand-statement-section { padding: 24px 16px 0 !important; }
-          .brand-info-row { flex-direction: column !important; padding: 24px 20px !important; }
+          .brand-statement-section { padding: 24px 16px 40px !important; }
+          .brand-info-row {
+            flex-direction: column !important;
+            padding: 24px 20px !important;
+          }
+          .brand-map-block {
+            width: min(100%, calc(100vw - 32px)) !important;
+            height: 260px !important;
+          }
+          .brand-contacto-footer { padding: 28px 16px 22px !important; }
         }
       `}</style>
     </section>

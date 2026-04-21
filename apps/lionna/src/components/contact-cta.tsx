@@ -48,7 +48,7 @@ export function ContactCta({ instagramUrl, email }: ContactCtaProps) {
         </p>
       </div>
 
-      {/* Contact form card — tan/beige background, horizontal layout */}
+      {/* Tarjeta del formulario: fondo beige, layout horizontal */}
       <div
         style={{
           width: '100%',

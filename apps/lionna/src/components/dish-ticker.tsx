@@ -102,43 +102,6 @@ function TickerRow({ items, speed }: { items: string[]; speed: number }) {
   );
 }
 
-/**
- * Blue vertical lines decoration on the sides of the section.
- */
-function BlueVerticalLines({ side }: { side: 'left' | 'right' }) {
-  return (
-    <div
-      aria-hidden
-      className="ticker-vertical-lines"
-      style={{
-        position: 'absolute',
-        top: 0,
-        [side]: 0,
-        width: 60,
-        height: '100%',
-        zIndex: 0,
-        pointerEvents: 'none',
-        overflow: 'hidden',
-        opacity: 0.12,
-      }}
-    >
-      <svg
-        viewBox="0 0 60 300"
-        fill="none"
-        preserveAspectRatio="none"
-        style={{
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        {[8, 18, 28, 38, 48].map((x) => (
-          <line key={x} x1={x} y1="0" x2={x} y2="300" stroke="rgb(0, 91, 255)" strokeWidth="2.5" />
-        ))}
-      </svg>
-    </div>
-  );
-}
-
 export function DishTicker({ dishes }: DishTickerProps) {
   const TICKER_ROWS = dishes && dishes.length > 0 ? buildTickerRows(dishes) : DEFAULT_TICKER_ROWS;
   return (
@@ -150,10 +113,6 @@ export function DishTicker({ dishes }: DishTickerProps) {
         overflow: 'hidden',
       }}
     >
-      {/* Blue vertical line decorations on both sides */}
-      <BlueVerticalLines side="left" />
-      <BlueVerticalLines side="right" />
-
       {/* Star/Union decorative icon */}
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24, position: 'relative', zIndex: 1 }}>
         <svg width="28" height="26" viewBox="0 0 28 26" fill="none" aria-hidden>
@@ -231,7 +190,6 @@ export function DishTicker({ dishes }: DishTickerProps) {
           .ticker-text-responsive { font-size: 16px !important; }
           .ticker-heading { padding: 0 16px 24px !important; }
           .imprescindibles-title { font-size: 36px !important; line-height: 43.2px !important; }
-          .ticker-vertical-lines { display: none; }
         }
       `}</style>
     </section>
