@@ -1,10 +1,24 @@
 import { config, collection, singleton, fields } from '@keystatic/core';
 import { seoFields, socialFields, imageField, richTextField } from '@mg/keystatic-config';
 
+/** GitHub App + secreto de Keystatic; sin ellos el modo github rompe el build (p. ej. Vercel sin env). */
+const keystaticGithubListo =
+  Boolean(
+    process.env.KEYSTATIC_GITHUB_CLIENT_ID &&
+      process.env.KEYSTATIC_GITHUB_CLIENT_SECRET &&
+      process.env.KEYSTATIC_SECRET,
+  );
+
+/** En dev siempre local; en prod github solo si hay env (CMS en la nube), si no local desde el repo. */
+const almacenamiento =
+  process.env.NODE_ENV === 'development'
+    ? ({ kind: 'local' } as const)
+    : keystaticGithubListo
+      ? ({ kind: 'github', repo: 'MandalaGroup/new-mg-mkt-cms' } as const)
+      : ({ kind: 'local' } as const);
+
 export default config({
-  storage: process.env.NODE_ENV === 'development'
-    ? { kind: 'local' }
-    : { kind: 'github', repo: 'MandalaGroup/new-mg-mkt-cms' },
+  storage: almacenamiento,
   ui: { brand: { name: 'LI-ONNA CMS' } },
 
   singletons: {
