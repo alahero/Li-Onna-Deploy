@@ -11,28 +11,143 @@ const INTERIOR_1_ALTO = 1937;
 const ANCHO_CAPA_INTERIOR_1 = 'min(calc(100vw * 0.96), calc(100vw - 24px))';
 
 /**
- * Alto mínimo del escenario para que, al ancho de capa (~96vw), quepa casi toda la foto (ratio 1300×1937).
+ * Ancho compartido del fondo interior y del collage: hasta ~1152px crece con el viewport; después solo
+ * absorbe una parte del ancho extra (factor FRAC) para que las tarjetas no escalan todo el salto a
+ * pantallas ultra anchas y la composición se parece más al diseño de referencia.
+ */
+const FRAC_CRECIMIENTO_ESCENARIO_TRAS_ARTBOARD = 0.4;
+const ANCHO_ESCENARIO_GALERIA = `min(${ANCHO_CAPA_INTERIOR_1}, calc(1152px + (max(0px, ${ANCHO_CAPA_INTERIOR_1} - 1152px) * ${FRAC_CRECIMIENTO_ESCENARIO_TRAS_ARTBOARD})))`;
+
+/**
+ * Alto mínimo del escenario para que, al ancho de capa efectivo, quepa casi toda la foto (ratio 1300×1937).
  * Opción B: menos recorte vertical que un escenario bajo con solo overflow:hidden.
  */
-const ALTO_MIN_ESCENARIO_INTERIOR = `calc(${ANCHO_CAPA_INTERIOR_1} * ${INTERIOR_1_ALTO} / ${INTERIOR_1_ANCHO} + 5rem)`;
+const ALTO_MIN_ESCENARIO_INTERIOR = `calc((${ANCHO_ESCENARIO_GALERIA}) * ${INTERIOR_1_ALTO} / ${INTERIOR_1_ANCHO} + 5rem)`;
 
 /** z-index: fondo interior < tarjetas < degradado (sin afectar el flujo del documento). */
 const Z_INTERIOR_FONDO = 2;
 const Z_TARJETA_MIN = 10;
 const Z_DEGRADADO_GALERIA = 25;
 
+/**
+ * Ancho de diseño del escenario de tarjetas (columna centrada). Las medidas en px del collage
+ * se convierten a `cqw` para escalar proporcionalmente entre viewports, como en Framer.
+ */
+const ANCHO_REF_COLLAGE = 1152;
+
+/** Convierte px del diseño @1152 a longitud fluida respecto al contenedor con `container-type: inline-size`. */
+function fluidoCollage(px: number): string {
+  return `calc((${px} * 100cqw) / ${ANCHO_REF_COLLAGE})`;
+}
+
+/** top/left en px de diseño → fluido; conserva %, calc() y demás valores tal cual. */
+function resuelvePosCollage(valor: string): string {
+  const m = /^([\d.]+)px$/.exec(valor.trim());
+  if (m) return fluidoCollage(Number(m[1]));
+  return valor;
+}
+
+/** Tarjeta flotante sobre el escenario de la galería (coordenadas y tamaño). */
+type FloatCard = {
+  src: string;
+  w: number;
+  h: number;
+  top: string;
+  left: string;
+  zIndex: number;
+  alt: string;
+  /** Si existe, ancho fijo en px de diseño @1152 (se escala con `fluidoCollage`). */
+  widthPx?: number;
+  /** Si existe, alto fijo en px de diseño @1152 (se escala con `fluidoCollage`). */
+  heightPx?: number;
+  /** Desplazamiento vertical del crop en la imagen `fill`, en px de diseño @1152. */
+  imageTopDesignPx?: number;
+};
+
 /* -- Photo card positions from Playwright @ 1440px viewport --
    Section starts at y=1032. Positions converted to % of 1440x1000 container. */
-const FLOAT_CARDS = [
-  { src: '/images/photo-interior-3.jpg',   w: 288, h: 339, top: '4.8%',  left: '25.7%', zIndex: Z_TARJETA_MIN, alt: 'Interior' },
-  { src: '/images/photo-dish-1.jpg',       w: 222, h: 231, top: '21.9%', left: '50%',   zIndex: Z_TARJETA_MIN + 1, alt: 'Plato' },
+const FLOAT_CARDS: FloatCard[] = [
+  {
+    src: '/images/photo-interior-3.jpg',
+    w: 288,
+    h: 339,
+    top: '232px',
+    left: '554px',
+    zIndex: Z_TARJETA_MIN,
+    alt: 'Interior',
+    /** Posición y tamaño fijos desde preview en navegador. */
+    widthPx: 202,
+    heightPx: 204,
+  },
+  { src: '/images/photo-dish-1.jpg',       w: 222, h: 231, top: '185px', left: '50%',   zIndex: Z_TARJETA_MIN + 1, alt: 'Plato' },
   { src: '/images/photo-dish-2.jpg',       w: 243, h: 344, top: '2.6%',  left: '67.2%', zIndex: Z_TARJETA_MIN, alt: 'Plato' },
-  { src: '/images/photo-dish-3.jpg',       w: 288, h: 339, top: '37%',   left: '10.8%', zIndex: Z_TARJETA_MIN, alt: 'Plato' },
-  { src: '/images/photo-dish-4.jpg',       w: 217, h: 215, top: '44.3%', left: '42.5%', zIndex: Z_TARJETA_MIN + 1, alt: 'Plato' },
-  { src: '/images/photo-dish-5.jpg',       w: 264, h: 311, top: '52.1%', left: '64.2%', zIndex: Z_TARJETA_MIN, alt: 'Plato' },
-  { src: '/images/photo-interior-2.png',   w: 228, h: 267, top: '58.7%', left: '26.7%', zIndex: Z_TARJETA_MIN, alt: 'Interior' },
-  { src: '/images/photo-interior-wide.jpg',w: 359, h: 231, top: '70.9%', left: '45.1%', zIndex: Z_TARJETA_MIN + 1, alt: 'Restaurante' },
-  { src: '/images/photo-dish-6.jpg',       w: 222, h: 298, top: '33.4%', left: '79%',   zIndex: Z_TARJETA_MIN, alt: 'Plato' },
+  {
+    src: '/images/photo-dish-3.jpg',
+    w: 288,
+    h: 339,
+    top: '405px',
+    left: '85px',
+    zIndex: Z_TARJETA_MIN,
+    alt: 'Plato',
+    /** Ajuste fino respecto a aspect-ratio (preview navegador). */
+    heightPx: 315,
+  },
+  {
+    src: '/images/photo-dish-4.jpg',
+    w: 217,
+    h: 215,
+    top: '554px',
+    left: '746px',
+    zIndex: Z_TARJETA_MIN + 1,
+    alt: 'Plato',
+    /** Ajuste fino respecto a aspect-ratio (preview navegador). */
+    heightPx: 267,
+  },
+  {
+    src: '/images/photo-dish-5.jpg',
+    w: 264,
+    h: 311,
+    top: '45px',
+    left: '169px',
+    zIndex: Z_TARJETA_MIN,
+    alt: 'Plato',
+    /** Ajuste fino respecto a aspect-ratio (preview navegador). */
+    heightPx: 341,
+  },
+  {
+    src: '/images/photo-interior-2.png',
+    w: 228,
+    h: 267,
+    top: '578px',
+    left: '308px',
+    zIndex: 272,
+    alt: 'Interior',
+    /** Posición, apilado y alto fijos desde preview en navegador. */
+    heightPx: 240,
+  },
+  {
+    src: '/images/photo-interior-wide.jpg',
+    w: 359,
+    h: 231,
+    top: '440px',
+    left: '469px',
+    zIndex: Z_TARJETA_MIN + 1,
+    alt: 'Restaurante',
+    widthPx: 215,
+    heightPx: 203,
+    imageTopDesignPx: 19,
+  },
+  {
+    src: '/images/photo-dish-6.jpg',
+    w: 222,
+    h: 298,
+    top: '336px',
+    left: '79%',
+    zIndex: Z_TARJETA_MIN,
+    alt: 'Plato',
+    /** Ajuste fino respecto a aspect-ratio (preview navegador). */
+    heightPx: 272,
+  },
 ];
 
 interface PhotoGalleryProps {
@@ -82,7 +197,7 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
           zIndex: 1,
         }}
       >
-        {/* Bloque galería: foto a ancho viewport (como Framer ~96vw); tarjetas siguen en columna 1152px */}
+        {/* Bloque galería: fondo y collage comparten ancho sublineal (crece menos que 96vw tras el artboard 1152) */}
         <div
           className="gallery-photo-container"
           style={{
@@ -106,7 +221,7 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
               isolation: 'isolate',
             }}
           >
-            {/* Fondo: sale del maxWidth 1152; sin esto el ancho visible queda ~1152px aunque el img pida ~96vw */}
+            {/* Fondo y collage: mismo ANCHO_ESCENARIO_GALERIA (sublineal) para alinear sin inflar todo en 4K */}
             <div
               aria-hidden
               style={{
@@ -128,8 +243,8 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
                 height={INTERIOR_1_ALTO}
                 sizes="96vw"
                 style={{
-                  width: ANCHO_CAPA_INTERIOR_1,
-                  maxWidth: ANCHO_CAPA_INTERIOR_1,
+                  width: ANCHO_ESCENARIO_GALERIA,
+                  maxWidth: ANCHO_ESCENARIO_GALERIA,
                   height: 'auto',
                   display: 'block',
                   objectFit: 'contain',
@@ -141,9 +256,10 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
               style={{
                 position: 'relative',
                 zIndex: 1,
-                width: '100%',
-                maxWidth: 1152,
-                margin: '0 auto',
+                width: ANCHO_ESCENARIO_GALERIA,
+                maxWidth: ANCHO_ESCENARIO_GALERIA,
+                marginInline: 'auto',
+                containerType: 'inline-size',
               }}
             >
               <div
@@ -158,16 +274,21 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
                 {FLOAT_CARDS.map((card) => {
                   const cardStyle: React.CSSProperties = {
                     position: 'absolute',
-                    width: `${(card.w / 1152) * 100}%`,
-                    aspectRatio: `${card.w}/${card.h}`,
+                    width:
+                      typeof card.widthPx === 'number'
+                        ? fluidoCollage(card.widthPx)
+                        : `${(card.w / ANCHO_REF_COLLAGE) * 100}%`,
+                    ...(typeof card.heightPx === 'number'
+                      ? { height: fluidoCollage(card.heightPx) }
+                      : { aspectRatio: `${card.w}/${card.h}` }),
                     borderRadius: 2,
                     overflow: 'hidden',
                     zIndex: card.zIndex,
                     willChange: 'transform',
                     boxShadow:
                       '0.398px 0.398px 0.563px -0.9375px rgba(0,0,0,0.18), 1.207px 1.207px 1.707px -1.875px rgba(0,0,0,0.17), 3.191px 3.191px 4.513px -2.8125px rgba(0,0,0,0.15), 10px 10px 14.142px -3.75px rgba(0,0,0,0.06)',
-                    top: card.top,
-                    left: card.left,
+                    top: resuelvePosCollage(card.top),
+                    left: resuelvePosCollage(card.left),
                   };
                   return (
                     <div key={card.src} style={cardStyle}>
@@ -175,7 +296,19 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
                         src={card.src}
                         alt={card.alt}
                         fill
-                        style={{ objectFit: 'cover' }}
+                        style={{
+                          objectFit: 'cover',
+                          ...(typeof card.imageTopDesignPx === 'number'
+                            ? {
+                                top: fluidoCollage(card.imageTopDesignPx),
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                width: '100%',
+                                height: '100%',
+                              }
+                            : {}),
+                        }}
                         sizes="20vw"
                       />
                     </div>
