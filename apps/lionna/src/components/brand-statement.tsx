@@ -50,10 +50,12 @@ export function BrandStatement({ contact }: BrandStatementProps) {
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            padding: '32px 40px',
-            gap: 24,
+            flexDirection: 'row',
             flexWrap: 'wrap',
+            /* Reparte el espacio sobrante por igual; los hijos conservan su width inline */
+            justifyContent: 'space-evenly',
+            alignItems: 'flex-start',
+            padding: '32px 40px',
             background: FONDO_BLOQUE_CONTACTO,
             borderRadius: '12px 12px 0 0',
             maxWidth: ANCHO_MAX_CABECERA_PIE,
@@ -62,7 +64,15 @@ export function BrandStatement({ contact }: BrandStatementProps) {
           }}
           className="brand-info-row"
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+              minWidth: 0,
+              width: '209px',
+            }}
+          >
             <p
               style={{
                 fontFamily: '"Editorial New Regular", EditorialNew, serif',
@@ -92,7 +102,15 @@ export function BrandStatement({ contact }: BrandStatementProps) {
             </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+              width: 'max-content',
+              maxWidth: '100%',
+            }}
+          >
             <p
               style={{
                 fontFamily: '"Editorial New Regular", EditorialNew, serif',
@@ -123,7 +141,15 @@ export function BrandStatement({ contact }: BrandStatementProps) {
             </a>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 4,
+              width: 'max-content',
+              maxWidth: '100%',
+            }}
+          >
             <p
               style={{
                 fontFamily: '"Editorial New Regular", EditorialNew, serif',
@@ -200,15 +226,25 @@ export function BrandStatement({ contact }: BrandStatementProps) {
               lineHeight: '28.8px',
               color: 'rgb(0, 0, 0)',
               margin: 0,
-              textDecoration: 'underline',
-              textUnderlineOffset: '6px',
             }}
           >
             Contacto
           </p>
-          <div style={{ marginTop: 8 }}>
-            <svg width="24" height="14" viewBox="0 0 24 14" fill="none" aria-hidden>
-              <path d="M2 2C6 6 10 10 12 12C14 10 18 6 22 2" stroke="rgb(0,0,0)" strokeWidth="1.5" strokeLinecap="round" />
+          <div
+            style={{
+              marginTop: 8,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <svg width="56" height="14" viewBox="0 0 56 14" fill="none" aria-hidden>
+              <path
+                d="M4 2 C16 6 22 10 28 12 C34 10 40 6 52 2"
+                stroke="rgb(0,0,0)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
             </svg>
           </div>
         </div>
@@ -222,6 +258,9 @@ export function BrandStatement({ contact }: BrandStatementProps) {
           .brand-statement-section { padding: 24px 16px 40px !important; }
           .brand-info-row {
             flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            gap: 20px !important;
             padding: 24px 20px !important;
           }
           .brand-map-block {
