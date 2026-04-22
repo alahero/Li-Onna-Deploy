@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
+import { EventosHeroFoto } from '@/components/eventos-hero-foto';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+
+/** Fondo crema del bloque hero (mismo que el sitio de referencia). */
+const FONDO_HERO_EVENTOS = 'rgb(246, 246, 242)';
 
 export const metadata: Metadata = {
   title: 'Eventos',
@@ -16,18 +20,20 @@ export default function EventosPage() {
     <>
       <Navbar />
 
-      <main style={{ backgroundColor: '#F7F8F3', minHeight: '100vh' }}>
-        {/* Hero */}
+      <main style={{ backgroundColor: FONDO_HERO_EVENTOS, minHeight: '100vh' }}>
+        <EventosHeroFoto />
+
         <section
           className="eventos-hero"
+          aria-label="Eventos a tu medida"
           style={{
-            backgroundColor: '#F6F6F2',
+            backgroundColor: FONDO_HERO_EVENTOS,
             padding: '120px 80px 80px',
             position: 'relative',
             overflow: 'hidden',
           }}
         >
-          <h1
+          <h2
             className="eventos-h1"
             style={{
               fontFamily: 'EditorialNew, serif',
@@ -41,7 +47,7 @@ export default function EventosPage() {
             }}
           >
             Eventos a tu medida
-          </h1>
+          </h2>
           <p style={{
             fontFamily: 'EditorialNew, serif',
             fontWeight: 400,

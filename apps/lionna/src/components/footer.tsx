@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { FooterLanguageSelector } from './footer-language-selector';
 
 const legalLinks = [
   { href: '/politica-de-privacidad', label: 'POLITICA DE PRIVACIDAD' },
@@ -38,15 +39,6 @@ function MapsIcon() {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#fff" />
       <circle cx="12" cy="9" r="2.5" fill="#000" />
-    </svg>
-  );
-}
-
-function GlobeIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
     </svg>
   );
 }
@@ -101,13 +93,13 @@ export function Footer({ siteSettings, contact }: FooterProps) {
         {/* Left column: Logo + EN COLABORACION CON + TANAKA HOSPITALITY */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           {/* LI-ONNA Logo */}
-          <div>
+          <div style={{ marginLeft: -17, marginRight: -17 }}>
             <Image
               src="/images/logo-large.svg"
               alt="LI-ONNA"
               width={7966}
               height={2181}
-              style={{ width: 252, height: 'auto' }}
+              style={{ width: 252, height: 'auto', textAlign: 'left' }}
             />
           </div>
 
@@ -207,33 +199,7 @@ export function Footer({ siteSettings, contact }: FooterProps) {
               <MapsIcon />
             </a>
 
-            {/* Language selector */}
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 6,
-                border: '1px solid rgba(255,255,255,0.3)',
-                borderRadius: 20,
-                padding: '8px 16px',
-                cursor: 'pointer',
-              }}
-            >
-              <GlobeIcon />
-              <span
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: 400,
-                  fontSize: 13,
-                  color: '#fff',
-                }}
-              >
-                Spanish
-              </span>
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1l4 4 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
+            <FooterLanguageSelector />
           </div>
 
           {/* Address */}

@@ -86,6 +86,8 @@ type FloatCard = {
   imageTopDesignPx?: number;
   /** Si es true, `top` y `left` se aplican en px tal cual (sin convertir a cqw). */
   posicionFijaPx?: boolean;
+  /** Si es true, solo `left` en px tal cual; `top` sigue fluido (cqw) salvo `posicionFijaPx`. */
+  izquierdaFijaPx?: boolean;
 };
 
 /* -- Photo card positions from Playwright @ 1440px viewport --
@@ -95,13 +97,14 @@ const FLOAT_CARDS: FloatCard[] = [
     src: '/images/photo-interior-3.jpg',
     w: 288,
     h: 339,
-    top: '232px',
-    left: '554px',
+    top: '346px',
+    left: '396px',
     zIndex: Z_TARJETA_MIN,
     alt: 'Interior',
     /** Posición y tamaño fijos desde preview en navegador. */
     widthPx: 202,
     heightPx: 204,
+    posicionFijaPx: true,
   },
   { src: '/images/photo-dish-1.jpg',       w: 222, h: 231, top: '185px', left: '50%',   zIndex: Z_TARJETA_MIN + 1, alt: 'Plato' },
   { src: '/images/photo-dish-2.jpg',       w: 243, h: 344, top: '2.6%',  left: '67.2%', zIndex: Z_TARJETA_MIN, alt: 'Plato' },
@@ -145,11 +148,13 @@ const FLOAT_CARDS: FloatCard[] = [
     w: 228,
     h: 267,
     top: '578px',
-    left: '308px',
+    left: '245px',
     zIndex: 272,
     alt: 'Interior',
     /** Posición, apilado y alto fijos desde preview en navegador. */
     heightPx: 240,
+    /** Preview: `left: 245px` fijos; el `top` sigue en cqw. */
+    izquierdaFijaPx: true,
   },
   {
     src: '/images/photo-interior-wide.jpg',
@@ -352,7 +357,11 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
                     boxShadow:
                       '0.398px 0.398px 0.563px -0.9375px rgba(0,0,0,0.18), 1.207px 1.207px 1.707px -1.875px rgba(0,0,0,0.17), 3.191px 3.191px 4.513px -2.8125px rgba(0,0,0,0.15), 10px 10px 14.142px -3.75px rgba(0,0,0,0.06)',
                     top: card.posicionFijaPx ? card.top : resuelvePosCollage(card.top),
-                    left: card.posicionFijaPx ? card.left : resuelvePosCollage(card.left),
+                    left: card.posicionFijaPx
+                      ? card.left
+                      : card.izquierdaFijaPx
+                        ? card.left
+                        : resuelvePosCollage(card.left),
                   };
                   return (
                     <div key={card.src} style={cardStyle}>
