@@ -22,7 +22,7 @@ function LineaConLetras({ texto, idBloque }: LineaConLetrasProps) {
   return (
     <span
       className="block w-full shrink-0"
-      style={{ lineHeight: 1.15, textAlign: 'center' }}
+      style={{ lineHeight: 1.02, textAlign: 'center' }}
     >
       {texto.split('').map((car, i) => (
         <span
@@ -127,10 +127,10 @@ export function EventosHeroFoto() {
 
         <div
           ref={refContenedor}
-          className="absolute inset-0 z-[2] box-border flex flex-col items-center justify-center px-4"
+          className="absolute inset-0 z-[2] box-border flex flex-col items-center justify-center px-4 -translate-y-[min(1.25rem,2.5vh)] sm:-translate-y-[min(1.75rem,3.5vh)]"
           style={{
-            paddingTop: 'clamp(1.25rem, 4vh, 3rem)',
-            paddingBottom: 'clamp(1.5rem, 5vh, 2.75rem)',
+            paddingTop: 'clamp(1rem, 3.5vh, 2.5rem)',
+            paddingBottom: 'clamp(1rem, 3.5vh, 2.5rem)',
           }}
         >
           <h1
@@ -140,7 +140,7 @@ export function EventosHeroFoto() {
               fontWeight: 400,
               fontSize: 'clamp(30px, 5.2vw, 80px)',
               letterSpacing: '0.04em',
-              lineHeight: 1.1,
+              lineHeight: 1.02,
               color: AZUL_MARCA,
               /* Contraste en zonas aún más oscuras del plato o banqueta */
               textShadow:
@@ -148,7 +148,8 @@ export function EventosHeroFoto() {
             }}
           >
             <LineaConLetras idBloque="evh-l1" texto={TEXTO_L1} />
-            <span className="block h-[0.12em] shrink-0" aria-hidden />
+            {/* Separación mínima entre renglones; el bloque entero se sube con -translate en el contenedor */}
+            <span className="block h-px w-full shrink-0" aria-hidden />
             <LineaConLetras idBloque="evh-l2" texto={TEXTO_L2} />
           </h1>
         </div>
