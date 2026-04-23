@@ -1,5 +1,6 @@
 'use client';
 
+import { ANCHO_TILE_CURVA, LionnaCurveStrip } from '@/components/lionna-curve-strip';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -11,20 +12,6 @@ const AZUL_HERO = 'rgb(0, 91, 255)';
 
 /** Mismo umbral que la máscara anterior: video limpio hasta ~63.5%, fundido hacia azul abajo. */
 const GRADIENTE_HERO_FONDO = `linear-gradient(to bottom, transparent 63.5%, ${AZUL_HERO} 100%)`;
-
-/** Carril de curva Lionna (mismo tamaño que cada `<img>` del ticker). */
-const ANCHO_TILE_CURVA = 551;
-const ALTO_TILE_CURVA = 262;
-const CANTIDAD_TILES_CURVA = 17;
-
-/**
- * Un ciclo = exactamente un tile en px (keyframes), no % sobre el ancho total.
- * Conserva la velocidad anterior: antes se recorría el 50% de la tira en 45s.
- */
-const SEGUNDOS_ANIM_CURVA = (45 * 2) / CANTIDAD_TILES_CURVA;
-
-const cssAnimCintaCurva = () =>
-  `lionna-curve-scroll ${SEGUNDOS_ANIM_CURVA}s linear infinite`;
 
 /**
  * LI-ONNA Hero — matched to live site via Playwright extraction.
@@ -43,7 +30,6 @@ interface HeroProps {
 
 export function Hero({ heroImage }: HeroProps) {
   const refSeccion = useRef<HTMLElement>(null);
-  const refCintaCurva = useRef<HTMLDivElement>(null);
   // Progreso 0–1 según scroll; el logo escala y pierde opacidad hasta desvanecerse
   const [progresoScroll, setProgresoScroll] = useState(0);
   const [movimientoReducido, setMovimientoReducido] = useState(false);
@@ -90,43 +76,6 @@ export function Hero({ heroImage }: HeroProps) {
       if (raf) cancelAnimationFrame(raf);
     };
   }, [sincronizarScroll]);
-
-  /** Reinicia la animación CSS (evita compositor “pegado” con % y carga de imágenes). */
-  useEffect(() => {
-    if (movimientoReducido) return;
-
-    const reiniciarAnimacionCinta = () => {
-      if (document.visibilityState !== 'visible') return;
-      const nodo = refCintaCurva.current;
-      if (!nodo) return;
-      const animacion = cssAnimCintaCurva();
-      nodo.style.animation = 'none';
-      void nodo.offsetWidth;
-      nodo.style.animation = animacion;
-    };
-
-    const alMostrarPagina = (e: PageTransitionEvent) => {
-      if (e.persisted) reiniciarAnimacionCinta();
-    };
-
-    document.addEventListener('visibilitychange', reiniciarAnimacionCinta);
-    window.addEventListener('pageshow', alMostrarPagina as (ev: Event) => void);
-    window.addEventListener('resize', reiniciarAnimacionCinta);
-
-    let idRafExterno = 0;
-    let idRafInterno = 0;
-    idRafExterno = requestAnimationFrame(() => {
-      idRafInterno = requestAnimationFrame(reiniciarAnimacionCinta);
-    });
-
-    return () => {
-      document.removeEventListener('visibilitychange', reiniciarAnimacionCinta);
-      window.removeEventListener('pageshow', alMostrarPagina as (ev: Event) => void);
-      window.removeEventListener('resize', reiniciarAnimacionCinta);
-      cancelAnimationFrame(idRafExterno);
-      cancelAnimationFrame(idRafInterno);
-    };
-  }, [movimientoReducido]);
 
   const escala = 1 - progresoScroll;
   const opacidad = 1 - progresoScroll;
@@ -203,58 +152,8 @@ export function Hero({ heroImage }: HeroProps) {
           }}
         />
 
-        {/* Thicker_Desktop — curve ticker at 30% opacity on top of video */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            zIndex: 2,
-            opacity: 0.3,
-            overflow: 'hidden',
-            pointerEvents: 'none',
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <div
-            style={{
-              width: '100%',
-              height: ALTO_TILE_CURVA,
-              display: 'flex',
-              overflow: 'hidden',
-            }}
-          >
-            <div
-              ref={refCintaCurva}
-              style={{
-                display: 'flex',
-                width: ANCHO_TILE_CURVA * CANTIDAD_TILES_CURVA,
-                minWidth: ANCHO_TILE_CURVA * CANTIDAD_TILES_CURVA,
-                animation: movimientoReducido ? 'none' : cssAnimCintaCurva(),
-                willChange: 'transform',
-                backfaceVisibility: 'hidden',
-              }}
-            >
-              {Array.from({ length: CANTIDAD_TILES_CURVA }).map((_, i) => (
-                /* eslint-disable-next-line @next/next/no-img-element */
-                <img
-                  key={i}
-                  src="/images/lionna-curve.png"
-                  alt=""
-                  width={ANCHO_TILE_CURVA}
-                  height={ALTO_TILE_CURVA}
-                  decoding="async"
-                  style={{
-                    width: ANCHO_TILE_CURVA,
-                    height: ALTO_TILE_CURVA,
-                    objectFit: 'cover',
-                    flexShrink: 0,
-                  }}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
+        {/* Cinta de curvas (mismo componente que en gift cards) */}
+        <LionnaCurveStrip opacidad={0.3} style={{ zIndex: 2 }} />
 
         {/* Header — logo centrado vertical y horizontalmente en el hero */}
         <div
