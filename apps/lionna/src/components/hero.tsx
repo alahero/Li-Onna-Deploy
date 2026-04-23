@@ -13,6 +13,11 @@ const AZUL_HERO = 'rgb(0, 91, 255)';
 /** Mismo umbral que la máscara anterior: video limpio hasta ~63.5%, fundido hacia azul abajo. */
 const GRADIENTE_HERO_FONDO = `linear-gradient(to bottom, transparent 63.5%, ${AZUL_HERO} 100%)`;
 
+/** Poster (primer fotograma) + VP9 + H.264 comprimido; el MP4 pesado original ya no se usa. */
+const RUTA_POSTER_HERO = '/images/hero-video-poster.webp';
+const RUTA_VIDEO_WEBM = '/images/hero-video.webm';
+const RUTA_VIDEO_MP4 = '/images/hero-video.mp4';
+
 /**
  * LI-ONNA Hero — matched to live site via Playwright extraction.
  *
@@ -30,11 +35,14 @@ interface HeroProps {
 
 export function Hero({ heroImage }: HeroProps) {
   const refSeccion = useRef<HTMLElement>(null);
+  const refVideo = useRef<HTMLVideoElement>(null);
   // Progreso 0–1 según scroll; el logo escala y pierde opacidad hasta desvanecerse
   const [progresoScroll, setProgresoScroll] = useState(0);
   const [movimientoReducido, setMovimientoReducido] = useState(false);
   /** Mientras el hero cruce el viewport, el fundido fijo se pinta; si no, se oculta (el main va z=2 encima). */
   const [capaGradienteFijaVisible, setCapaGradienteFijaVisible] = useState(true);
+  /** Solo enganchamos las fuentes del <video> cuando el hero entra al viewport (ahorro de red). */
+  const [cargarFuentesVideo, setCargarFuentesVideo] = useState(false);
 
   const sincronizarScroll = useCallback(() => {
     const altura = window.innerHeight || 1;
@@ -76,6 +84,47 @@ export function Hero({ heroImage }: HeroProps) {
       if (raf) cancelAnimationFrame(raf);
     };
   }, [sincronizarScroll]);
+
+  /** Carga diferida: hasta que el hero sea visible (o casi) no pedimos WebM/MP4. */
+  useEffect(() => {
+    if (heroImage || movimientoReducido) return;
+    const seccion = refSeccion.current;
+    if (!seccion) return;
+
+    const encenderCarga = () => {
+      if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+      setCargarFuentesVideo(true);
+    };
+
+    if (typeof IntersectionObserver === 'undefined') {
+      encenderCarga();
+      return;
+    }
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.some((e) => e.isIntersecting);
+        if (!visible) return;
+        encenderCarga();
+        io.disconnect();
+      },
+      { root: null, rootMargin: '80px', threshold: 0 },
+    );
+    io.observe(seccion);
+    return () => io.disconnect();
+  }, [heroImage, movimientoReducido]);
+
+  /** Tras montar las fuentes, forzamos buffer y autoplay (muted + playsInline). */
+  useEffect(() => {
+    if (!cargarFuentesVideo || movimientoReducido || heroImage) return;
+    const v = refVideo.current;
+    if (!v) return;
+    v.load();
+    const pr = v.play();
+    if (pr !== undefined) void pr.catch(() => {});
+  }, [cargarFuentesVideo, movimientoReducido, heroImage]);
 
   const escala = 1 - progresoScroll;
   const opacidad = 1 - progresoScroll;
@@ -121,11 +170,13 @@ export function Hero({ heroImage }: HeroProps) {
             />
           ) : (
             <video
+              ref={refVideo}
+              poster={RUTA_POSTER_HERO}
               autoPlay
               loop
               muted
               playsInline
-              preload="none"
+              preload={cargarFuentesVideo ? 'metadata' : 'none'}
               style={{
                 width: '100%',
                 height: '100%',
@@ -133,7 +184,12 @@ export function Hero({ heroImage }: HeroProps) {
                 objectPosition: '50% 50%',
               }}
             >
-              <source src="/images/hero-video.mp4" type="video/mp4" />
+              {cargarFuentesVideo && !movimientoReducido ? (
+                <>
+                  <source src={RUTA_VIDEO_WEBM} type="video/webm" />
+                  <source src={RUTA_VIDEO_MP4} type="video/mp4" />
+                </>
+              ) : null}
             </video>
           )}
         </div>
