@@ -68,12 +68,14 @@ export function ReservationDrawer({ abrir, alCerrar, urlReserva }: ReservationDr
         display: 'flex',
         justifyContent: 'flex-end',
         alignItems: 'stretch',
+        boxSizing: 'border-box',
+        padding: '8px 12px',
       }}
       role="presentation"
     >
       <button
         type="button"
-        className="reservas-capa__backdrop"
+        className="reservas-capa__backdrop reservas-capa__backdrop--entra"
         aria-label="Cerrar panel de reservas"
         onClick={cerrar}
         style={{
@@ -88,21 +90,25 @@ export function ReservationDrawer({ abrir, alCerrar, urlReserva }: ReservationDr
       <nav
         id="reservas-panel"
         ref={refPanel}
-        className="reservas-capa__panel"
+        className="reservas-capa__panel reservas-capa__panel--entra"
         data-framer-name="Content"
         role="dialog"
         aria-modal="true"
         style={{
           position: 'relative',
-          width: 'min(100vw, 400px)',
+          width: 'min(calc(100vw - 24px), 400px)',
           maxWidth: '100%',
-          height: '100dvh',
+          minHeight: 0,
+          /* Ocupa casi toda la altura; solo deja aire con el padding del contenedor. */
+          alignSelf: 'stretch',
           background: '#fff',
-          boxShadow: '-4px 0 24px rgba(0,0,0,0.12)',
+          boxShadow: '0 4px 24px rgba(0,0,0,0.1)',
+          borderRadius: 12,
           zIndex: 1,
           display: 'flex',
           flexDirection: 'column',
           fontFamily: 'Inter, system-ui, sans-serif',
+          overflow: 'hidden',
         }}
         tabIndex={-1}
         aria-labelledby={idTituloPanel}
@@ -157,6 +163,7 @@ export function ReservationDrawer({ abrir, alCerrar, urlReserva }: ReservationDr
             display: 'flex',
             flexDirection: 'column',
             background: '#fafafa',
+            overflow: 'auto',
           }}
         >
           {/*

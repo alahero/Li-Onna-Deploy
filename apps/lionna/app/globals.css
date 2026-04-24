@@ -291,9 +291,39 @@
     transform: translate3d(0, -12px, 0);
   }
 }
+/* Panel de reservas (drawer) — entrada suave */
+@keyframes reservas-backdrop-entra {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes reservas-panel-entra {
+  from {
+    transform: translate3d(calc(100% + 8px), 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.reservas-capa__backdrop--entra {
+  animation: reservas-backdrop-entra 0.25s ease-out both;
+}
+
+.reservas-capa__panel--entra {
+  animation: reservas-panel-entra 0.36s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  transform-origin: center right;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .giftcards-wiggle-a,
-  .giftcards-wiggle-b {
+  .giftcards-wiggle-b,
+  .reservas-capa__backdrop--entra,
+  .reservas-capa__panel--entra {
     animation: none !important;
   }
 }
