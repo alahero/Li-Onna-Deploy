@@ -14,14 +14,12 @@ export const revalidate = 3600;
 async function getPageData() {
   const reader = createReader(process.cwd(), keystaticConfig);
 
-  const [siteSettings, homepage, contact, reservations, dishSlugs] =
-    await Promise.all([
-      reader.singletons.siteSettings.read().catch(() => null),
-      reader.singletons.homepage.read().catch(() => null),
-      reader.singletons.contact.read().catch(() => null),
-      reader.singletons.reservations.read().catch(() => null),
-      reader.collections.signatureDishes.list().catch(() => [] as string[]),
-    ]);
+  const [siteSettings, homepage, contact, dishSlugs] = await Promise.all([
+    reader.singletons.siteSettings.read().catch(() => null),
+    reader.singletons.homepage.read().catch(() => null),
+    reader.singletons.contact.read().catch(() => null),
+    reader.collections.signatureDishes.list().catch(() => [] as string[]),
+  ]);
 
   const signatureDishes = await Promise.all(
     dishSlugs.map(async (slug) => {
@@ -43,7 +41,6 @@ async function getPageData() {
     siteSettings,
     homepage,
     contact,
-    reservations,
     signatureDishes: signatureDishes
       .filter(Boolean)
       .sort((a, b) => (a!.order ?? 99) - (b!.order ?? 99)) as NonNullable<
@@ -53,15 +50,14 @@ async function getPageData() {
 }
 
 export default async function HomePage() {
-  const { siteSettings, homepage, contact, reservations, signatureDishes } =
-    await getPageData();
+  const { siteSettings, homepage, contact, signatureDishes } = await getPageData();
   return (
     <>
       {/* Full-viewport video hero (100vh, #005BFF) */}
       <Hero heroImage={homepage?.heroImage ?? undefined} />
 
       {/* Barra sticky pegada al bloque hero (sin franja blur intermedia) */}
-      <Navbar reservationsUrl={reservations?.bookingUrl ?? undefined} />
+      <Navbar />
 
       {/* Main Content -- bg #F6F6F2 */}
       <main style={{ backgroundColor: '#F6F6F2', position: 'relative', zIndex: 2 }}>

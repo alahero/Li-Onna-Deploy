@@ -506,7 +506,7 @@ export function PhotoGallery({ heroTitle, heroSubtitle }: PhotoGalleryProps) {
                       Men&uacute;
                     </a>
                     <a
-                      href="#reservas"
+                      href="#reservar"
                       style={{
                         fontFamily: 'Inter, sans-serif',
                         fontWeight: 400,

@@ -254,6 +254,59 @@
   100% { transform: translateX(-50%); }
 }
 
+/* ─── Cinta de curvas + distintivo del hero: mismos nombres que en `LionnaCurveStrip` y Hero (551px = ANCHO_TILE_CURVA) */
+@keyframes lionna-curve-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-551px, 0, 0);
+  }
+}
+@keyframes lionna-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Gift cards: wiggle (global: no depender de styled-jsx en el bundle del cliente) */
+@keyframes giftcard-wiggle-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+@keyframes giftcard-wiggle-y-b {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .giftcards-wiggle-a,
+  .giftcards-wiggle-b {
+    animation: none !important;
+  }
+}
+.giftcards-wiggle-a {
+  animation: giftcard-wiggle-y 3.2s ease-in-out infinite;
+  will-change: transform;
+}
+.giftcards-wiggle-b {
+  animation: giftcard-wiggle-y-b 3.6s ease-in-out infinite;
+  animation-delay: 0.4s;
+  will-change: transform;
+}
+
 /* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 4px;

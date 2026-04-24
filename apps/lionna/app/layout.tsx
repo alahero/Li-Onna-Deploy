@@ -1,5 +1,8 @@
 import type { Metadata, Viewport } from 'next';
 import { JsonLd } from '@mg/ui-primitives';
+import { ReservationBookingProvider } from '@/components/reservation-booking-provider';
+import { ReservasQueryOverlay } from '@/components/reservas-query-overlay';
+import { leerUrlReservasLionna } from '@/lib/read-lionna-booking-url';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -61,32 +64,38 @@ const jsonLd = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const enlaceReservaCms = leerUrlReservasLionna();
+
   return (
     <html lang="es">
       <body>
-        <JsonLd data={jsonLd} />
-        {/* Fixed blue background — visible when hero scrolls away */}
-        <div
-          aria-hidden
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgb(0, 91, 255)',
-            zIndex: 0,
-          }}
-        />
-        <div
-          style={{
-            position: 'relative',
-            zIndex: 1,
-            width: '100%',
+        <ReservationBookingProvider url={enlaceReservaCms}>
+          <JsonLd data={jsonLd} />
+          <ReservasQueryOverlay />
+          {/* Fondo fijo (azul) visible cuando deja de verse el hero con scroll */}
+          <div
+            aria-hidden
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgb(0, 91, 255)',
+              zIndex: 0,
+            }}
+          />
+          <div
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              width: '100%',
             minWidth: 0,
-            overflowX: 'clip',
+            /* `overflow: clip` en un ancestro puede afectar sticky/click; el recorte x va en `html` en globals.css. */
+            overflow: 'visible',
             backgroundColor: '#F6F6F2',
-          }}
-        >
-          {children}
-        </div>
+            }}
+          >
+            {children}
+          </div>
+        </ReservationBookingProvider>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { ANCHO_TILE_CURVA, LionnaCurveStrip } from '@/components/lionna-curve-strip';
+import { LionnaCurveStrip } from '@/components/lionna-curve-strip';
 
 const URL_COMPRA_GIFT =
   'https://www.covermanager.com/eco/buy_products/restaurante-li-onna/spanish';
@@ -39,6 +39,7 @@ export function GiftcardsHero() {
       >
         {/* Logo principal con leve resplandor, como en el sitio en Framer */}
         <div style={{ textAlign: 'center' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element -- SVG local, mismo criterio que en Navbar/Hero */}
           <img
             src="/images/logo-large.svg"
             alt="LI-ONNA"
@@ -92,10 +93,11 @@ export function GiftcardsHero() {
             >
               <div className="giftcards-wiggle-a" style={{ width: '100%' }}>
                 <Image
-                  src="/images/photo-giftcard-1.png"
+                  src="/images/photo-giftcard-1.webp"
                   alt="Tarjeta regalo LI-ONNA"
                   width={400}
                   height={252}
+                  quality={80}
                   sizes="(max-width: 809px) 80vw, 360px"
                   className="giftcards-card-img"
                   style={{ width: '100%', height: 'auto', display: 'block' }}
@@ -116,10 +118,11 @@ export function GiftcardsHero() {
             >
               <div className="giftcards-wiggle-b" style={{ width: '100%' }}>
                 <Image
-                  src="/images/photo-giftcard-2.png"
+                  src="/images/photo-giftcard-2.webp"
                   alt=""
                   width={400}
                   height={252}
+                  quality={80}
                   sizes="(max-width: 809px) 80vw, 360px"
                   className="giftcards-card-img"
                   style={{ width: '100%', height: 'auto', display: 'block' }}
@@ -157,45 +160,6 @@ export function GiftcardsHero() {
       </div>
 
       <style jsx global>{`
-        @keyframes lionna-curve-scroll {
-          from {
-            transform: translate3d(0, 0, 0);
-          }
-          to {
-            transform: translate3d(-${ANCHO_TILE_CURVA}px, 0, 0);
-          }
-        }
-        @keyframes giftcard-wiggle-y {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-        @keyframes giftcard-wiggle-y-b {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-12px);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .giftcards-wiggle-a,
-          .giftcards-wiggle-b {
-            animation: none !important;
-          }
-        }
-        .giftcards-wiggle-a {
-          animation: giftcard-wiggle-y 3.2s ease-in-out infinite;
-        }
-        .giftcards-wiggle-b {
-          animation: giftcard-wiggle-y-b 3.6s ease-in-out infinite;
-          animation-delay: 0.4s;
-        }
         @media (max-width: 809px) {
           .giftcards-hero-section {
             padding: 32px 16px 40px !important;

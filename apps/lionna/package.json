@@ -6,7 +6,8 @@
     "dev": "next dev --port 3005",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "optimize:images": "node scripts/optimize-hero-webp.cjs"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.36",
@@ -17,7 +18,8 @@
     "gsap": "^3.15.0",
     "next": "^14.2.0",
     "react": "^18.3.0",
-    "react-dom": "^18.3.0"
+    "react-dom": "^18.3.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
@@ -25,6 +27,7 @@
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.0",
     "typescript": "^5.7.0"
   }

@@ -40,10 +40,11 @@ export default function ContactPage() {
         <section className="contact-hero" aria-labelledby="contacto-hero-titulo">
           <div className="contact-hero-frame">
             <Image
-              src="/images/photo-contact.jpg"
+              src="/images/photo-contact.webp"
               alt="Mesa con platos LI-ONNA"
               fill
               priority
+              quality={70}
               sizes="(max-width: 809px) 95vw, min(1280px, calc(100vw - 48px))"
               className="contact-hero-img"
             />

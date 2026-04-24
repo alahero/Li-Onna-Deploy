@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useReservationBookingUrl } from '@/components/reservation-booking-provider';
+import { ReservasLaunchLink } from '@/components/reservas-launch-link';
 
 /** Alto del wordmark en la barra (60px); mismo SVG que el hero (`logo-large.svg`). */
 const ALTURA_LOGO_NAV_PX = 26;
@@ -16,8 +18,8 @@ const navStyle: React.CSSProperties = {
   backgroundColor: 'rgb(0, 91, 255)',
   position: 'sticky',
   top: 0,
-  /* Por encima del distintivo del hero (z=2) y del main (z=2) al hacer scroll */
-  zIndex: 10,
+  /* Encima de todo el contenido del main (galería, copy) para que el CTA sea clicable. */
+  zIndex: 500,
   display: 'flex',
   alignItems: 'center',
   padding: '0 64px',
@@ -55,21 +57,24 @@ const pillStyle: React.CSSProperties = {
 };
 
 interface NavbarProps {
-  reservationsUrl?: string;
   /** Separación bajo el hero (p. ej. distintivo circular) para que no choque con el nav */
   overlapReservationPx?: number;
 }
 
-export function Navbar({ reservationsUrl, overlapReservationPx = 0 }: NavbarProps) {
-  const enlaceReservas =
-    reservationsUrl && reservationsUrl.trim().length > 0 ? reservationsUrl.trim() : '#reservas';
-  const reservasExterno = enlaceReservas !== '#reservas';
+/**
+ * Reservas: con URL en CMS (CoverManager) se abre un panel con iframe, como en el sitio en Framer;
+ * sin URL, el CTA baja a la sección #reservar.
+ */
+export function Navbar({ overlapReservationPx = 0 }: NavbarProps) {
+  const urlReservaCms = useReservationBookingUrl();
+  const reservaEmbeddable = urlReservaCms != null && urlReservaCms.length > 0;
 
   return (
     <nav
       style={{
         ...navStyle,
         ...(overlapReservationPx > 0 ? { marginTop: overlapReservationPx } : {}),
+        isolation: 'isolate',
       }}
       className="lionna-nav"
     >
@@ -125,13 +130,15 @@ export function Navbar({ reservationsUrl, overlapReservationPx = 0 }: NavbarProp
           minWidth: 0,
         }}
       >
-        <a
-          href={enlaceReservas}
-          style={pillStyle}
-          {...(reservasExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-        >
-          RESERVAS
-        </a>
+        {reservaEmbeddable ? (
+          <ReservasLaunchLink
+            pillStyle={{ ...pillStyle, position: 'relative', zIndex: 1 }}
+          />
+        ) : (
+          <a href="/#reservar" style={pillStyle}>
+            RESERVAS
+          </a>
+        )}
       </div>
     </nav>
   );

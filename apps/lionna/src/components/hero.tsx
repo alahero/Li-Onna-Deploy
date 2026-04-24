@@ -1,6 +1,6 @@
 'use client';
 
-import { ANCHO_TILE_CURVA, LionnaCurveStrip } from '@/components/lionna-curve-strip';
+import { LionnaCurveStrip } from '@/components/lionna-curve-strip';
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -34,6 +34,10 @@ interface HeroProps {
 }
 
 export function Hero({ heroImage }: HeroProps) {
+  /** Solo reemplazamos el video por imagen con una ruta de Keystatic no vacía. */
+  const rutaImagenFondo =
+    typeof heroImage === 'string' && heroImage.trim().length > 0 ? heroImage.trim() : undefined;
+
   const refSeccion = useRef<HTMLElement>(null);
   const refVideo = useRef<HTMLVideoElement>(null);
   // Progreso 0–1 según scroll; el logo escala y pierde opacidad hasta desvanecerse
@@ -41,8 +45,6 @@ export function Hero({ heroImage }: HeroProps) {
   const [movimientoReducido, setMovimientoReducido] = useState(false);
   /** Mientras el hero cruce el viewport, el fundido fijo se pinta; si no, se oculta (el main va z=2 encima). */
   const [capaGradienteFijaVisible, setCapaGradienteFijaVisible] = useState(true);
-  /** Solo enganchamos las fuentes del <video> cuando el hero entra al viewport (ahorro de red). */
-  const [cargarFuentesVideo, setCargarFuentesVideo] = useState(false);
 
   const sincronizarScroll = useCallback(() => {
     const altura = window.innerHeight || 1;
@@ -85,46 +87,18 @@ export function Hero({ heroImage }: HeroProps) {
     };
   }, [sincronizarScroll]);
 
-  /** Carga diferida: hasta que el hero sea visible (o casi) no pedimos WebM/MP4. */
+  /** Fuentes del <video> siempre en el DOM; autoplay/nudge tras paint (ref listo). */
   useEffect(() => {
-    if (heroImage || movimientoReducido) return;
-    const seccion = refSeccion.current;
-    if (!seccion) return;
-
-    const encenderCarga = () => {
-      if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        return;
-      }
-      setCargarFuentesVideo(true);
-    };
-
-    if (typeof IntersectionObserver === 'undefined') {
-      encenderCarga();
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.some((e) => e.isIntersecting);
-        if (!visible) return;
-        encenderCarga();
-        io.disconnect();
-      },
-      { root: null, rootMargin: '80px', threshold: 0 },
-    );
-    io.observe(seccion);
-    return () => io.disconnect();
-  }, [heroImage, movimientoReducido]);
-
-  /** Tras montar las fuentes, forzamos buffer y autoplay (muted + playsInline). */
-  useEffect(() => {
-    if (!cargarFuentesVideo || movimientoReducido || heroImage) return;
-    const v = refVideo.current;
-    if (!v) return;
-    v.load();
-    const pr = v.play();
-    if (pr !== undefined) void pr.catch(() => {});
-  }, [cargarFuentesVideo, movimientoReducido, heroImage]);
+    if (rutaImagenFondo || movimientoReducido) return;
+    const t = window.setTimeout(() => {
+      const v = refVideo.current;
+      if (!v) return;
+      v.load();
+      const pr = v.play();
+      if (pr !== undefined) void pr.catch(() => {});
+    }, 0);
+    return () => clearTimeout(t);
+  }, [rutaImagenFondo, movimientoReducido]);
 
   const escala = 1 - progresoScroll;
   const opacidad = 1 - progresoScroll;
@@ -156,9 +130,9 @@ export function Hero({ heroImage }: HeroProps) {
             zIndex: 0,
           }}
         >
-          {heroImage ? (
+          {rutaImagenFondo ? (
             <Image
-              src={heroImage}
+              src={rutaImagenFondo}
               alt=""
               fill
               priority
@@ -176,7 +150,7 @@ export function Hero({ heroImage }: HeroProps) {
               loop
               muted
               playsInline
-              preload={cargarFuentesVideo ? 'metadata' : 'none'}
+              preload="metadata"
               style={{
                 width: '100%',
                 height: '100%',
@@ -184,7 +158,7 @@ export function Hero({ heroImage }: HeroProps) {
                 objectPosition: '50% 50%',
               }}
             >
-              {cargarFuentesVideo && !movimientoReducido ? (
+              {!movimientoReducido ? (
                 <>
                   <source src={RUTA_VIDEO_WEBM} type="video/webm" />
                   <source src={RUTA_VIDEO_MP4} type="video/mp4" />
@@ -306,18 +280,6 @@ export function Hero({ heroImage }: HeroProps) {
             />
           </svg>
         </div>
-
-        <style jsx global>{`
-          @keyframes lionna-spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-          }
-          /* Un tile en px: bucle sin depender del % (evita “freeze” hasta reflow). Mantener sync con ANCHO_TILE_CURVA. */
-          @keyframes lionna-curve-scroll {
-            from { transform: translate3d(0, 0, 0); }
-            to { transform: translate3d(-551px, 0, 0); }
-          }
-        `}</style>
       </section>
 
     </>
